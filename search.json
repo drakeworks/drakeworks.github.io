@@ -1,0 +1,28 @@
+---
+layout: null
+---
+{
+  "posts": [
+    {% for post in site.posts %}
+    {
+      "title": {{ post.title | jsonify }},
+      "url": "{{ post.url | absolute_url }}",
+      "excerpt": {{ post.excerpt | strip_html | strip_newlines | jsonify }},
+      "date": "{{ post.date | date: '%d %b, %Y' }}",
+      "tags": {{ post.tags | jsonify }},
+      "categories": {{ post.categories | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "pages": [
+    {% for page in site.pages %}
+    {% if page.layout %}
+    {
+      "title": {{ page.title | jsonify }},
+      "url": "{{ page.url | absolute_url }}",
+      "excerpt": {{ page.excerpt | strip_html | strip_newlines | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+    {% endif %}
+    {% endfor %}
+  ]
+} 

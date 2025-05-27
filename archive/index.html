@@ -1,0 +1,147 @@
+---
+layout: default
+title: Archive
+---
+
+<!-- begin archive-page -->
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+        <div class="archive-page">
+
+          <div class="archive-page__head">
+            <h1 class="archive-page__title">Archive</h1>
+          </div>
+
+          <div class="archive-page__inner">
+            {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+            {% for year in posts_by_year %}
+            <div class="archive__year">
+              <h2 class="archive-page__year">{{ year.name }}</h2>
+              
+              {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
+              {% for month in posts_by_month %}
+              <div class="archive__month">
+                <h3 class="archive-page__month">{{ month.name }}</h3>
+                
+                <div class="archive__posts">
+                  {% for post in month.items %}
+                  <div class="archive-article">
+                    <h3 class="archive-article__title">
+                      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h3>
+                    <div class="archive-article__meta">
+                      <time class="archive-article__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end archive-page -->
+
+<style>
+.archive__year {
+  margin-bottom: 3rem;
+}
+
+.archive__year-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--heading-color);
+}
+
+.archive__month {
+  margin-bottom: 2rem;
+}
+
+.archive__month-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+  opacity: 0.8;
+}
+
+.archive__posts {
+  display: grid;
+  gap: 1rem;
+}
+
+.archive__post {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--background-alt-color);
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.archive__post:hover {
+  transform: translateX(5px);
+}
+
+.archive__post-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 60px;
+}
+
+.archive__post-date {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.archive__post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.archive__post-tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: var(--white);
+}
+
+.archive__post-title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.archive__post-title a {
+  color: var(--heading-color);
+  text-decoration: none;
+}
+
+.archive__post-title a:hover {
+  color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .archive__post {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .archive__post-meta {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+</style> 

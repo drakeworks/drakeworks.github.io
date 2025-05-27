@@ -1,0 +1,18 @@
+- name: Twitter
+  url: https://twitter.com
+  icon: fa-brands fa-x-twitter
+- name: Facebook
+  url: https://facebook.com
+  icon: fa-brands fa-facebook
+- name: Mastodon
+  url: https://mastodon.social
+  icon: fa-brands fa-mastodon
+- name: Reddit
+  url: https://reddit.com
+  icon: fa-brands fa-reddit-alien
+- name: Github
+  url: https://github.com
+  icon: fa-brands fa-github
+- name: RSS
+  url: /feed.xml
+  icon: fa-solid fa-rss 

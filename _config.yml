@@ -1,0 +1,65 @@
+# Site settings
+title: "[SITE_NAME]"
+description: "[SITE_NAME] is a super modern and unique blog theme"
+baseurl: ""
+url: "https://[SITE_NAME].netlify.app"
+
+# Build settings
+markdown: kramdown
+permalink: /:title/
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+  - .DS_Store 
+
+# Sidebar settings
+mailchimp-form: "//gmail.us21.list-manage.com/subscribe/post?u=8aeb9c31a5c97a3a5f9ff2740&amp;id=0e31fd7793&amp"
+newsletter-frequency: "Sunday"
+featured-posts: true
+
+# Tag colors
+tag-colors:
+  programming: "#4643ec"
+  games: "#ff4500"
+  movies: "#f14979"
+  security: "#de47e2"
+  productivity: "#3eb99a"
+  linux: "var(--dark-gray)"
+  blockchain: "#00b894"  # A modern teal color representing blockchain technology
+  cryptocurrency: "#fdcb6e"  # A gold-like color representing cryptocurrency
+  python: "#306998"  # Python's official blue color
+  digital-privacy: "#6c5ce7"  # A deep purple representing privacy and security
+  project-management: "#e17055"  # A warm orange representing organization and structure
+  product-management: "#0984e3"  # A professional blue representing product strategy
+
+paginate: 4
+paginate_path: "/page/:num/" 

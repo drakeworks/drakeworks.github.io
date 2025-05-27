@@ -1,0 +1,14 @@
+- title: Home
+  url: /
+- title: Videos
+  url: /videos/
+- title: Archive
+  url: /archive/
+- title: More
+  dropdown:
+    - title: About
+      url: /about/
+    - title: Contact
+      url: /contact/
+    - title: Elements
+      url: /elements/ 
