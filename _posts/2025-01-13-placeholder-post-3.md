@@ -1,7 +1,7 @@
 ---
 title: "Placeholder Post 3: Another Interesting Topic"
 date: 2025-01-13 10:00:00 +0000
-tags: [productivity]
+tags: [productivity, digital-privacy]
 featured: true
 excerpt: "This is the excerpt for placeholder post number three. It discusses productivity tips."
 image: /images/posts/placeholder-003.jpg

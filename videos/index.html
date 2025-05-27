@@ -39,7 +39,16 @@ title: Videos
                       {% for tag in post.tags %}
                       {% assign tag_name = tag %}
                       {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
-                      <a href="/tags/?tag={{ tag_name | slugify }}" class="article__tag" style="background-color: {{ tag_color | strip }};">{{ tag_name | capitalize }}</a>
+                      {% assign words = tag_name | replace:"-"," " | split: " " %}
+                      {% assign display_tag_name = "" %}
+                      {% for word in words %}
+                        {% assign capitalized_word = word | capitalize %}
+                        {% assign display_tag_name = display_tag_name | append: capitalized_word %}
+                        {% unless forloop.last %}
+                          {% assign display_tag_name = display_tag_name | append: " " %}
+                        {% endunless %}
+                      {% endfor %}
+                      <a href="/tags/?tag={{ tag_name | slugify }}" class="article__tag" style="background-color: {{ tag_color | strip }};">{{ display_tag_name }}</a>
                       {% endfor %}
                     </div>
                     {% endif %}

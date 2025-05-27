@@ -8,13 +8,22 @@
           </div>
 
           <div class="row">
-            {% assign featured_tags = "programming,linux,productivity,security" | split: "," %}
+            {% assign featured_tags = "programming,linux,digital-privacy,security" | split: "," %}
             {% for tag_name in featured_tags %}
             {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
               <div class="col col-3 col-d-6 col-m-12">
               <a href="/tags/?tag={{ tag_name }}" class="section-tags__image" style="outline-color: {{ tag_color }};">
-                <span class="section-tags__name" style="background: {{ tag_color }};">{{ tag_name | capitalize }}</span>
-                <img class="lazy" data-src="/images/home/tags/{{ tag_name }}-001.jpg" alt="{{ tag_name | capitalize }}">
+                {% assign words = tag_name | replace:"-"," " | split: " " %}
+                {% assign display_tag_name = "" %}
+                {% for word in words %}
+                  {% assign capitalized_word = word | capitalize %}
+                  {% assign display_tag_name = display_tag_name | append: capitalized_word %}
+                  {% unless forloop.last %}
+                    {% assign display_tag_name = display_tag_name | append: " " %}
+                  {% endunless %}
+                {% endfor %}
+                <span class="section-tags__name" style="background: {{ tag_color }};">{{ display_tag_name }}</span>
+                <img class="lazy" data-src="/images/home/tags/{{ tag_name }}-001.jpg" alt="{{ display_tag_name }}">
                 </a>
 
                 <div class="section-tags__content">
