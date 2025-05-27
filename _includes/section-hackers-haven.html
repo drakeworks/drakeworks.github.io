@@ -12,7 +12,7 @@
             {% for tag_name in featured_tags %}
             {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
               <div class="col col-3 col-d-6 col-m-12">
-              <a href="/tags/?tag={{ tag_name }}" class="section-tags__image" style="outline-color: {{ tag_color }};">
+              <a href="/tags/?tag={{ tag_name | slugify }}" class="section-tags__image" style="outline-color: {{ tag_color }};">
                 {% assign words = tag_name | replace:"-"," " | split: " " %}
                 {% assign display_tag_name = "" %}
                 {% for word in words %}

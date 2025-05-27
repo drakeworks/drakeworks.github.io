@@ -72,7 +72,7 @@
         {% assign display_tag_name = display_tag_name | append: " " %}
       {% endunless %}
     {% endfor %}
-    <a href="/tags/?tag={{ tag_name }}" class="tag-cloud__item" style="background: {{ tag_color }}">
+    <a href="/tags/?tag={{ tag_name | slugify }}" class="tag-cloud__item" style="background: {{ tag_color }}">
       {{ display_tag_name }}
     </a>
     {% endfor %}

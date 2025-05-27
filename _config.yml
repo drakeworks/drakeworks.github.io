@@ -19,6 +19,9 @@ collections:
     output: true
     permalink: /:title/
 
+# Tag Page Generator Configuration
+# ... existing code ...
+
 # Defaults
 defaults:
   - scope:

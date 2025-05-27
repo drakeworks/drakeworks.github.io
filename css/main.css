@@ -11480,6 +11480,15 @@ table td {
   text-align: center;
 }
 
+.tags .pagination {
+  text-align: center;
+}
+
+.tags .load-more-section {
+  margin: 0 auto;
+  max-width: 200px;
+}
+
 @media (width <= 1024px) {
   .sidebar {
     margin-top: 80px;
