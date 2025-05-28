@@ -8,7 +8,6 @@ layout: default
 
       <div class="post-head">
 
-        {% comment %} Display image or video {% endcomment %}
         {% if page.video %}
         <div class="post-video-embed">
            <iframe src="{{ page.video_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -22,7 +21,6 @@ layout: default
 
         <div class="post-info">
           
-          {% comment %} Tags {% endcomment %}
           {% if page.tags.size >= 1 %}
           <div class="post-tags">
             {% for tag in page.tags %}
@@ -45,13 +43,12 @@ layout: default
           <h1 class="post-title">{{ page.title }}</h1>
 
           <div class="post-meta">
-            {% comment %} Author Meta (using placeholders/example for now) {% endcomment %}
             <a href="/about/" class="post-meta__image">
-              <img class="lazy" data-src="/images/01-1.jpg" alt="Author Name Placeholder">
+              <img class="lazy" data-src="/images/01-1.jpg" alt="Drake Kutz">
             </a>
 
             <div class="post-meta__content">
-              <a class="post-meta__author" href="/about/">Author Name Placeholder</a>
+              <a class="post-meta__author" href="/about/">Drake Kutz</a>
               <div class="post-meta__bottom">
                 <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %b, %Y" }}</time> –
                 <span class="post-minutes">
@@ -71,7 +68,6 @@ layout: default
         </div>
       </article>
 
-      {% comment %} Share Section {% endcomment %}
       <div class="share">
         <div class="share__title">Share this:</div>
         <ul class="share__list list-reset">
@@ -86,7 +82,6 @@ layout: default
               onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
               title="Share on Twitter" rel="nofollow"><i class="fa-brands fa-x-twitter"></i></a>
           </li>
-          {% comment %} Pinterest share (using example image path for now) {% endcomment %}
           <li class="share__item">
             <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url={{ site.url }}{{ page.url }}&amp;media={{ site.url }}{{ page.image }}&amp;description={{ page.title | uri_escape }}"
             onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest"
@@ -99,7 +94,6 @@ layout: default
         </ul>
       </div>
 
-      {% comment %} Comments Section {% endcomment %}
       {% if site.disqus-identifier %}
       <div class="show-comments">
         <h3 class="show-comments__title">Start the conversation</h3>
@@ -137,7 +131,6 @@ layout: default
       </noscript>
       {% endif %}
 
-      {% comment %} Related Posts Section {% endcomment %}
       <div class="related-posts is-related">
         <div class="section__info">
           <div class="section__head">
@@ -145,7 +138,6 @@ layout: default
           </div>
         </div>
         <div class="view-list">
-          {% comment %} Get posts with matching tags {% endcomment %}
           {% assign related_posts = "" | split: "" %}
           {% for tag in page.tags %}
             {% assign tag_posts = site.posts | where_exp: "post", "post.tags contains tag" %}
@@ -215,7 +207,6 @@ layout: default
 
     <div class="col col-4 col-d-12">
       <aside class="sidebar">
-        {% comment %} Include sidebar from default layout {% endcomment %}
         {% include sidebar.html %}
       </aside>
     </div>

@@ -117,10 +117,6 @@ title: Tags
     var posts = tagSection.querySelectorAll('.article');
     var loadMoreButton = tagSection.querySelector('.load-more-posts');
     
-    console.log('showPosts called for tagId:', tagId);
-    console.log('Total posts for tag:', posts.length);
-    console.log('Posts per page:', postsPerPage);
-
     // Hide all posts initially
     posts.forEach(function(post) {
       post.style.display = 'none';
@@ -136,12 +132,10 @@ title: Tags
     // Show/hide load more button
     if (posts.length > postsPerPage) {
       if (loadMoreButton) {
-        console.log('Showing Load More button');
         loadMoreButton.style.display = 'block';
       }
     } else {
        if (loadMoreButton) {
-        console.log('Hiding Load More button');
         loadMoreButton.style.display = 'none';
       }
     }
@@ -168,7 +162,6 @@ title: Tags
   var tag = urlParams.get('tag');
   if (tag) {
     var tagId = tag.toLowerCase().replace(/\s/g, '-'); // Ensure id matches generated id
-    console.log('Tag from URL:', tag, 'Generated tagId:', tagId);
     var el = document.getElementById(tagId);
     if (el) {
       el.classList.remove("is-hidden");
@@ -176,8 +169,6 @@ title: Tags
       // Scroll to the element if needed
       el.scrollIntoView({ behavior: 'smooth' });
     }
-  } else {
-    console.log('No tag parameter in URL');
   }
 
    // Optional: If no tag is specified in the URL, show the first tag's content

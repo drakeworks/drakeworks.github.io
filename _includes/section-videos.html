@@ -13,7 +13,6 @@
 
           
           <div class="row">
-            {% comment %} Fetch and display latest 3 video posts {% endcomment %}
             {% assign video_count = 0 %}
             {% for post in site.posts %}
               {% if post.video and video_count < 3 %}

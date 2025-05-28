@@ -1,8 +1,8 @@
 # Site settings
-title: "[SITE_NAME]"
-description: "[SITE_NAME] is a super modern and unique blog theme"
+title: "DrakeWorks"
+description: "DrakeWorks is the professional portfolio & blog of Drake Kutz, showcasing blockchain projects, python tutorials, and product & project management insights - plus the occasional Cajun recipe."
 baseurl: ""
-url: "https://[SITE_NAME].netlify.app"
+url: "https://drakeworks.github.io/"
 
 # Build settings
 markdown: kramdown
@@ -45,8 +45,8 @@ exclude:
   - .DS_Store 
 
 # Sidebar settings
-mailchimp-form: "//gmail.us21.list-manage.com/subscribe/post?u=8aeb9c31a5c97a3a5f9ff2740&amp;id=0e31fd7793&amp"
-newsletter-frequency: "Sunday"
+mailchimp-form: "PLACEHOLDER"
+newsletter-frequency: "PLACEHOLDER"
 featured-posts: true
 
 # Tag colors

@@ -3,7 +3,7 @@
 ------------------------------------------------------------------- */
 :root {
   --primary-color: #ae00ee;
-  --secondary-color: #FF4E8A;
+  --secondary-color: #60b0ba;
   --white: #fff;
   --light-gray: #f3f3f4;
   --lighten-gray: #ecf0f6;
@@ -24,19 +24,8 @@
   --link-color: var(--dark-blue);
   --link-color-hover: var(--dark-blue);
   --button-color: var(--white);
-
-  /* original */
-  /* --gradient-color: linear-gradient(90deg, #f70077 0%, #ae00ee 100%);
-  --gradient-hover: linear-gradient(180deg, #f70077 0%, #ae00ee 160%); */
-
-  /* currently I like... */
-  --gradient-color: linear-gradient(90deg, #ae00ee 0%, #8A5FD0 60%, #00E5EE 100%);
-  --gradient-hover: linear-gradient(180deg, #ae00ee 0%, #8A5FD0 60%, #00E5EE 160%);
-
-  /* test2 */
-  /* --gradient-color: linear-gradient(90deg, #ae00ee 0%, #A45BE7 60%, #00D4C4 100%);
-  --gradient-hover: linear-gradient(180deg, #ae00ee 0%, #A45BE7 60%, #00D4C4 160%); */
-
+  --gradient-color: linear-gradient(90deg, #f70077 0%, #ae00ee 100%);
+  --gradient-hover: linear-gradient(180deg, #f70077 0%, #ae00ee 160%);
   --border-color: var(--light-gray);
   --border-alt-color: var(--light-blue);
   --th-color: var(--light-blue);
@@ -49,7 +38,7 @@
   --syntax-highlighting-background: #f3f3f3;
 }
 [dark]:root {
-  --primary-color: #ae00ee;
+  --primary-color: #d60067;
   --white: #fff;
   --light-gray: #f0f0f0;
   --gray: #9e9e9e;
@@ -65,18 +54,8 @@
   --link-color: var(--light-gray);
   --link-color-hover: var(--light-gray);
   --button-color: var(--white);
-  /* original */
-  /* --gradient-color: linear-gradient(90deg, #d60067 0%, #8311c0 100%);
-  --gradient-hover: linear-gradient(180deg, #d60067 0%, #8311c0 160%); */
-
-  /* currently I like... */
-  --gradient-color: linear-gradient(90deg, #8311c0 0%, #7540C4 40%, #00B3A4 100%);
-  --gradient-hover: linear-gradient(180deg, #8311c0 0%, #7540C4 40%, #00B3A4 160%);
-
-  /* test2 */
-  /* --gradient-color: linear-gradient(90deg, #8311c0 0%, #945FD8 40%, #00C5B0 100%);
-  --gradient-hover: linear-gradient(180deg, #8311c0 0%, #945FD8 40%, #00C5B0 160%); */
-
+  --gradient-color: linear-gradient(90deg, #d60067 0%, #8311c0 100%);
+  --gradient-hover: linear-gradient(180deg, #d60067 0%, #8311c0 160%);
   --border-color: #232939;
   --border-alt-color: #232939;
   --th-color: var(--background-alt-color);
