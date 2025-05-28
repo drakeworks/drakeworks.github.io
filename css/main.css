@@ -11479,12 +11479,17 @@ table td {
 .pagination {
   text-align: center;
 }
-
 .tags .pagination {
   text-align: center;
 }
-
+@media (max-width: 576px) {
+  .tags .pagination {
+    margin-bottom: 32px;
+  }
+}
 .tags .load-more-section {
+  display: flex;
+  justify-content: center;
   margin: 0 auto;
   max-width: 200px;
 }
