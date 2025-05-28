@@ -78,7 +78,7 @@ title: Tags
                       <div class="article__meta">
                         <time class="article__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
                         <div class="article__minutes">
-                          {{ post.content | reading_time }}
+                          {% assign words = post.content | strip_html | number_of_words %}{% if words < 360 %}1 min read{% else %}{{ words | divided_by: 180 }} min read{% endif %}
                         </div>
                       </div>
                     </div>

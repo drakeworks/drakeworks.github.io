@@ -51,6 +51,9 @@ title: Archive
                     {% endif %}
                     <div class="archive-article__meta">
                       <time class="archive-article__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+                      <div class="archive-article__minutes">
+                        {% assign words = post.content | strip_html | number_of_words %}{% if words < 360 %}1 min read{% else %}{{ words | divided_by: 180 }} min read{% endif %}
+                      </div>
                     </div>
                   </div>
                   {% endfor %}

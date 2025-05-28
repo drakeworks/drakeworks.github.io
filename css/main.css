@@ -11689,6 +11689,14 @@ table td {
   letter-spacing: 0.5px;
   color: var(--text-alt-color);
 }
+.post-featured-content .post-featured-meta .post-featured-minutes {
+  font-family: Poppins, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-alt-color);
+  margin-top: 8px;
+}
 .tag-cloud {
   display: flex;
   align-items: center;

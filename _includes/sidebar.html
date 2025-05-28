@@ -49,6 +49,9 @@
         <a href="{{ post.url }}">{{ post.title }}</a>
       </h3>
       <time class="post-featured-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+      <div class="post-featured-minutes">
+        {% assign words = post.content | strip_html | number_of_words %}{% if words < 360 %}1 min read{% else %}{{ words | divided_by: 180 }} min read{% endif %}
+      </div>
     </div>
   </div>
   {% endfor %}

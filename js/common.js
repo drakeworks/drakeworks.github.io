@@ -191,7 +191,8 @@ document.addEventListener("DOMContentLoaded", function() {
     resultsContainer: document.getElementById("js-results-container"),
     json: "/search.json",
     searchResultTemplate: '{article}',
-    noResultsText: '<div class="no-results">No results found...</div>'
+    noResultsText: '<div class="no-results">No results found...</div>',
+    keys: ['title', 'excerpt', 'content']
   });
 
 

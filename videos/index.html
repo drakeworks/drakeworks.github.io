@@ -58,6 +58,9 @@ title: Videos
                     <p class="article__excerpt">{{ post.excerpt }}</p>
                     <div class="article__meta">
                       <time class="article__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+                      <div class="article__minutes">
+                        {% assign words = post.content | strip_html | number_of_words %}{% if words < 360 %}1 min read{% else %}{{ words | divided_by: 180 }} min read{% endif %}
+                      </div>
                     </div>
                   </div>
                 </div>
