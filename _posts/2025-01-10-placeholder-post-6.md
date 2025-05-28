@@ -3,7 +3,7 @@ title: "Placeholder Post 6: Learn to Code Video"
 date: 2025-01-10 10:00:00 +0000
 tags: [programming]
 excerpt: "A beginner-friendly video tutorial on getting started with programming."
-image: /images/posts/placeholder-006.jpg
+image: /images/posts/placeholder-post-6-img001.jpg
 video: true
 video_url: https://www.youtube.com/embed/o-YBDTqX_cU
 ---

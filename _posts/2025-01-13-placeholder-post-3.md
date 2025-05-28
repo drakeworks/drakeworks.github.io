@@ -4,7 +4,7 @@ date: 2025-01-13 10:00:00 +0000
 tags: [productivity, digital-privacy]
 featured: true
 excerpt: "This is the excerpt for placeholder post number three. It discusses productivity tips."
-image: /images/posts/placeholder-003.jpg
+image: /images/posts/placeholder-post-3-img001.jpg
 video: true
 video_url: https://www.youtube.com/embed/dQw4w9WgXcQ
 ---
