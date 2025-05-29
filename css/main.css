@@ -11294,6 +11294,7 @@ table td {
 }
 .hero__description {
   margin-bottom: 16px;
+  font-size: 16px;
 }
 .hero__description p {
   margin-bottom: 16px;
@@ -11310,7 +11311,7 @@ table td {
 
 @media (width <= 576px) {
   .hero__description {
-    font-size: 16px;
+    font-size: 14px;
   }
   .hero__description p {
     margin-bottom: 12px;
