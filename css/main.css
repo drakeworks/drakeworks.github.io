@@ -11996,7 +11996,7 @@ table td {
   width: 100%;
   max-width: 500px;
 }
-.contact .contact__inner .contact__link {
+.contact__right .contact__inner .contact__link {
   display: inline-flex;
   margin-bottom: 24px;
   align-items: center;
@@ -12009,7 +12009,7 @@ table td {
   border: 1px solid var(--border-color);
   transition: none;
 }
-.contact .contact__inner .contact__link:hover {
+.contact__right .contact__inner .contact__link:hover {
   outline: 0.4px solid var(--border-alt-color);
 }
 .contact .contact__inner .contact__link i {
