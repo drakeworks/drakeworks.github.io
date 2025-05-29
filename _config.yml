@@ -2,7 +2,7 @@
 title: "DrakeWorks"
 description: "DrakeWorks is the professional portfolio & blog of Drake Kutz, showcasing blockchain projects, python tutorials, and product & project management insights - plus the occasional Cajun recipe."
 baseurl: ""
-url: "https://drakeworks.github.io/"
+url: "https://drakeworks.github.io"
 
 # Build settings
 markdown: kramdown
@@ -46,7 +46,6 @@ exclude:
 
 # Sidebar settings
 mailchimp-form: "PLACEHOLDER"
-newsletter-frequency: "PLACEHOLDER"
 featured-posts: true
 
 # Tag colors
