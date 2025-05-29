@@ -11388,7 +11388,7 @@ table td {
   }
 }
 .logos {
-  max-width: 680px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 24px;
   will-change: transform;
@@ -11404,7 +11404,7 @@ table td {
 .logos .logos__image {
   position: relative;
   max-width: 100%;
-  height: 140px;
+  height: 160px;
   border-radius: 8px;
   overflow: hidden;
   user-select: none;
