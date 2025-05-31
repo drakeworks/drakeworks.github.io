@@ -45,7 +45,7 @@ exclude:
   - .DS_Store 
 
 # Sidebar settings
-mailchimp-form: "PLACEHOLDER"
+mailchimp-form: "http://eepurl.com/jf5CvE"
 featured-posts: true
 
 # Tag colors

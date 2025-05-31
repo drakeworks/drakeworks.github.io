@@ -4,13 +4,7 @@
     <h2 class="widget-subscribe__title">Stay inspired weekly ✌️</h2>
     <p class="widget-subscribe__description">Every Monday, I deliver actionable tips for enhancing productivity, practical life advice, and top-notch insights gathered from various sources, right to your email inbox.</p>
   </div>
-  <form class="widget-subscribe__form validate"
-    action="{{ site.mailchimp-form }}" method="POST" id="membedded-subscribe-form" name="membedded-subscribe-form" target="_blank" novalidate>
-    <label class="screen-reader-text" for="mce-EMAIL">Email address</label>
-    <input class="widget-subscribe__email required email" id="mce-EMAIL" type="email" name="EMAIL" placeholder="Your email address..." required>
-    <div class="form-error" style="display: none; color: var(--error-color); margin-top: 10px;"></div>
-    <button class="button button--secondary button--big widget-subscribe__button" id="membedded-subscribe" type="submit" name="subscribe">Join Now</button>
-  </form>
+  <a class="button button--secondary button--big widget-subscribe__button" href="{{ site.mailchimp-form }}" target="_blank" rel="noopener">Join Now</a>
 </div>
 {% endif %}
 
