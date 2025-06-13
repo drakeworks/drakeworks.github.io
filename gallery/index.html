@@ -16,7 +16,7 @@ layout: default
 
       <div class="gallery-page__inner">
         <div class="gallery-grid" id="gallery-grid">
-          <!-- Gallery items will be dynamically loaded here -->
+          <!-- Gallery items are dynamically loaded here -->
         </div>
 
         <div class="gallery-page__load-more">
@@ -78,10 +78,31 @@ document.addEventListener('DOMContentLoaded', function() {
       caption: 'Where gaming dreams come alive.'
     },
     {
-      src: '/images/gallery/creative-space.jpg',
-      alt: 'Creative Space',
-      caption: 'A space for innovation and creativity.'
-    }
+      src: '/images/gallery/taiwan1.jpg',
+      alt: 'Taiwan Night',
+      caption: 'Taiwan Night View'
+    },
+    {
+      src: '/images/gallery/greece1.jpg',
+      alt: 'Greece',
+      caption: 'Greece'
+    },
+    {
+      src: '/images/gallery/greece2.jpg',
+      alt: 'Greece',
+      caption: 'Greece'
+    },
+    {
+      src: '/images/gallery/china1.jpg',
+      alt: 'China',
+      caption: 'China'
+    },
+    {
+      src: '/images/gallery/croatia1.jpg',
+      alt: 'Croatia',
+      caption: 'Croatia'
+    },
+    
   ];
 
   // Create gallery item
@@ -92,7 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
     div.innerHTML = `
       <figure class="gallery-item__image">
         <div class="image-loading">
-          <img class="lazy" data-src="${item.src}" alt="${item.alt}" onload="this.parentElement.classList.add('loaded')">
+          <div class="image-loading__placeholder"></div>
+          <img src="${item.src}" alt="${item.alt}" onload="this.parentElement.classList.add('loaded')">
         </div>
         <figcaption class="gallery-item__caption">${item.caption}</figcaption>
       </figure>
@@ -107,7 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
       itemSelector: '.gallery-item',
       columnWidth: '.gallery-item',
       percentPosition: true,
-      transitionDuration: '0.2s'
+      transitionDuration: '0.2s',
+      horizontalOrder: true
     });
   }
 
@@ -117,16 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initialItems.forEach(item => {
       const element = createGalleryItem(item);
       grid.appendChild(element);
-    });
-    
-    // Initialize lazy loading
-    const lazyLoadInstance = new LazyLoad({
-      elements_selector: '.lazy',
-      callback_loaded: function(el) {
-        el.parentElement.classList.add('loaded');
-        // Relayout Masonry after image loads
-        masonry.layout();
-      }
     });
 
     // Initialize Masonry after initial items are loaded
@@ -147,27 +160,13 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    const fragment = document.createDocumentFragment();
     newItems.forEach(item => {
       const element = createGalleryItem(item);
-      fragment.appendChild(element);
-    });
-    
-    grid.appendChild(fragment);
-    
-    // Initialize lazy loading for new images
-    const lazyLoadInstance = new LazyLoad({
-      elements_selector: '.lazy',
-      callback_loaded: function(el) {
-        el.parentElement.classList.add('loaded');
-        // Relayout Masonry after image loads
-        masonry.layout();
+      grid.appendChild(element);
+      if (masonry) {
+        masonry.appended(element);
       }
     });
-    
-    // Relayout Masonry after new items are added
-    masonry.appended(fragment);
-    masonry.layout();
     
     currentPage++;
     isLoading = false;
@@ -226,6 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
   width: calc(50% - 20px);
   margin: 10px;
   break-inside: avoid;
+  float: left;
 }
 
 .gallery-item__image {
@@ -235,6 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  background: var(--background-alt-color);
 }
 
 .gallery-item__image:hover {
@@ -268,8 +269,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .image-loading {
   position: relative;
-  padding-bottom: 75%; /* Default aspect ratio */
-  background: #f5f5f5;
+  padding-bottom: 75%;
+  background: var(--background-alt-color);
+  overflow: hidden;
+}
+
+.image-loading__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    var(--background-alt-color) 25%, 
+    var(--background-color) 50%, 
+    var(--background-alt-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .image-loading img {
@@ -285,6 +311,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .image-loading.loaded img {
   opacity: 1;
+}
+
+.image-loading.loaded .image-loading__placeholder {
+  display: none;
 }
 
 @media (max-width: 768px) {
