@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function() {
       image.addEventListener('click', (e) => {
         // Only trigger zoom if we're not dragging
         if (!isDragging) {
-          const galleryImage = image.closest('.gallery__image');
+          const galleryImage = image.closest('.gallery__image, .logos__image');
           const description = galleryImage?.querySelector('.gallery__image__caption')?.textContent || '';
           imagesOverlay.classList.add('active');
 
@@ -326,5 +326,83 @@ document.addEventListener("DOMContentLoaded", function() {
       })
     }
   });
+
+
+  /* =======================
+  // Load More Gallery
+  ======================= */
+  const loadMoreGallery = document.querySelector('.load-more-gallery');
+  const galleryLoadMore = document.getElementById('gallery-load-more');
+  
+  if (loadMoreGallery && galleryLoadMore) {
+    let currentPage = 1;
+    const itemsPerPage = 5;
+    
+    const createGalleryItem = (src, alt, caption, isLarge = false) => {
+      const item = document.createElement('div');
+      item.className = `gallery-page__item${isLarge ? ' gallery-page__item--large' : ''}`;
+      
+      item.innerHTML = `
+        <figure class="gallery__image">
+          <img class="lazy" data-src="${src}" alt="${alt}">
+          <figcaption class="gallery__image__caption">${caption}</figcaption>
+        </figure>
+      `;
+      
+      return item;
+    };
+    
+    const loadMoreItems = () => {
+      // Simulate loading more items (replace with actual data loading)
+      const newItems = [
+        {
+          src: '/images/gallery/coding-station.jpg',
+          alt: 'Coding Station',
+          caption: 'Where creativity meets technology.',
+          isLarge: true
+        },
+        {
+          src: '/images/gallery/daily-routine.jpg',
+          alt: 'Daily Routine',
+          caption: 'Finding beauty in everyday moments.'
+        },
+        {
+          src: '/images/gallery/desk-setup.jpg',
+          alt: 'Desk Setup',
+          caption: 'A workspace that inspires.'
+        },
+        {
+          src: '/images/gallery/tech-life.jpg',
+          alt: 'Tech Life',
+          caption: 'Living in the digital age.'
+        },
+        {
+          src: '/images/gallery/gaming-setup.jpg',
+          alt: 'Gaming Setup',
+          caption: 'Where gaming dreams come alive.',
+          isLarge: true
+        }
+      ];
+      
+      newItems.forEach(item => {
+        const galleryItem = createGalleryItem(item.src, item.alt, item.caption, item.isLarge);
+        galleryLoadMore.parentNode.insertBefore(galleryItem, galleryLoadMore);
+      });
+      
+      // Initialize lazy loading for new images
+      new LazyLoad({
+        elements_selector: '.lazy'
+      });
+      
+      currentPage++;
+      
+      // Hide load more button if we've reached the end
+      if (currentPage >= 3) { // Example limit
+        loadMoreGallery.style.display = 'none';
+      }
+    };
+    
+    loadMoreGallery.addEventListener('click', loadMoreItems);
+  }
 
 });
