@@ -214,7 +214,10 @@ document.addEventListener("DOMContentLoaded", function() {
   // Zoom Image
   ======================= */
   if (imagesOverlay) {
-    const images = document.querySelectorAll('.post__content img, .page__content img, .gallery__image img');
+    const images = document.querySelectorAll('.post__content img, .page__content img, .gallery__image img, .logos__image img');
+    let isDragging = false;
+    let startX;
+    let scrollLeft;
 
     const clearOverlay = () => {
       imagesOverlay.classList.remove('active');
@@ -235,16 +238,34 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     images.forEach(image => {
-      image.addEventListener('click', () => {
-        const galleryImage = image.closest('.gallery__image');
-        const description = galleryImage?.querySelector('.gallery__image__caption')?.textContent || '';
-        imagesOverlay.classList.add('active');
+      // Handle mouse events for drag detection
+      image.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - image.parentElement.offsetLeft;
+        scrollLeft = image.parentElement.scrollLeft;
+      });
 
-        imagesOverlay.innerHTML = '';
-        imagesOverlay.appendChild(createImageElement(image.dataset.src || image.src));
+      image.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
 
-        if (description) {
-          imagesOverlay.appendChild(createDescriptionElement(description));
+      image.addEventListener('mouseleave', () => {
+        isDragging = false;
+      });
+
+      image.addEventListener('click', (e) => {
+        // Only trigger zoom if we're not dragging
+        if (!isDragging) {
+          const galleryImage = image.closest('.gallery__image');
+          const description = galleryImage?.querySelector('.gallery__image__caption')?.textContent || '';
+          imagesOverlay.classList.add('active');
+
+          imagesOverlay.innerHTML = '';
+          imagesOverlay.appendChild(createImageElement(image.src));
+
+          if (description) {
+            imagesOverlay.appendChild(createDescriptionElement(description));
+          }
         }
       });
     });
