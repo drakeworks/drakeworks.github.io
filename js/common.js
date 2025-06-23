@@ -256,8 +256,15 @@ document.addEventListener("DOMContentLoaded", function() {
       image.addEventListener('click', (e) => {
         // Only trigger zoom if we're not dragging
         if (!isDragging) {
-          const galleryImage = image.closest('.gallery__image, .logos__image');
-          const description = galleryImage?.querySelector('.gallery__image__caption')?.textContent || '';
+          let description = '';
+          // Prefer data-caption if present (for carousel images)
+          if (image.hasAttribute('data-caption')) {
+            description = image.getAttribute('data-caption');
+          } else {
+            // fallback for gallery images
+            const galleryImage = image.closest('.gallery__image, .logos__image');
+            description = galleryImage?.querySelector('.gallery__image__caption')?.textContent || '';
+          }
           imagesOverlay.classList.add('active');
 
           imagesOverlay.innerHTML = '';

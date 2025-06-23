@@ -140,9 +140,61 @@ layout: base
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-8LX65YN4WK', {
-      anonymize_ip: false,
       page_path: window.location.pathname
     });
+  </script>
+
+  <!-- Custom Google Analytics Events -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Outbound Link Clicks
+    document.querySelectorAll('a').forEach(function(link) {
+      if (link.hostname !== location.hostname) {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_click', {
+            'event_category': 'outbound',
+            'event_label': link.href
+          });
+        });
+      }
+    });
+
+    // Button Clicks
+    document.querySelectorAll('.button, .btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        gtag('event', 'button_click', {
+          'event_category': 'engagement',
+          'event_label': btn.textContent.trim()
+        });
+      });
+    });
+
+    // Scroll Depth
+    let scrollTracked = [false, false, false, false];
+    window.addEventListener('scroll', function() {
+      let scroll = window.scrollY + window.innerHeight;
+      let height = document.body.scrollHeight;
+      [0.25, 0.5, 0.75, 1].forEach(function(p, i) {
+        if (!scrollTracked[i] && scroll >= height * p) {
+          gtag('event', 'scroll_depth', {
+            'event_category': 'engagement',
+            'event_label': (p * 100) + '%'
+          });
+          scrollTracked[i] = true;
+        }
+      });
+    });
+
+    // Site Search
+    var searchInput = document.getElementById('js-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('change', function() {
+        gtag('event', 'search', {
+          'search_term': searchInput.value
+        });
+      });
+    }
+  });
   </script>
 </head>
 
