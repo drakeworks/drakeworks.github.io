@@ -1,6 +1,6 @@
 # Site settings
 title: "DrakeWorks"
-description: "DrakeWorks is the professional portfolio & blog of Drake Kutz, showcasing blockchain projects, python tutorials, and product & project management insights - plus the occasional Cajun recipe."
+description: "DrakeWorks is the professional portfolio & blog of Drake Kutz, blending product strategy, technical insight, and the lessons learned from a decade of remote work—plus the occasional Cajun recipe."
 baseurl: ""
 url: "https://drakeworks.github.io"
 
@@ -56,12 +56,12 @@ tag-colors:
   security: "#de47e2"
   productivity: "#3eb99a"
   linux: "var(--dark-gray)"
-  blockchain: "#00b894"  # A modern teal color representing blockchain technology
-  cryptocurrency: "#fdcb6e"  # A gold-like color representing cryptocurrency
-  python: "#306998"  # Python's official blue color
-  digital-privacy: "#6c5ce7"  # A deep purple representing privacy and security
-  project-management: "#e17055"  # A warm orange representing organization and structure
-  product-management: "#0984e3"  # A professional blue representing product strategy
+  blockchain: "#00b894"
+  cryptocurrency: "#fdcb6e"
+  python: "#306998"
+  digital-privacy: "#6c5ce7"
+  project-management: "#e17055"
+  product-management: "#0984e3"
 
 paginate: 4
 paginate_path: "/page/:num/" 

@@ -10038,7 +10038,7 @@ table td {
 }
 .hero__title {
   margin-bottom: 12px;
-  font-size: 68px;
+  font-size: 66px;
   line-height: 1;
   color: var(--heading-font-color);
 }
@@ -10058,13 +10058,13 @@ table td {
 @media (width <= 576px) {
   .hero__title {
     margin-bottom: 8px;
-    font-size: 32px;
+    font-size: 30px;
   }
 }
 .hero__subtitle {
   margin-bottom: 24px;
   font-family: Poppins, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--text-color);
 }
@@ -10072,15 +10072,15 @@ table td {
 @media (width <= 576px) {
   .hero__subtitle {
     margin-bottom: 20px;
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 .hero__description {
   margin-bottom: 16px;
-  font-size: 16px;
+  font-size: 15px;
 }
 .hero__description p {
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 .hero__description a:not([class]) {
   text-decoration: underline;
