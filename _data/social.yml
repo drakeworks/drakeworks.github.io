@@ -1,17 +1,8 @@
-- name: Twitter
-  url: https://twitter.com
-  icon: fa-brands fa-x-twitter
-- name: Facebook
-  url: https://facebook.com
-  icon: fa-brands fa-facebook
-- name: Mastodon
-  url: https://mastodon.social
-  icon: fa-brands fa-mastodon
-- name: Reddit
-  url: https://reddit.com
-  icon: fa-brands fa-reddit-alien
+- name: LinkedIn
+  url: https://linkedin.com/in/drakekutz
+  icon: fa-brands fa-linkedin
 - name: Github
-  url: https://github.com
+  url: https://github.com/drakeworks
   icon: fa-brands fa-github
 - name: RSS
   url: /feed.xml
