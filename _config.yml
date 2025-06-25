@@ -50,18 +50,15 @@ featured-posts: true
 
 # Tag colors
 tag-colors:
-  programming: "#4643ec"
-  games: "#ff4500"
-  movies: "#f14979"
-  security: "#de47e2"
-  productivity: "#3eb99a"
-  linux: "var(--dark-gray)"
-  blockchain: "#00b894"
-  cryptocurrency: "#fdcb6e"
-  python: "#306998"
-  digital-privacy: "#6c5ce7"
-  project-management: "#e17055"
-  product-management: "#0984e3"
+  development: "#4643ec"           # Vivid indigo
+  blockchain: "#00b341"            # Strong tech green
+  games: "#ff4500"                 # Blazing orange-red
+  digital-privacy: "#6c5ce7"       # Bright periwinkle
+  product-management: "#ff1a75"    # Fire engine red
+  project-management: "#de47e2"    # Electric fuchsia
+  cooking: "#a0382b"               # Paprika red-brown
+  travel: "#3c6e47"                # Deep earthy green
+  artificial-intelligence: "#9b00ff" # Electric violet purple
 
 paginate: 4
 paginate_path: "/page/:num/" 
