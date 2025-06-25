@@ -52,12 +52,12 @@ featured-posts: true
 tag-colors:
   development: "#4643ec"           # Vivid indigo
   blockchain: "#00b341"            # Strong tech green
-  games: "#ff4500"                 # Blazing orange-red
+  games: "#ff6a00"                 # Bright tech orange
   digital-privacy: "#6c5ce7"       # Bright periwinkle
-  product-management: "#ff1a75"    # Fire engine red
+  product-management: "#ff1a75"    # Vivid hot pink-red
   project-management: "#de47e2"    # Electric fuchsia
-  cooking: "#a0382b"               # Paprika red-brown
-  travel: "#3c6e47"                # Deep earthy green
+  cooking: "#ff3f2e"               # Punchy chili red
+  travel: "#008c5e"                # Electric forest green
   artificial-intelligence: "#9b00ff" # Electric violet purple
 
 paginate: 4
