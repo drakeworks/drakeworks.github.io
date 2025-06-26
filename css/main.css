@@ -12042,3 +12042,31 @@ table td {
     gap: 16px;
   }
 }
+
+.gallery-more {
+  text-align: right;
+}
+
+.gallery-more__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.gallery-more__link:hover {
+  color: var(--primary-color);
+}
+
+.gallery-more__link i {
+  font-size: 14px;
+}
+
+@media (width <= 576px) {
+  .gallery-more {
+    text-align: center;
+  }
+}
