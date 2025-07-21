@@ -110,7 +110,7 @@ The workflow will:
 - ✅ Has deployment workflow (`.github/workflows/deploy-to-production.yml`)
 - ✅ Has build workflow (builds but doesn't deploy)
 - 🔄 Manual deployment trigger
-- 🔄 Automatic build on push (continues on error)
+- 🔄 Automatic build on push (continues if error)
 
 **Production Repository**:
 - ✅ Has build and deploy workflow (same file as staging)
@@ -118,14 +118,10 @@ The workflow will:
 - ✅ Deploys to GitHub Pages
 - 🔄 Triggered by staging deployment or direct pushes
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 ## Credits
 
 This site uses the following resources:
 
 - [Font Awesome](https://fontawesome.com/) for icons
 - [Splide](https://splidejs.com/) for carousels
-- [Google Fonts](https://fonts.google.com/) for typography # Test deployment with compiled CSS fix
+- [Google Fonts](https://fonts.google.com/) for typography
