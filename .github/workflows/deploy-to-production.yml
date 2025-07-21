@@ -55,16 +55,16 @@ jobs:
           bundle exec jekyll build
           echo "Staging site built successfully"
 
-      - name: Copy source files and compiled CSS to production
+      - name: Copy source files, compiled CSS, and optimized workflows to production
         run: |
-          echo "Copying source files and compiled CSS to production..."
+          echo "Copying source files, compiled CSS, and optimized workflows to production..."
           # Remove any existing nested production folder
           rm -rf production/production
-          # Copy source files from staging to production (excluding built files)
-          rsync -av --exclude='.git' --exclude='node_modules' --exclude='.github' --exclude='_site' --exclude='.sass-cache' staging/ production/
+          # Copy source files from staging to production (excluding built files and SCSS)
+          rsync -av --exclude='.git' --exclude='node_modules' --exclude='_site' --exclude='.sass-cache' --exclude='css/main.scss' staging/ production/
           # Copy only the compiled CSS file to production
           cp staging/_site/css/main.css production/css/main.css
-          echo "Source files and compiled CSS copied successfully"
+          echo "Source files, compiled CSS, and optimized workflows copied successfully"
 
       - name: Commit and push to production
         run: |
