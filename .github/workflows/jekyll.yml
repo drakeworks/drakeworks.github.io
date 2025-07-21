@@ -44,6 +44,7 @@ jobs:
     concurrency:
       group: "pages"
       cancel-in-progress: true
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,10 +59,19 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
 
-      - name: Build with Jekyll (using pre-compiled CSS)
+      - name: Build with Jekyll (compile SCSS and build site)
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      - name: Check site size
+        run: |
+          echo "Checking site size..."
+          du -sh _site/
+          echo "Number of files:"
+          find _site/ -type f | wc -l
+          echo "Largest files:"
+          find _site/ -type f -exec du -h {} + | sort -hr | head -10
 
       - name: Setup artifact upload context
         uses: actions/upload-pages-artifact@v3
@@ -70,4 +80,5 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
+        timeout-minutes: 10 

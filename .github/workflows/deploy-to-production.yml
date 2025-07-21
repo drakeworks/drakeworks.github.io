@@ -41,30 +41,14 @@ jobs:
             echo "No nested production folder found"
           fi
 
-      - name: Setup Ruby for staging build
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
-
-      - name: Build staging site
+      - name: Copy source files and optimized workflows to production
         run: |
-          echo "Building staging site..."
-          cd staging
-          bundle install
-          bundle exec jekyll build
-          echo "Staging site built successfully"
-
-      - name: Copy source files, compiled CSS, and optimized workflows to production
-        run: |
-          echo "Copying source files, compiled CSS, and optimized workflows to production..."
+          echo "Copying source files and optimized workflows to production..."
           # Remove any existing nested production folder
           rm -rf production/production
-          # Copy source files from staging to production (excluding built files and SCSS)
-          rsync -av --exclude='.git' --exclude='node_modules' --exclude='_site' --exclude='.sass-cache' --exclude='css/main.scss' staging/ production/
-          # Copy only the compiled CSS file to production
-          cp staging/_site/css/main.css production/css/main.css
-          echo "Source files, compiled CSS, and optimized workflows copied successfully"
+          # Copy source files from staging to production (excluding built files)
+          rsync -av --exclude='.git' --exclude='node_modules' --exclude='_site' --exclude='.sass-cache' staging/ production/
+          echo "Source files and optimized workflows copied successfully"
 
       - name: Commit and push to production
         run: |
@@ -84,4 +68,4 @@ jobs:
         run: |
           echo "✅ Deployment to production completed"
           echo "Production repository is up to date"
-          echo "Site has been built and deployed directly" 
+          echo "Source files copied - production will build and deploy" 
