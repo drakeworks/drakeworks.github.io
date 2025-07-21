@@ -1,0 +1,77 @@
+# Site settings
+title: "DrakeWorks"
+description: "DrakeWorks is the professional portfolio & blog of Drake Kutz, blending product strategy, technical insight, and the lessons learned from a decade of remote work—plus the occasional Cajun recipe."
+baseurl: ""
+url: "https://drakeworks.github.io"
+
+# Build settings
+markdown: kramdown
+permalink: /:title/index.html
+
+# Kramdown configuration for Jekyll 4.x
+kramdown:
+  input: GFM
+  hard_wrap: false
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# SCSS Configuration
+sass:
+  style: compressed
+  load_paths:
+    - scss
+  sass_dir: scss
+  css_dir: css
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:title/index.html
+
+# Tag Page Generator Configuration
+# ... existing code ...
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+  - .DS_Store 
+
+# Sidebar settings
+mailchimp-form: "http://eepurl.com/jf5CvE"
+featured-posts: true
+
+# Tag colors
+tag-colors:
+  development: "#4643ec"           # Vivid indigo
+  blockchain: "#00b341"            # Strong tech green
+  games: "#ff6a00"                 # Bright tech orange
+  digital-privacy: "#6c5ce7"       # Bright periwinkle
+  product-management: "#ff1a75"    # Vivid hot pink-red
+  project-management: "#de47e2"    # Electric fuchsia
+  cooking: "#ff3f2e"               # Punchy chili red
+  travel: "#008c5e"                # Electric forest green
+  artificial-intelligence: "#9b00ff" # Electric violet purple
+
+paginate: 4
+paginate_path: "/page/:num/" 

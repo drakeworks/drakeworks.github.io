@@ -1,0 +1,9 @@
+- name: LinkedIn
+  url: https://linkedin.com/in/drakekutz
+  icon: fa-brands fa-linkedin
+- name: Github
+  url: https://github.com/drakeworks
+  icon: fa-brands fa-github
+- name: RSS
+  url: /feed.xml
+  icon: fa-solid fa-rss 
