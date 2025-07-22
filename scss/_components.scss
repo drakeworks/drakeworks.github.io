@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   padding: 4px;
-  font-size: 24px;
+  font-size: 26px;
   color: var(--heading-font-color);
 }
 
@@ -336,6 +336,7 @@
   .images-overlay img {
   max-width: 90%;
   max-height: 80%;
+  border-radius: 8px;
 }
 
   .images-overlay .image-overlay__description {
@@ -789,12 +790,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: 26px;
   width: 52px;
   height: 52px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background: var(--background-alt-color-2);
+  color: var(--heading-font-color);
 }
 
   .widget-social

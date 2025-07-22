@@ -1,14 +1,18 @@
 - title: Home
   url: /
-- title: Videos
-  url: /videos/
-- title: Gallery
-  url: /gallery/
-- title: Archive
-  url: /archive/
+- title: Resume
+  url: /resume/
+- title: Projects
+  url: /projects/
+- title: About
+  url: /about/
+- title: Contact
+  url: /contact/
 - title: More
   dropdown:
-    - title: About
-      url: /about/
-    - title: Contact
-      url: /contact/
+    - title: Gallery
+      url: /gallery/
+    - title: Videos
+      url: /videos/
+    - title: Archive
+      url: /archive/

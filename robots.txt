@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /images/
+Disallow: /resume/
+Disallow: /projects/
 
 User-agent: AhrefsBot
 Disallow: /
@@ -261,4 +263,55 @@ User-agent: masscan
 Disallow: /
 
 User-agent: nmap
+Disallow: /
+
+User-agent: BSpider
+Disallow: /
+
+User-agent: crawler4j
+Disallow: /
+
+User-agent: MSIECrawler
+Disallow: /
+
+User-agent: IndieCrawler
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Applebot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Twitterbot
+Disallow: /
+
+User-agent: LinkedInBot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: DuckDuckBot
 Disallow: /
