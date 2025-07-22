@@ -756,9 +756,17 @@
 
 .resume-hero__title {
   margin: 0 0 8px 0;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-alt-color);
+}
+
+.title-line {
+  display: inline;
+}
+
+.title-separator {
+  display: inline;
 }
 
 .resume-hero__location {
@@ -800,11 +808,19 @@
   transition: all 0.3s ease;
 }
 
-.resume-contact__link:hover {
+.resume-contact__link:hover,
+.resume-contact__link:focus {
   background: var(--primary-color);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.resume-contact__link:focus:not(:focus-visible) {
+  background: var(--background-alt-color-2);
+  color: var(--heading-font-color);
+  transform: none;
+  box-shadow: none;
 }
 
 .resume-metrics {
@@ -1012,12 +1028,19 @@
 }
 
 .position-item__title {
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   font-size: 18px;
   font-weight: 600;
   color: var(--heading-font-color);
   line-height: 1.3;
   transform: translateY(2px);
+}
+
+.position-item__location {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--text-alt-color);
+  font-style: italic;
 }
 
 .position-item__responsibilities {
@@ -1128,6 +1151,8 @@
 .portfolio-item__link:hover {
   color: var(--heading-font-color);
 }
+
+
 
 /* Education & Volunteer Lists */
 .education-list,
@@ -1608,6 +1633,23 @@
     font-size: 32px;
   }
   
+  .resume-hero__title {
+    font-size: 14px;
+  }
+  
+  .title-line {
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .title-line:last-child {
+    margin-bottom: 0;
+  }
+  
+  .title-separator {
+    display: none;
+  }
+  
   .resume-metrics {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -1626,21 +1668,93 @@
     font-size: 12px;
   }
   
+  /* Mobile Timeline Restructure */
   .experience-timeline::before {
-    left: 80px;
+    display: none; /* Hide desktop timeline line */
   }
   
-  .experience-item::before {
-    left: 72px;
+  .company-experience {
+    margin-bottom: 32px;
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--background-alt-color-2);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    position: relative;
   }
   
-  .experience-item__period {
-    flex: 0 0 80px;
-    font-size: 12px;
+  .company-experience::before {
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 3px solid var(--background-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
   }
   
-  .experience-item {
-    gap: 20px;
+  .company-experience__header {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .company-experience__period {
+    flex: none;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-color);
+    transform: none;
+  }
+  
+  .company-experience__name {
+    font-size: 18px;
+    transform: none;
+  }
+  
+  .company-experience__location {
+    font-size: 14px;
+  }
+  
+  .position-list {
+    margin-left: 0;
+    padding-left: 0;
+  }
+  
+  .position-list::before {
+    display: none; /* Hide desktop position line */
+  }
+  
+  .position-item {
+    margin-bottom: 24px;
+    padding-left: 20px;
+    position: relative;
+  }
+  
+  .position-item::before {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+  
+  .position-item__title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    transform: none;
+  }
+  
+  .position-item__responsibilities li {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 6px;
   }
   
   .portfolio-grid {
