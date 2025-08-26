@@ -1,0 +1,36 @@
+---
+---
+
+/**
+ * Main SCSS Entry Point
+ * ====================
+ * 
+ * This is the primary SCSS file that imports all partials and generates
+ * the final CSS output. Jekyll processes this file and compiles it into
+ * the main.css file served to the browser.
+ * 
+ * Structure:
+ * - Uses modern @use syntax for better performance and namespacing
+ * - Imports are ordered from most fundamental to most specific
+ * - All partials are located in the ../scss/ directory
+ * 
+ * Import Order:
+ * 1. variables - CSS custom properties and theme variables
+ * 2. base - Global resets, typography, and basic elements
+ * 3. layout - Page structure and layout components
+ * 4. grid - Responsive grid system and breakpoints
+ * 5. components - Reusable UI components and widgets
+ * 6. pages - Page-specific styles and layouts
+ * 7. utilities - Helper classes and utility functions
+ */
+
+// Main SCSS file - imports all partials
+// Using @use for modern SCSS approach with Jekyll 4.3.2
+
+@use '../scss/variables' as *;
+@use '../scss/base' as *;
+@use '../scss/layout' as *;
+@use '../scss/grid' as *;
+@use '../scss/components' as *;
+@use '../scss/pages' as *;
+@use '../scss/utilities' as *; 

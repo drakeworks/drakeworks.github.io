@@ -1,0 +1,72 @@
+<section class="section section-videos">
+
+  <div class="section-videos__inner">
+    <div class="container">
+      <div class="row">
+        <div class="col col-12">
+
+          <div class="section__head">
+            
+            <h2 class="section__title">Push Play</h2>
+            
+          </div>
+
+          
+          <div class="row">
+            {% assign video_count = 0 %}
+            {% for post in site.posts %}
+              {% if post.video and video_count < 3 %}
+                {% assign video_count = video_count | plus: 1 %}
+              <div class="article col col-3 col-d-5 col-m-12 push-1 push-m-0">
+                <div class="article__inner">
+
+                  
+                  <div class="article__head">
+                    {% if post.video %}
+                    <div class="video-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                        <polygon points="40,30 70,50 40,70"></polygon>
+                      </svg>
+                    </div>
+                    {% endif %}
+                    <a class="article__image section-tags__image" href="{{ post.url | relative_url }}" {% if post.tags and post.tags.size > 0 %}{% assign first_tag = post.tags | first %}{% assign tag_color = site.tag-colors[first_tag] | default: "var(--dark-gray)" %}style="outline-color: {{ tag_color | strip }};"{% endif %}>
+                      <img class="lazy" data-src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
+                    </a>
+                  </div>
+                  
+
+                  <div class="article__content">
+                    {% if post.tags and post.tags.size > 0 %}
+                    <div class="article__tags">
+                      {% for tag in post.tags %}
+                      {% assign tag_name = tag %}
+                      {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
+                      {% assign words = tag_name | replace:"-"," " | split: " " %}
+                      {% assign display_tag_name = "" %}
+                      {% for word in words %}
+                        {% assign capitalized_word = word | capitalize %}
+                        {% assign display_tag_name = display_tag_name | append: capitalized_word %}
+                        {% unless forloop.last %}
+                          {% assign display_tag_name = display_tag_name | append: " " %}
+                        {% endunless %}
+                      {% endfor %}
+                      <a href="/tags/?tag={{ tag_name | slugify }}" class="article__tag" style="background-color: {{ tag_color | strip }};">{{ display_tag_name }}</a>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                    <h2 class="article__title">
+                      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section> 

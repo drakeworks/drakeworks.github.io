@@ -1,0 +1,81 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to production?'
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  deploy:
+    if: github.event.inputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout staging repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PRODUCTION_TOKEN }}
+          repository: drakeworks/drakeworks.github.io-stage
+          path: staging
+
+      - name: Checkout production repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PRODUCTION_TOKEN }}
+          repository: drakeworks/drakeworks.github.io
+          path: production
+
+      - name: Clean up nested production folder
+        run: |
+          echo "Cleaning up any nested production folder..."
+          cd production
+          if [ -d "production" ]; then
+            echo "Found nested production folder, removing it..."
+            rm -rf production
+            git add -A
+            git commit -m "Remove nested production folder" || echo "No changes to commit"
+          else
+            echo "No nested production folder found"
+          fi
+
+      - name: Copy source files and optimized workflows to production
+        run: |
+          echo "Copying source files and optimized workflows to production..."
+          # Remove any existing nested production folder
+          rm -rf production/production
+          # Copy source files from staging to production (excluding built files)
+          rsync -av --exclude='.git' --exclude='node_modules' --exclude='_site' --exclude='.sass-cache' staging/ production/
+          echo "Source files and optimized workflows copied successfully"
+
+      - name: Commit and push to production
+        run: |
+          cd production
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit - repositories are already in sync"
+          else
+            git commit -m "Deploy from staging: $(date)"
+            git push origin main
+            echo "Changes committed and pushed to production"
+          fi
+
+      - name: Trigger production build
+        run: |
+          echo "Triggering production build..."
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.PRODUCTION_TOKEN }}" \
+            https://api.github.com/repos/drakeworks/drakeworks.github.io/dispatches \
+            -d '{"event_type":"trigger-build"}'
+          echo "Production build triggered"
+
+      - name: Deploy Status
+        run: |
+          echo "✅ Deployment to production completed"
+          echo "Production repository is up to date"
+          echo "Production build has been triggered" 
