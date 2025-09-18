@@ -30,15 +30,17 @@ layout: base
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | absolute_url }}">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:description" content="{{ site.description }}">
-  <meta name="twitter:image:src" content="{{ "/images/home/hero/main-banner.jpg" | absolute_url }}">
+  <meta name="twitter:card" content="{% if page.twitter_card %}{{ page.twitter_card }}{% else %}summary_large_image{% endif %}">
+  <meta name="twitter:title" content="{% if page.twitter_title %}{{ page.twitter_title }}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if page.twitter_description %}{{ page.twitter_description }}{% elsif page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="twitter:image:src" content="{% if page.twitter_image %}{{ page.twitter_image | absolute_url }}{% else %}{{ "/images/home/hero/main-banner.jpg" | absolute_url }}{% endif %}">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{{ site.description }}">
-  <meta property="og:image" content="{{ "/images/home/hero/main-banner.jpg" | absolute_url }}">
+  <meta property="og:title" content="{% if page.og_title %}{{ page.og_title }}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.og_description %}{{ page.og_description }}{% elsif page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:image" content="{% if page.og_image %}{{ page.og_image | absolute_url }}{% else %}{{ "/images/home/hero/main-banner.jpg" | absolute_url }}{% endif %}">
+  <meta property="og:type" content="{% if page.og_type %}{{ page.og_type }}{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -233,6 +235,7 @@ layout: base
   <!-- Site Scripts -->
   <script src="/js/scripts.js"></script>
   <script src="/js/common.js"></script>
+  <script src="/js/projects.js?v=1.4"></script>
 </body>
 
 </html> 

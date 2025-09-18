@@ -14,7 +14,7 @@ layout: default
         </div>
         {% elsif page.image %}
         <div class="post-image">
-          <img class="lazy" data-src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
         </div>
         {% endif %}
         
@@ -44,13 +44,17 @@ layout: default
 
           <div class="post-meta">
             <a href="/about/" class="post-meta__image">
-              <img class="lazy" data-src="/images/about/author-avatar-001.jpg" alt="author-avatar">
+              <img class="lazy" data-src="/images/home/hero/author-avatar.jpeg" alt="author-avatar">
             </a>
 
             <div class="post-meta__content">
               <a class="post-meta__author" href="/about/">Drake Kutz</a>
               <div class="post-meta__bottom">
-                <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %b, %Y" }}</time> –
+                <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %b, %Y" }}</time>
+                {% if page.last_updated %}
+                <span class="post-updated"> • Updated <time datetime="{{ page.last_updated | date_to_xmlschema }}">{{ page.last_updated | date: "%d %b, %Y" }}</time></span>
+                {% endif %}
+                –
                 <span class="post-minutes">
                   {% assign words = content | number_of_words %}
                   {% if words < 360 %} 1 min read {% else %} {{ words | divided_by: 180 }} min read {% endif %}
@@ -192,6 +196,9 @@ layout: default
 
                   <div class="article__meta">
                     <time class="article__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+                    {% if post.last_updated %}
+                    <span class="article__updated">&nbsp;• Updated {{ post.last_updated | date: "%d %b, %Y" }}</span>
+                    {% endif %}
                     <div class="article__minutes">
                       {% assign words = post.content | number_of_words %}
                       {% if words < 360 %} 1 min read {% else %} {{ words | divided_by: 180 }} min read {% endif %}

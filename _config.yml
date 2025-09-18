@@ -63,15 +63,50 @@ featured-posts: true
 
 # Tag colors
 tag-colors:
+  # Core Development & Technology
   development: "#4643ec"           # Vivid indigo
+  web-development: "#4643ec"       # Same as development
+  javascript: "#f7df1e"            # JavaScript yellow
+  python: "#3776ab"                # Python blue
+  testing: "#5d6d7e"               # Slate blue-grey
+
+  
+  # Infrastructure & DevOps
+  infra: "#34495e"        # Dark slate
+  devops: "#16a085"                # Teal
+  automation: "#ff6a00"            # Bright tech orange
+  
+  # Blockchain & Fintech
   blockchain: "#00b341"            # Strong tech green
+  fintech: "#008c5e"               # Electric forest green
+  web3: "#6a1b9a"                  # Dark electric purple
+  regulation: "#2c3e50"            # Dark blue-gray
+  
+  # AI
+  ai: "#9b00ff"                    # Electric violet purple
+  artificial-intelligence: "#9b00ff" # Same as ai
+  llm: "#6c5ce7"                   # Bright periwinkle
+  
+  # Design & UX
+  product-design: "#ff1a75"        # Vivid hot pink-red
+  ux: "#9b59b6"                    # Purple
+  figma: "#f39c12"                 # Orange
+  prototyping: "#ff3f2e"           # Punchy chili red
+  
+  # Leadership & Management
+  leadership: "#de47e2"            # Electric fuchsia
+  product-management: "#ff1a75"    # Same as product-design
+  project-management: "#de47e2"    # Same as leadership
+  
+  # Content & Branding
+  portfolio: "#8e44ad"             # Purple
+  content-management: "#3498db"    # Blue
+  
+  # Lifestyle & Other
   games: "#ff6a00"                 # Bright tech orange
   digital-privacy: "#6c5ce7"       # Bright periwinkle
-  product-management: "#ff1a75"    # Vivid hot pink-red
-  project-management: "#de47e2"    # Electric fuchsia
   cooking: "#ff3f2e"               # Punchy chili red
   travel: "#008c5e"                # Electric forest green
-  artificial-intelligence: "#9b00ff" # Electric violet purple
 
 paginate: 4
 paginate_path: "/page/:num/" 

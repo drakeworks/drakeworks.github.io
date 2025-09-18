@@ -10,9 +10,10 @@
   url: /contact/
 - title: More
   dropdown:
-    - title: Gallery
-      url: /gallery/
-    - title: Videos
-      url: /videos/
+    # Gallery and Videos temporarily hidden for future updates
+    # - title: Gallery
+    #   url: /gallery/
+    # - title: Videos
+    #   url: /videos/
     - title: Archive
       url: /archive/
