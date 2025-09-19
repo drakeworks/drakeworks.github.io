@@ -65,7 +65,6 @@ featured-posts: true
 tag-colors:
   # Core Development & Technology
   development: "#4643ec"           # Vivid indigo
-  web-development: "#4643ec"       # Same as development
   javascript: "#f7df1e"            # JavaScript yellow
   python: "#3776ab"                # Python blue
   testing: "#5d6d7e"               # Slate blue-grey
@@ -97,10 +96,6 @@ tag-colors:
   leadership: "#de47e2"            # Electric fuchsia
   product-management: "#ff1a75"    # Same as product-design
   project-management: "#de47e2"    # Same as leadership
-  
-  # Content & Branding
-  portfolio: "#8e44ad"             # Purple
-  content-management: "#3498db"    # Blue
   
   # Lifestyle & Other
   games: "#ff6a00"                 # Bright tech orange

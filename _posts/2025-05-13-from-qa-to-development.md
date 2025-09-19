@@ -7,8 +7,6 @@ excerpt: "A journey from testing games at EA to building a career outside the in
 image: /images/posts/from-qa-to-development-img.png
 ---
 
-# From QA to Development: How Video Games Made My Career and Why I Eventually Walked Away
-
 If you'd told college-me that my first "real" job would be playing video games for money, I would've assumed you were lying or trying to rope me into some pyramid scheme involving Doritos & Red Bull. But it was real. And it changed my life.  
 
 ## The Dream Job: QA at Electronic Arts  
@@ -106,8 +104,3 @@ If you're considering a career in video games, do it. But go in prepared. Passio
 
 And for the love of all things digital—save your work.
 
----
-
-## Related Posts
-
-- **[How I Built the DrakeWorks Portfolio Website with Cursor](/how-i-built-drakeworks-portfolio-website-with-cursor/)** - Another career transition story, this time exploring how I rebuilt my professional presence through technical development and AI-assisted coding.

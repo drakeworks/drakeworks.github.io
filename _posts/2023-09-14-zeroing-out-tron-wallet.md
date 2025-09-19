@@ -3,13 +3,11 @@ title: "Zeroing Out a Tron Wallet: A Practical Step-by-Step Guide"
 date: 2023-09-14 10:00:00 +0800
 last_updated: 2025-05-15 14:30:00 +0000
 tags: [blockchain, development, python]
-featured: true
+featured: false
 excerpt: "A clear, step-by-step guide to fully emptying a Tron wallet by accounting for bandwidth, energy, and token transfers."
 image: /images/posts/zeroing-out-tron-wallet-img.png
 ---
-
-# Zeroing Out a Tron Wallet: A Practical Step-by-Step Guide  
-
+  
 **TL;DR:** Zeroing out a Tron wallet means sending every last TRX and TRC-20 token so your balance hits exactly 0. To pull it off without errors, you need to do two things: send TRC-20 tokens first (they eat TRX for energy) and calculate the transaction fees before you drain your TRX. The formula is simple enough:  
 
 `sendable_amount = balance – fees`  
@@ -124,10 +122,3 @@ Zeroing out a Tron wallet is basically a two-step dance: drain tokens first (whi
 
 And yes, the process feels more like bookkeeping than coding, but that's blockchain for you.
 
----
-
-## Related Posts
-
-- **[Wall Street Meets Web3 (and Why Regulators Have a Headache)](/wall-street-meets-web3/)** - Explore how blockchain technology is reshaping traditional finance with tokenized stocks and the regulatory challenges ahead.
-
-- **[How I Built the DrakeWorks Portfolio Website with Cursor](/how-i-built-drakeworks-portfolio-website-with-cursor/)** - A deep dive into technical development and AI-assisted coding, featuring practical implementation examples and architecture decisions.  

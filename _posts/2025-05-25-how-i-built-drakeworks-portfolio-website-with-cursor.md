@@ -1,13 +1,11 @@
 ---
 title: "How I Built the DrakeWorks Portfolio Website with Cursor: Architecture, Experience, and Lessons Learned"
-date: 2025-08-21 10:00:00 +0000
-tags: [product-management, development, artificial-intelligence]
-featured: true
+date: 2025-05-25 10:00:00 +0000
+tags: [development, artificial-intelligence]
+featured: false
 excerpt: "A deep dive into building the DrakeWorks portfolio website, how I used Cursor as an AI coding assistant, and the lessons I took away from the process."
 image: /images/posts/drakeworks-portfolio-website-with-cursor.jpg
 ---
-
-# How I Built the DrakeWorks Portfolio Website with Cursor: Architecture, Experience, and Lessons Learned
 
 So I decided to rebuild my portfolio. Not just a basic "here's my resume and a contact form" kind of site, but a full portfolio, blog, and professional knowledge base. I ended up moving away from Medium as a platform and created my own blog—partly because I got tired of their algorithm deciding who sees my content, partly because of their paywalls, and partly because I wanted the flexibility and full control over design, performance, and user experience that I could only get from my own site. I wanted something that looked sharp, ran fast, and didn't feel like a cookie-cutter template.  
 
@@ -262,10 +260,3 @@ What did I walk away with?
 
 So no, AI didn't build this site. But it helped me build it faster, cleaner, and with fewer headaches. If you're willing to keep control of the wheel, Cursor can be a damn good copilot.
 
----
-
-## Related Posts
-
-- **[From QA to Development: How Video Games Made My Career and Why I Eventually Walked Away](/from-qa-to-development/)** - Another story of career transition and professional growth, exploring how I moved from gaming industry QA to building technical solutions.
-
-- **[Zeroing Out a Tron Wallet: A Practical Step-by-Step Guide](/zeroing-out-tron-wallet/)** - A technical deep-dive into blockchain development with practical implementation examples and code snippets.  
