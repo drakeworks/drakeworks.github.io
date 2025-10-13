@@ -2,7 +2,7 @@
 title: "Experimentation in Product Management Isn't Optional Anymore"
 date: 2025-01-21 10:00:00 +0000
 tags: [product-management, testing]
-featured: true
+featured: false
 excerpt: "In 2025, being a PM who doesn't experiment is like being a pilot who doesn't use instruments. Experimentation isn't optional—it's survival."
 image: /images/posts/experimentation-in-product-management-img.jpg
 ---
