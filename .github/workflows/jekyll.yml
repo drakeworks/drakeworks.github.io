@@ -3,6 +3,8 @@ name: Build and Deploy Production
 on:
   push:
     branches: [ main ]
+  repository_dispatch:
+    types: [trigger-build]
 
 jobs:
   # Build and Deploy job (production only)
