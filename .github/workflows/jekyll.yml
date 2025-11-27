@@ -1,0 +1,63 @@
+name: Build and Deploy Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  # Build and Deploy job (production only)
+  deploy:
+    if: github.repository == 'drakeworks/drakeworks.github.io'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+        with:
+          enablement: true
+
+      - name: Build with Jekyll (compile SCSS and build site)
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+
+      - name: Check site size
+        run: |
+          echo "Checking site size..."
+          du -sh _site/
+          echo "Number of files:"
+          find _site/ -type f | wc -l
+          echo "Largest files:"
+          find _site/ -type f -exec du -h {} + | sort -hr | head -10
+
+      - name: Setup artifact upload context
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        timeout-minutes: 10 

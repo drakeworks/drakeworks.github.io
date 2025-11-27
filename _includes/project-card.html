@@ -1,0 +1,66 @@
+{% assign project = include.project %}
+{% assign formatted_date = project.date | date: "%b %Y" %}
+
+<article class="project-card" 
+         data-tags="{{ project.tags | join: ',' }}" 
+         data-business-skills="{{ project.business_skills | join: ',' }}"
+         data-tools="{{ project.tools | join: ',' }}" 
+         data-date="{{ project.date }}" 
+         data-featured="{{ project.featured }}"
+         data-feature-rank="{{ project.feature_rank | default: '' }}"
+         data-metric="{{ project.metric }}"
+         data-metric-icon="{{ project.metric_icon }}"
+         data-role="{{ project.role }}"
+         data-summary="{{ project.full_summary }}"
+         {% if project.links.github %}data-github-url="{{ project.links.github }}"{% endif %}
+         {% if project.links.case_study %}data-case-study-url="{{ project.links.case_study }}"{% endif %}
+         {% if project.links.figma %}data-figma-url="{{ project.links.figma }}"{% endif %}
+         tabindex="0">
+  
+  <div class="project-card__image">
+    <img src="{{ project.image }}" 
+         alt="{{ project.image_alt }}"
+         loading="lazy">
+  </div>
+  
+  <div class="project-card__content">
+    <div class="project-card__header">
+      <h3 class="project-card__title">{{ project.title }}</h3>
+      <div class="project-card__meta">
+        <span class="project-card__role">{{ project.role }}</span>
+        <span class="project-card__date">{{ formatted_date }}</span>
+      </div>
+    </div>
+    
+    <p class="project-card__summary">{{ project.summary }}</p>
+    
+    <div class="project-card__metric">
+      <i class="{{ project.metric_icon }}"></i>
+      <span>{{ project.metric }}</span>
+    </div>
+    
+    <div class="project-card__tools">
+      <!-- Tools can be dynamically populated via JavaScript if needed -->
+    </div>
+    
+    <div class="project-card__links">
+      {% if project.links.github %}
+        <a href="{{ project.links.github }}" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View source code">
+          <i class="fab fa-github"></i>
+        </a>
+      {% endif %}
+      
+      {% if project.links.case_study %}
+        <a href="{{ project.links.case_study }}" class="project-link" aria-label="Read case study">
+          <i class="fas fa-file-alt"></i>
+        </a>
+      {% endif %}
+      
+      {% if project.links.figma %}
+        <a href="{{ project.links.figma }}" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="View Figma design system">
+          <i class="fab fa-figma"></i>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</article>

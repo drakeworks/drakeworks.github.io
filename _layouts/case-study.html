@@ -1,0 +1,29 @@
+---
+layout: default
+---
+{% assign case_study_id = page.case_study_id %}
+{% assign case_study = site.data.case-studies[case_study_id] %}
+<div class="case-study-container">
+  <div class="container">
+    <div class="row">
+      <div class="col col-8 col-d-12">
+        {% include case-study-hero.html case_study=case_study %}
+        <article class="page">
+          <div class="page__content">
+            {% include case-study-problem-solution.html case_study=case_study %}
+            {% include case-study-architecture.html case_study=case_study %}
+            {% include case-study-results.html case_study=case_study %}
+            {% include case-study-challenges.html case_study=case_study %}
+            {% include case-study-lessons.html case_study=case_study %}
+            {% include case-study-enhancements.html case_study=case_study %}
+            {% include case-study-links.html case_study=case_study %}
+            {{ content }} <!-- For unique content per case study -->
+          </div>
+        </article>
+      </div>
+      <div class="col col-4 col-d-12">
+        {% include case-study-sidebar.html case_study=case_study %}
+      </div>
+    </div>
+  </div>
+</div>

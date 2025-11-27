@@ -1,0 +1,36 @@
+{% assign case_study = include.case_study %}
+
+{% if case_study.results %}
+<!-- Results & Impact -->
+<section class="case-study-section">
+  <div class="section-card results-card">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <h2>Results & Impact</h2>
+    </div>
+    
+    <div class="results-grid">
+      {% for result in case_study.results.results_grid %}
+        <div class="result-item">
+          <div class="result-icon">
+            <i class="{{ result.icon }}"></i>
+          </div>
+          <h3>{{ result.title }}</h3>
+          <p>{{ result.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <h3>Key Metrics</h3>
+    <div class="metrics-grid">
+      {% for metric in case_study.results.key_metrics %}
+        <div class="metric-item">
+          <div class="metric-value">{{ metric.value }}</div>
+          <div class="metric-label">{{ metric.label }}</div>
+          <div class="metric-desc">{{ metric.description }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

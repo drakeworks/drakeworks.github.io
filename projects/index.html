@@ -1,0 +1,185 @@
+---
+layout: default
+title: Projects & Portfolio
+description: Explore my latest projects in product management, development, and design. From AI-powered solutions to user experience prototypes.
+og_title: Projects & Portfolio - Product Management & Development Work
+og_description: Explore my latest projects in product management, development, and design. From AI-powered solutions to user experience prototypes.
+og_image: /images/projects/crypto-wallet-design-system.jpg
+og_type: website
+twitter_card: summary_large_image
+twitter_title: Projects & Portfolio - Product Management & Development Work
+twitter_description: Explore my latest projects in product management, development, and design. From AI-powered solutions to user experience prototypes.
+twitter_image: /images/projects/crypto-wallet-design-system.jpg
+---
+
+
+
+<!-- begin page -->
+<div class="container">
+  <div class="row">
+
+    <div class="col col-8 col-d-12">
+      <div class="page-head">
+        <section class="hero-page">
+          <div class="hero-page__inner">
+            <h1 class="hero-page__title">Projects & Portfolio</h1>
+            <p class="hero-page__description">Explore my latest work in product management, development, and design. From AI-powered solutions to user experience prototypes.</p>
+          </div>
+        </section>
+      </div>
+
+      <article class="page">
+        <div class="page__content">
+          
+
+
+          <!-- Projects Toolbar -->
+          <section class="projects-toolbar" role="toolbar" aria-label="Project filters and search">
+            <div class="projects-toolbar__top">
+              <div class="projects-toolbar__search">
+                <label for="projects-search" class="screen-reader-text">Search projects</label>
+                <div class="search-input-wrapper">
+                  <i class="fas fa-search search-icon"></i>
+                  <input type="text" 
+                         id="projects-search"
+                         class="projects-search" 
+                         placeholder="Search projects..." 
+                         aria-label="Search projects by title, description, or tools">
+                </div>
+              </div>
+              
+              <div class="projects-toolbar__sort">
+                <label class="filter-label">Sort by:</label>
+                <div class="custom-select" id="projects-sort-container">
+                  <button class="custom-select__trigger" id="projects-sort-trigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="custom-select__selected">Featured First</span>
+                    <i class="fas fa-chevron-down custom-select__arrow"></i>
+                  </button>
+                  <div class="custom-select__dropdown" id="projects-sort-dropdown" role="listbox" aria-hidden="true">
+                    <div class="custom-select__option" data-value="featured" role="option" aria-selected="true" tabindex="0">
+                      Featured First
+                    </div>
+                    <div class="custom-select__option" data-value="date-desc" role="option" aria-selected="false" tabindex="0">
+                      Date (Newest)
+                    </div>
+                    <div class="custom-select__option" data-value="date-asc" role="option" aria-selected="false" tabindex="0">
+                      Date (Oldest)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="projects-toolbar__filters">
+              {% include project-filters.html %}
+            </div>
+          </section>
+
+          <!-- Projects Grid -->
+          <section class="projects-grid" role="region" aria-label="All projects">
+            <div class="projects-grid__container" style="opacity: 0; transition: opacity 0.3s ease;">
+              <!-- Loading State -->
+              <div class="projects-loading" id="projects-loading"></div>
+              
+              <!-- Dynamic Project Cards -->
+              {% for project in site.data.projects %}
+                {% include project-card.html project=project %}
+              {% endfor %}
+
+
+
+
+
+            </div>
+          </section>
+
+        </div>
+      </article>
+    </div>
+
+    <div class="col col-4 col-d-12">
+      <aside class="sidebar">
+        {% include sidebar.html %}
+      </aside>
+    </div>
+
+  </div>
+</div>
+
+<!-- Project Modal Template -->
+<div id="project-modal" class="project-modal" aria-hidden="true" aria-modal="false" aria-labelledby="modal-title">
+  <div class="project-modal__backdrop"></div>
+  <div class="project-modal__container" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
+    <button class="project-modal__close" aria-label="Close modal">
+      <i class="fas fa-times"></i>
+    </button>
+    
+    <div class="project-modal__content">
+      <div class="project-modal__image">
+        <img id="modal-image" src="" alt="" loading="lazy">
+        <div class="project-modal__image-overlay">
+          <div class="project-modal__header">
+            <h2 id="modal-title" class="project-modal__title"></h2>
+            <div class="project-modal__meta">
+              <span class="project-modal__role"></span>
+              <span class="project-modal__date"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-modal__body">
+        <p id="modal-description" class="project-modal__description"></p>
+        
+        <div class="project-modal__metric">
+          <i class="fas fa-chart-line"></i>
+          <span id="modal-metric"></span>
+        </div>
+        
+        <div class="project-modal__skills">
+          <div class="project-modal__business-skills">
+            <h3>Business Skills & Impact</h3>
+            <div id="modal-business-skills" class="project-modal__skills-list"></div>
+          </div>
+          
+          <div class="project-modal__technical-tools">
+            <h3>Tools & Technologies</h3>
+            <div id="modal-technical-tools" class="project-modal__tools-list"></div>
+          </div>
+        </div>
+        
+        <div class="project-modal__embeds" id="modal-embeds">
+          <!-- Dynamic embeds will be inserted here -->
+        </div>
+        
+        <div class="project-modal__links">
+          <h3>Project Links</h3>
+          <div id="modal-links" class="project-modal__links-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Simple loading script -->
+<script>
+  // Hide projects initially and show loading
+  document.querySelector('.projects-grid__container').style.opacity = '0';
+  document.getElementById('projects-loading').style.display = 'flex';
+  
+  // Hide loading and show projects after 10 seconds
+  setTimeout(function() {
+    document.getElementById('projects-loading').style.display = 'none';
+    document.querySelector('.projects-grid__container').style.opacity = '1';
+    
+    // Mark initial load as complete so JavaScript can handle future interactions
+    if (window.state) {
+      window.state.initialLoadComplete = true;
+    } else {
+      // Fallback: set a global flag
+      window.initialLoadComplete = true;
+    }
+  }, 500);
+</script>
+
+<!-- end page --> 

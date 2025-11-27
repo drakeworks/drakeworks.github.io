@@ -1,0 +1,75 @@
+{% if site.mailchimp-form %}
+<div class="widget widget-subscribe">
+  <div class="widget-subscribe__content">
+    <h2 class="widget-subscribe__title">Insights for Innovators and Life on the Move 🌍</h2>
+    <p class="widget-subscribe__description">Each quarter, I share the most relevant trends from the crypto, blockchain, fintech, and AI spaces, along with actionable strategies for product and project management. Plus, valuable advice for digital nomads navigating the new era of work and travel.</p>
+  </div>
+  <a class="button button--secondary button--big widget-subscribe__button" href="{{ site.mailchimp-form }}" target="_blank" rel="noopener">Join Now</a>
+</div>
+{% endif %}
+
+<div class="widget widget-social">
+  <ul class="widget-social__list list-reset">
+    {% for social in site.data.social %}
+    <li class="widget-social__item">
+      <a class="widget-social__link" href="{{ social.url }}" target="_blank" rel="noopener" aria-label="{{ social.name }} link">
+        <i class="{{ social.icon }}"></i>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="widget widget-tags">
+  <div class="widget-sidebar-head">
+    <h2 class="widget-sidebar-title">Topics</h2>
+  </div>
+  <div class="tag-cloud">
+    {% assign sorted_tags = site.tags | sort %}
+    {% for tag in sorted_tags %}
+    {% assign tag_name = tag[0] %}
+    {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
+    {% assign words = tag_name | replace:"-"," " | split: " " %}
+    {% assign display_tag_name = "" %}
+    {% for word in words %}
+      {% assign capitalized_word = word | capitalize %}
+      {% assign display_tag_name = display_tag_name | append: capitalized_word %}
+      {% unless forloop.last %}
+        {% assign display_tag_name = display_tag_name | append: " " %}
+      {% endunless %}
+    {% endfor %}
+    <a href="/tags/?tag={{ tag_name | slugify }}" class="tag-cloud__item" style="background: {{ tag_color }}">
+      {{ display_tag_name }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% if site.featured-posts %}
+<div class="widget widget-featured-posts">
+  <div class="widget-sidebar-head">
+    <h2 class="widget-sidebar-title">Featured posts</h2>
+  </div>
+  {% assign featured_posts = site.posts | where: "featured", true | sort: "date" | reverse %}
+  {% for post in featured_posts limit:3 %}
+  <div class="post-featured-content">
+    <a href="{{ post.url }}" class="post-featured-image">
+      {% if post.video %}
+      <div class="video-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <polygon points="40,30 70,50 40,70"></polygon>
+        </svg>
+      </div>
+      {% endif %}
+      <img class="lazy" data-src="{{ post.image }}" alt="{{ post.title }}">
+    </a>
+    <div class="post-featured-meta">
+      <h3 class="post-featured-title">
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      </h3>
+      <time class="post-featured-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %} 

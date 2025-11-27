@@ -1,0 +1,118 @@
+# Site settings
+title: "DrakeWorks"
+description: "DrakeWorks is the professional portfolio & blog of Drake Kutz, blending product strategy, technical insight, and the lessons learned from a decade of remote work—plus the occasional Cajun recipe."
+baseurl: ""
+url: "https://drakeworks.github.io"
+
+# Build settings
+markdown: kramdown
+permalink: /:title/index.html
+
+# Kramdown configuration for Jekyll 4.x
+kramdown:
+  input: GFM
+  hard_wrap: false
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# SCSS Configuration
+sass:
+  style: compressed
+  load_paths:
+    - scss
+  sass_dir: scss
+  css_dir: css
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:title/index.html
+
+# Tag Page Generator Configuration
+# ... existing code ...
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+  - .DS_Store 
+
+# Sidebar settings
+mailchimp-form: "http://eepurl.com/jf5CvE"
+featured-posts: true
+
+# Analytics Configuration
+# These values are read from environment variables set in GitHub Actions
+# The actual values are injected during build via environment variables
+# For local development, set GOOGLE_ANALYTICS_ID and AMPLITUDE_API_KEY in your shell
+google_analytics:
+  id: ""  # Set via GOOGLE_ANALYTICS_ID environment variable
+
+amplitude:
+  api_key: ""  # Set via AMPLITUDE_API_KEY environment variable
+  enabled: true
+
+# Tag colors
+tag-colors:
+  # Core Development & Technology
+  development: "#4643ec"           # Vivid indigo
+  javascript: "#f7df1e"            # JavaScript yellow
+  python: "#3776ab"                # Python blue
+  testing: "#5d6d7e"               # Slate blue-grey
+
+  
+  # Infrastructure & DevOps
+  infra: "#34495e"        # Dark slate
+  devops: "#16a085"                # Teal
+  automation: "#ff6a00"            # Bright tech orange
+  
+  # Blockchain & Fintech
+  blockchain: "#00b341"            # Strong tech green
+  fintech: "#008c5e"               # Electric forest green
+  web3: "#6a1b9a"                  # Dark electric purple
+  regulation: "#2c3e50"            # Dark blue-gray
+  
+  # AI
+  ai: "#9b00ff"                    # Electric violet purple
+  artificial-intelligence: "#9b00ff" # Same as ai
+  llm: "#6c5ce7"                   # Bright periwinkle
+  
+  # Design & UX
+  product-design: "#ff1a75"        # Vivid hot pink-red
+  ux: "#9b59b6"                    # Purple
+  figma: "#f39c12"                 # Orange
+  prototyping: "#ff3f2e"           # Punchy chili red
+  
+  # Leadership & Management
+  leadership: "#de47e2"            # Electric fuchsia
+  product-management: "#ff1a75"    # Same as product-design
+  project-management: "#de47e2"    # Same as leadership
+  
+  # Lifestyle & Other
+  games: "#ff6a00"                 # Bright tech orange
+  digital-privacy: "#6c5ce7"       # Bright periwinkle
+  cooking: "#ff3f2e"               # Punchy chili red
+  travel: "#008c5e"                # Electric forest green
+
+paginate: 4
+paginate_path: "/page/:num/" 

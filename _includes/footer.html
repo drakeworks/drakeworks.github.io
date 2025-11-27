@@ -1,0 +1,86 @@
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="container">
+      <div class="row">
+        <div class="col col-4 col-d-12">
+          <h3 class="footer__info__title">{{ site.title }}</h3>
+          <p class="footer__info__description">{{ site.description }}</p>
+          
+          <div class="footer__social">
+            <ul class="footer__social__list list-reset">
+              {% for social in site.data.social %}
+              <li class="footer__social__item">
+                <a class="footer__social__link" href="{{ social.url }}" target="_blank" rel="noopener" aria-label="{{ social.name }} link">
+                  <i class="{{ social.icon }}"></i>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="col col-4 col-d-12">
+          <h3 class="footer__title">Recent Posts</h3>
+          <div class="footer__recent-posts">
+            {% for post in site.posts limit:3 %}
+            <div class="footer__recent-content">
+              <a href="{{ post.url }}" class="footer__recent-image">
+                {% if post.video %}
+                <div class="video-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <polygon points="40,30 70,50 40,70"></polygon>
+                  </svg>
+                </div>
+                {% endif %}
+                <img class="lazy" data-src="{{ post.image }}" alt="{{ post.title }}">
+              </a>
+              <div class="footer__recent-meta">
+                <h3 class="footer__recent-title">
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </h3>
+                <time class="footer__recent-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="col col-2 col-d-6 col-m-12">
+          <div class="footer-nav__left">
+            <h3 class="footer__title">Menu</h3>
+            <div class="footer-nav__list">
+              {% for item in site.data.navigation %}
+              {% unless item.dropdown %}
+              <a class="footer-nav__link" href="{{ item.url }}">{{ item.title }}</a>
+              {% endunless %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-2 col-d-6 col-m-12">
+          <div class="footer-nav__right">
+            {% for item in site.data.navigation %}
+            {% if item.dropdown %}
+            <h3 class="footer__title">Pages</h3>
+            <div class="footer-nav__list">
+              {% for subitem in item.dropdown %}
+              <a class="footer-nav__link" href="{{ subitem.url }}">{{ subitem.title }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+        <div class="copyright">{{ site.time | date: '%Y' }} &copy; <a href="/">{{ site.title }}</a>. Vibe coded with care by Drake Kutz.</div>
+      </div>
+    </div>
+  </div>
+</footer> 

@@ -1,0 +1,63 @@
+{% comment %}
+  Generate unique tags from all projects
+{% endcomment %}
+{% assign all_tags = "" | split: "" %}
+{% for project in site.data.projects %}
+  {% for tag in project.tags %}
+    {% unless all_tags contains tag %}
+      {% assign all_tags = all_tags | push: tag %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %}
+  Tag color mapping - comprehensive color scheme matching site aesthetic
+{% endcomment %}
+{% assign tag_colors = "ai:#9b00ff,development:#4643ec,web-development:#4643ec,javascript:#f39c12,python:#3776ab,jekyll:#c83c23,scss:#cf649a,blockchain:#00b341,fintech:#008c5e,testing:#28a745,automation:#ff6a00,infrastructure:#34495e,devops:#16a085,llm:#6c5ce7,privacy:#6c5ce7,product-design:#ff1a75,ux:#9b59b6,figma:#f39c12,prototyping:#ff3f2e,leadership:#de47e2,product-management:#ff1a75,project-management:#de47e2,portfolio:#8e44ad,personal-branding:#8e44ad,content-management:#3498db" | split: "," %}
+
+<div class="filter-group">
+  <label class="filter-label">Filter by tags:</label>
+  <div class="filter-tags" role="group" aria-label="Project tag filters">
+    {% for tag in all_tags %}
+      {% assign tag_color = "#6c5ce7" %}
+      {% for color_mapping in tag_colors %}
+        {% assign mapping = color_mapping | split: ":" %}
+        {% if mapping[0] == tag %}
+          {% assign tag_color = mapping[1] %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      
+      {% assign words = tag | replace:"-"," " | split: " " %}
+      {% assign display_tag_name = "" %}
+      {% assign acronyms = "ai,llm,api,ui,ux" | split: "," %}
+      {% assign mixed_case = "devops,fintech" | split: "," %}
+      {% for word in words %}
+        {% assign word_lower = word | downcase %}
+        {% if acronyms contains word_lower %}
+          {% assign display_word = word | upcase %}
+        {% elsif mixed_case contains word_lower %}
+          {% if word_lower == "devops" %}
+            {% assign display_word = "DevOps" %}
+          {% elsif word_lower == "fintech" %}
+            {% assign display_word = "FinTech" %}
+          {% else %}
+            {% assign display_word = word | capitalize %}
+          {% endif %}
+        {% else %}
+          {% assign display_word = word | capitalize %}
+        {% endif %}
+        {% assign display_tag_name = display_tag_name | append: display_word %}
+        {% unless forloop.last %}
+          {% assign display_tag_name = display_tag_name | append: " " %}
+        {% endunless %}
+      {% endfor %}
+      <button class="filter-tag" 
+              data-tag="{{ tag }}" 
+              aria-pressed="false" 
+              style="background: {{ tag_color }};">
+        {{ display_tag_name }}
+      </button>
+    {% endfor %}
+  </div>
+</div>
