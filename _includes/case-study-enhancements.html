@@ -1,0 +1,25 @@
+{% assign case_study = include.case_study %}
+
+{% if case_study.future_enhancements %}
+<!-- Future Enhancements -->
+<section class="case-study-section">
+  <div class="section-card enhancements-card">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <h2>Future Enhancements</h2>
+    </div>
+    
+    {% for enhancement in case_study.future_enhancements %}
+      <div class="enhancement-item">
+        <div class="enhancement-icon">
+          <i class="{{ enhancement.icon }}"></i>
+        </div>
+        <div class="enhancement-content">
+          <h3>{{ enhancement.title }}</h3>
+          <p>{{ enhancement.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

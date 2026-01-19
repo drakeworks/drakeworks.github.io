@@ -1,0 +1,93 @@
+- id: bitbucket-backup
+  title: "Bitbucket Repository Backup"
+  role: "Developer"
+  date: "2023-10-04"
+  featured: false
+  feature_rank: null
+  summary: "Cross-platform automation that saves hours of manual work by backing up all Bitbucket repositories with parallel processing and smart error recovery."
+  full_summary: "Developed comprehensive bash and PowerShell scripts that automatically backup all repositories and branches from a Bitbucket workspace with advanced features like parallel processing, error recovery, and progress tracking. This solution replaced our deprecated backup infrastructure, eliminating manual backup tasks and providing secure cross-platform automation that scales with our growing development team."
+  metric: "Cross-platform backup automation"
+  metric_icon: "fas fa-shield-alt"
+  image: "/images/projects/bitbucket-backup.jpeg"
+  image_alt: "Bitbucket repository backup automation showing script execution and progress tracking"
+  tags: ["development", "automation", "infrastructure", "devops"]
+  business_skills: ["Infrastructure Automation", "Cost Optimization", "Cross-Platform Solutions", "Team Efficiency"]
+  tools: ["Bash", "PowerShell", "API Integration", "DevOps", "Infrastructure Management"]
+  links:
+    github: "https://github.com/drakeworks/bitbucketbackup"
+    case_study: "/projects/case-studies/bitbucket-backup.html"
+
+- id: drakeworks-website
+  title: "DrakeWorks Portfolio Website"
+  role: "Product Manager & Developer"
+  date: "2025-05-27"
+  featured: true
+  feature_rank: 3
+  summary: "Modern, data-driven portfolio website built to showcase my professional journey, share knowledge, and establish thought leadership in product management and technical development."
+  full_summary: "I built a sophisticated Jekyll-based portfolio website using data-driven architecture, modular components, and modern web development practices. The platform serves as both a professional showcase and comprehensive resource hub, featuring advanced search, filtering, and interactive case studies. This project demonstrates my approach to creating scalable, maintainable systems that grow with career evolution while maintaining authentic personal branding."
+  metric: "Professional portfolio showcase"
+  metric_icon: "fas fa-user-tie"
+  image: "/images/projects/drakeworks-website.jpg"
+  image_alt: "DrakeWorks portfolio website showing modern design and project showcase"
+  tags: ["web-development", "jekyll", "scss", "javascript", "portfolio", "personal-branding", "content-management"]
+  business_skills: ["Personal Branding", "Content Strategy", "Technical Leadership", "User Experience Design"]
+  tools: ["Jekyll", "SCSS", "JavaScript", "YAML", "GitHub Pages", "Static Site Generation", "Responsive Design"]
+  links:
+    github: "https://github.com/drakeworks/drakeworks.github.io"
+    case_study: "/projects/case-studies/drakeworks-website.html"
+
+- id: tron-loadtest
+  title: "Tron Loadtest TRC-20"
+  role: "Developer"
+  date: "2024-04-25"
+  featured: true
+  feature_rank: 2
+  summary: "Python automation that simulates realistic payment traffic for any TRC-20 token, validating payment gateway performance without risking real funds."
+  full_summary: "Developed a Python-based automated script that simulates realistic payment traffic for any TRC-20 token using multi-threaded execution and configurable transaction patterns. This solution validates our payment gateway system under realistic load conditions without the risk and cost of mainnet testing, providing comprehensive performance validation for blockchain payment processing."
+  metric: "Automated TRC-20 token testing"
+  metric_icon: "fas fa-rocket"
+  image: "/images/projects/tron-loadtest-trc20.jpg"
+  image_alt: "Tron blockchain load testing script showing transaction automation"
+  tags: ["blockchain", "development", "python", "testing", "fintech"]
+  business_skills: ["Payment System Validation", "Risk Mitigation", "Performance Testing", "Fintech Solutions"]
+  tools: ["Python", "Blockchain", "Payment Processing", "Load Testing"]
+  links:
+    github: "https://github.com/drakeworks/tron-loadtest-trc20"
+    case_study: "/projects/case-studies/tron-loadtest-trc20.html"
+
+- id: ollama-chat
+  title: "Ollama Local AI Chat"
+  role: "Developer"
+  date: "2025-01-15"
+  featured: false
+  feature_rank: null
+  summary: "Privacy-first AI chat interface built with Gradio and Ollama, featuring real-time system monitoring and advanced parameter control for local LLM experimentation."
+  full_summary: "Built a comprehensive local AI chat interface using Gradio and Ollama, featuring advanced parameter control, real-time system monitoring, and model comparison capabilities. This learning project explored the GPT-OSS-20B model locally, provided hands-on experience with LLM parameters, and demonstrated the power of privacy-first AI solutions while experimenting with Cursor IDE for AI-powered development."
+  metric: "Offline, Privacy-first AI Assistant"
+  metric_icon: "fas fa-comments"
+  image: "/images/projects/ollama-local-ai-chat.jpg"
+  image_alt: "Ollama Local AI Chat interface showing chat interface and parameter controls"
+  tags: ["ai", "development", "python", "llm", "privacy"]
+  business_skills: ["Privacy-First AI", "Innovation Leadership", "Rapid Prototyping", "Emerging Technologies"]
+  tools: ["Python", "AI", "Gradio", "Ollama", "Cursor IDE", "Privacy Engineering", "AI/ML"]
+  links:
+    github: "https://github.com/drakeworks/ollama-local-ai-chat"
+    case_study: "/projects/case-studies/ollama-local-ai-chat.html"
+
+- id: crypto-wallet
+  title: "Crypto Wallet Mockups & Design System"
+  role: "Product Manager"
+  date: "2022-10-05"
+  featured: true
+  feature_rank: 1
+  summary: "Multi-platform design system for a white-label crypto wallet that successfully evolved from prototype to production product, demonstrating end-to-end product design leadership."
+  full_summary: "Comprehensive design system for a white-label crypto wallet application covering web, mobile web, and mobile app platforms. Led product design, user flows, and created prototypes that successfully pitched to client and evolved into a production product. This project demonstrates end-to-end product leadership from initial concept through successful client delivery, showcasing the ability to translate complex requirements into scalable design solutions. Before Generative AI was a thing 😉"
+  metric: "Multi-platform crypto wallet design"
+  metric_icon: "fas fa-wallet"
+  image: "/images/projects/crypto-wallet-design-system.jpg"
+  image_alt: "Crypto wallet design system showing multi-platform interface designs"
+  tags: ["blockchain", "product-design", "ux", "figma", "prototyping", "leadership", "fintech"]
+  business_skills: ["Client Leadership", "Product Strategy", "Cross-Platform Design", "Fintech Innovation"]
+  tools: ["Figma", "Product Management", "Design System", "Client Management", "Product Strategy"]
+  links:
+    figma: "https://www.figma.com/design/N18M4SHxLtxG0UCWsJUYhU/DrakeWorks-CryptoApp-Example"

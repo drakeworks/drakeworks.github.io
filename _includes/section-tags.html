@@ -1,0 +1,44 @@
+<section class="section section-tags">
+  <div class="section-tags__inner">
+    <div class="container">
+      <div class="row">
+        <div class="col col-12">
+          <div class="section__head">
+            <h2 class="section__title">Backlog Brainstorms</h2>
+          </div>
+
+          <div class="row">
+            {% assign featured_tags = "product-management,development,artificial-intelligence,blockchain" | split: "," %}
+            {% for tag_name in featured_tags %}
+            {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
+              <div class="col col-3 col-d-6 col-m-12">
+              <a href="/tags/?tag={{ tag_name | slugify }}" class="section-tags__image" style="outline-color: {{ tag_color }};">
+                {% assign words = tag_name | replace:"-"," " | split: " " %}
+                {% assign display_tag_name = "" %}
+                {% for word in words %}
+                  {% assign capitalized_word = word | capitalize %}
+                  {% assign display_tag_name = display_tag_name | append: capitalized_word %}
+                  {% unless forloop.last %}
+                    {% assign display_tag_name = display_tag_name | append: " " %}
+                  {% endunless %}
+                {% endfor %}
+                <span class="section-tags__name" style="background: {{ tag_color }};">{{ display_tag_name }}</span>
+                <img class="lazy" data-src="/images/home/tags/{{ tag_name }}.jpg" alt="{{ display_tag_name }}">
+                </a>
+
+                <div class="section-tags__content">
+                {% assign tag_posts = site.posts | where_exp: "post", "post.tags contains tag_name" | limit: 4 %}
+                {% for post in tag_posts %}
+                  <h3 class="section-tags__title">
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                  </h3>
+                {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+                </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</section> 

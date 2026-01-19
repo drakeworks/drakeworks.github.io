@@ -1,0 +1,88 @@
+/**
+ * Utility Classes & Helper Functions
+ * =================================
+ * 
+ * This file contains utility classes and helper functions that provide
+ * common functionality and styling shortcuts. These are single-purpose
+ * classes that can be applied to any element to achieve specific effects.
+ * 
+ * Contents:
+ * - Animation and transition utilities
+ * - Spacing and layout helpers
+ * - Text and typography utilities
+ * - Display and visibility classes
+ * - Responsive utilities
+ * - Interactive state helpers
+ * - Common utility patterns
+ * 
+ * Key Utilities:
+ * - .animate - Animation classes
+ * - .clearfix - Float clearing
+ * - .list-reset - List style reset
+ * - .screen-reader-text - Accessibility
+ * - Responsive breakpoint helpers
+ * - Spacing utilities (margin, padding)
+ * - Text alignment and sizing
+ * 
+ * Best Practices:
+ * - Keep utilities single-purpose
+ * - Use semantic class names
+ * - Ensure cross-browser compatibility
+ * - Maintain consistent naming conventions
+ * - Keep utilities lightweight
+ * - Document complex utilities
+ * 
+ * NOTE: Some utility classes are currently in _base.scss and should
+ * be moved here for better organization (e.g., .list-reset, .clearfix).
+ */
+
+  .animate {
+  animation: animate-element cubic-bezier(0.3, 0.45, 0.45, 0.95) 0.75s;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  transition: transform 0.15s;
+}
+
+@keyframes animate-element {
+  0% {
+    transform: translate(0, 50px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.hero__button {
+  margin-top: 16px;
+}
+
+@media (width <= 576px) {
+  .hero__button {
+    margin-top: 8px;
+  }
+}
+
+@media (width <= 768px) {
+  .top {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}

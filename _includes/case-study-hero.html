@@ -1,0 +1,17 @@
+{% assign case_study = include.case_study %}
+
+<div class="page-head">
+  <section class="hero-page">
+    <div class="hero-page__inner">
+      <h1 class="hero-page__title">{{ case_study.title }}</h1>
+      <p class="hero-page__description">{{ case_study.description }}</p>
+      <div class="hero-meta">
+        <div class="hero-dates">
+          <span class="hero-date">{{ case_study.start_date }}</span>
+          <span class="hero-date-separator">•</span>
+          <span class="hero-date-updated">Last updated: {{ case_study.last_updated }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

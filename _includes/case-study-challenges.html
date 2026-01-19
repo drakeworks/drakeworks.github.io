@@ -1,0 +1,40 @@
+{% assign case_study = include.case_study %}
+
+{% if case_study.challenges %}
+<!-- Challenges & Solutions -->
+<section class="case-study-section">
+  <div class="section-card challenges-card">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <h2>Challenges & Solutions</h2>
+    </div>
+    
+    {% for challenge in case_study.challenges %}
+      <div class="challenge-item">
+        <div class="challenge-header">
+          <div class="challenge-icon">
+            <i class="{{ challenge.icon }}"></i>
+          </div>
+          <h3>{{ challenge.title }}</h3>
+        </div>
+        <div class="challenge-content">
+          <div class="problem-section">
+            <div class="problem-label">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>Problem</span>
+            </div>
+            <p>{{ challenge.problem }}</p>
+          </div>
+          <div class="solution-section">
+            <div class="solution-label">
+              <i class="fas fa-check-circle"></i>
+              <span>Solution</span>
+            </div>
+            <p>{{ challenge.solution }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

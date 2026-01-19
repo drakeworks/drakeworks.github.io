@@ -1,0 +1,283 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+
+  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name='description' content='{{ site.description }}'>
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/css/main.css" as="style">
+  <link rel="preload" href="/js/common.js" as="script">
+  <link rel="preload" href="/js/scripts.js" as="script">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | absolute_url }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="{% if page.twitter_card %}{{ page.twitter_card }}{% else %}summary_large_image{% endif %}">
+  <meta name="twitter:title" content="{% if page.twitter_title %}{{ page.twitter_title }}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if page.twitter_description %}{{ page.twitter_description }}{% elsif page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="twitter:image:src" content="{% if page.twitter_image %}{{ page.twitter_image | absolute_url }}{% else %}{{ "/images/home/hero/main-banner.jpg" | absolute_url }}{% endif %}">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="{% if page.og_title %}{{ page.og_title }}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.og_description %}{{ page.og_description }}{% elsif page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:image" content="{% if page.og_image %}{{ page.og_image | absolute_url }}{% else %}{{ "/images/home/hero/main-banner.jpg" | absolute_url }}{% endif %}">
+  <meta property="og:type" content="{% if page.og_type %}{{ page.og_type }}{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+  <script>
+    const defaultTheme = "dark";
+    const isToggleEnabled = true;
+    
+    function getStoredTheme() {
+      try {
+        return localStorage.getItem("theme");
+      } catch (e) {
+        console.warn('localStorage is not available:', e);
+        return null;
+      }
+    }
+
+    function setStoredTheme(mode) {
+      try {
+        localStorage.setItem("theme", mode);
+      } catch (e) {
+        console.warn('localStorage is not available:', e);
+      }
+    }
+
+    function setTheme(mode) {
+      if (mode === "dark") {
+        document.documentElement.setAttribute("dark", "");
+        document.documentElement.classList.add("dark-mode");
+      } else if (mode === "light") {
+        document.documentElement.removeAttribute("dark");
+        document.documentElement.classList.remove("dark-mode");
+      }
+    }
+
+    if (isToggleEnabled) {
+      const userTheme = getStoredTheme();
+      if (userTheme) {
+        setTheme(userTheme);
+      } else {
+        setTheme(defaultTheme);
+      }
+    } else {
+      setTheme(defaultTheme);
+    }
+
+    try {
+      if (localStorage.getItem("classView") === "list") {
+        document.documentElement.setAttribute("list", "");
+        document.documentElement.classList.add('view-list');
+      }
+    } catch (e) {
+      console.warn('localStorage is not available:', e);
+    }
+  </script>
+
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Normalize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  
+  <!-- Splide CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+
+  <style>
+    .lazy {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .lazy.loaded {
+      opacity: 1;
+    }
+    .image-loading {
+      position: relative;
+      background: var(--background-color);
+    }
+    .image-loading::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: loading 1.5s infinite;
+    }
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+
+  <!-- Google Analytics -->
+  {% if site.google_analytics.id and site.google_analytics.id != "" %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics.id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ site.google_analytics.id }}', {
+      page_path: window.location.pathname
+    });
+  </script>
+  <!-- Custom Google Analytics Events -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Outbound Link Clicks
+    document.querySelectorAll('a').forEach(function(link) {
+      if (link.hostname !== location.hostname) {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_click', {
+            'event_category': 'outbound',
+            'event_label': link.href
+          });
+        });
+      }
+    });
+
+    // Button Clicks
+    document.querySelectorAll('.button, .btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        gtag('event', 'button_click', {
+          'event_category': 'engagement',
+          'event_label': btn.textContent.trim()
+        });
+      });
+    });
+
+    // Scroll Depth
+    let scrollTracked = [false, false, false, false];
+    window.addEventListener('scroll', function() {
+      let scroll = window.scrollY + window.innerHeight;
+      let height = document.body.scrollHeight;
+      [0.25, 0.5, 0.75, 1].forEach(function(p, i) {
+        if (!scrollTracked[i] && scroll >= height * p) {
+          gtag('event', 'scroll_depth', {
+            'event_category': 'engagement',
+            'event_label': (p * 100) + '%'
+          });
+          scrollTracked[i] = true;
+        }
+      });
+    });
+
+    // Site Search
+    var searchInput = document.getElementById('js-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('change', function() {
+        gtag('event', 'search', {
+          'search_term': searchInput.value
+        });
+      });
+    }
+  });
+  </script>
+  {% endif %}
+</head>
+
+<body>
+  <noscript>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; color: #333;">
+      This website requires JavaScript to function properly. Please enable JavaScript in your browser settings.
+    </div>
+  </noscript>
+
+  <!-- begin global wrap -->
+  <div class="global-wrap">
+    {% include header.html %}
+    {% include search_overlay.html %}
+    {{ content }}
+    {% include footer.html %}
+  </div>
+  <!-- end global wrap -->
+
+  <div class="top" title="Top"><i class="fa-solid fa-arrow-up"></i></div>
+
+  <div class="images-overlay"></div>
+
+  <!-- Splide JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  <!-- Splide Extensions -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-intersection@0.2.0/dist/js/splide-extension-intersection.min.js"></script>
+  
+  <!-- Masonry Layout -->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  <!-- Site Scripts -->
+  <script src="/js/scripts.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/projects.js?v=1.4"></script>
+  
+  <!-- Amplitude Analytics -->
+  {% if site.amplitude.enabled and site.amplitude.api_key and site.amplitude.api_key != "" %}
+  {% assign amplitude_api_key = site.amplitude.api_key %}
+  
+  <!-- 
+    Amplitude Loading Order (all deferred scripts run in order after DOM parsing):
+    1. This inline script sets page data (runs immediately, but just sets data)
+    2. Amplitude SDK loads (defer)
+    3. amplitude-init.js runs (defer) - handles initialization
+    4. amplitude.js runs (defer) - helper functions
+  -->
+  
+  <!-- Set page data for analytics (inline so Jekyll can inject values) -->
+  <script>
+    // Page metadata for Amplitude (set at build time by Jekyll)
+    window.AMPLITUDE_PAGE_DATA = {
+      pageType: {% if page.layout == 'post' %}'post'{% elsif page.layout == 'case-study' %}'case-study'{% elsif page.layout == 'video' %}'video'{% elsif page.url == '/' %}'home'{% elsif page.url contains '/projects/' %}'project'{% elsif page.url contains '/about/' %}'about'{% elsif page.url contains '/resume/' %}'resume'{% elsif page.url contains '/contact/' %}'contact'{% elsif page.url contains '/archive/' %}'archive'{% elsif page.url contains '/tags/' %}'tags'{% elsif page.url contains '/gallery/' %}'gallery'{% elsif page.url contains '/videos/' %}'videos'{% else %}'page'{% endif %},
+      pageTitle: '{{ page.title | default: site.title | escape | replace: "'", "\\'" }}',
+      pageUrl: window.location.href,
+      pagePath: window.location.pathname,
+      {% if page.layout == 'post' %}
+      postTags: [{% for tag in page.tags %}'{{ tag }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
+      postDate: '{{ page.date | date: "%Y-%m-%d" }}',
+      postCategory: '{{ page.category | default: "" }}'
+      {% else %}
+      postTags: [],
+      postDate: '',
+      postCategory: ''
+      {% endif %}
+    };
+  </script>
+  
+  <!-- Load Amplitude SDK (defer ensures it loads after DOM parsing) -->
+  <script defer src="https://cdn.amplitude.com/script/{{ amplitude_api_key }}.js"></script>
+  
+  <!-- Load initialization script (defer, runs after SDK) -->
+  <script defer src="/js/amplitude-init.js"></script>
+  
+  <!-- Load helper functions (defer, runs after init) -->
+  <script defer src="/js/amplitude.js"></script>
+  {% endif %}
+</body>
+
+</html> 

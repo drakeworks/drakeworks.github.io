@@ -1,0 +1,25 @@
+{% assign case_study = include.case_study %}
+
+{% if case_study.lessons_learned %}
+<!-- Lessons Learned -->
+<section class="case-study-section">
+  <div class="section-card lessons-card">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <h2>Lessons Learned</h2>
+    </div>
+    
+    {% for lesson in case_study.lessons_learned %}
+      <div class="lesson-item">
+        <div class="lesson-icon">
+          <i class="{{ lesson.icon }}"></i>
+        </div>
+        <div class="lesson-content">
+          <h3>{{ lesson.title }}</h3>
+          <p>{{ lesson.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

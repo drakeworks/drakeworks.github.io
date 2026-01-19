@@ -1,0 +1,49 @@
+---
+layout: default
+title: Home
+---
+
+    <!-- begin content -->
+    <main class="content" aria-label="Content">
+      
+{% include hero.html %}
+
+{% include section-logos.html %}
+
+<div class="container">
+  <div class="section__head">
+    <h2 class="section__title">Signals from Somewhere</h2>
+    <div class="blog__view">
+      <div class="blog__toggle">
+        <div class="icon">
+          <div class="icon-bar"></div>
+          <div class="icon-bar"></div>
+          <div class="icon-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-8 col-d-12">
+      {% include section-blog-posts.html %}
+    </div>
+    <div class="col col-4 col-d-12">
+      <aside class="sidebar">
+        {% include sidebar.html %}
+      </aside>
+    </div>
+  </div>
+</div>
+
+{% include section-tags.html %}
+
+<!-- Push Play section - temporarily hidden for future updates
+{% include section-videos.html %}
+-->
+
+<!-- Lightbox Log section - temporarily hidden for future updates
+{% include section-gallery.html %}
+-->
+
+    </main>
+    <!-- end content -->

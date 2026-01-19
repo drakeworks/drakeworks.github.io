@@ -1,0 +1,25 @@
+{% assign case_study = include.case_study %}
+
+{% if case_study.project_links %}
+<!-- Project Links -->
+<section class="case-study-section">
+  <div class="section-card links-card">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <h2>Project Links</h2>
+    </div>
+    <div class="project-links">
+      {% if case_study.project_links.github %}
+        <a href="{{ case_study.project_links.github }}" class="project-link-btn primary-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github"></i>
+          View Source Code
+        </a>
+      {% endif %}
+      <a href="/projects/" class="project-link-btn secondary-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Projects
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}

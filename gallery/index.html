@@ -1,0 +1,327 @@
+---
+layout: default
+title: Gallery
+---
+
+<!-- begin page -->
+<div class="container">
+  <div class="row">
+    <div class="col col-8 col-d-12">
+      <div class="page-head">
+        <section class="hero-page">
+          <div class="hero-page__inner">
+            <h1 class="hero-page__title">Gallery</h1>
+            <p class="hero-page__description">A visual journey through my workspace, travels, and the moments that inspire my work in product management and development.</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="gallery-page__inner">
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- Gallery items are dynamically loaded here -->
+        </div>
+
+        <div class="gallery-page__load-more">
+          <button class="button button--primary load-more-gallery">
+            <span class="button__text">Load More</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col col-4 col-d-12">
+      <aside class="sidebar">
+        {% include sidebar.html %}
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- Image Zoom Modal -->
+<div class="images-overlay"></div>
+
+<!-- end page -->
+
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const grid = document.getElementById('gallery-grid');
+  const loadMoreBtn = document.querySelector('.load-more-gallery');
+  let currentPage = 1;
+  const itemsPerPage = 6;
+  let isLoading = false;
+  let masonry;
+
+  // Gallery data
+  const galleryItems = [
+    {
+      src: '/images/gallery/coding-station.jpg',
+      alt: 'Coding Station',
+      caption: 'Where creativity meets technology.'
+    },
+    {
+      src: '/images/gallery/daily-routine.jpg',
+      alt: 'Daily Routine',
+      caption: 'Finding beauty in everyday moments.'
+    },
+    {
+      src: '/images/gallery/desk-setup.jpg',
+      alt: 'Desk Setup',
+      caption: 'A workspace that inspires.'
+    },
+    {
+      src: '/images/gallery/tech-life.jpg',
+      alt: 'Tech Life',
+      caption: 'Living in the digital age.'
+    },
+    {
+      src: '/images/gallery/gaming-setup.jpg',
+      alt: 'Gaming Setup',
+      caption: 'Where gaming dreams come alive.'
+    },
+    {
+      src: '/images/gallery/taiwan1.jpg',
+      alt: 'Taiwan Night',
+      caption: 'Taiwan Night View'
+    },
+    {
+      src: '/images/gallery/greece1.jpg',
+      alt: 'Greece',
+      caption: 'Greece'
+    },
+    {
+      src: '/images/gallery/greece2.jpg',
+      alt: 'Greece',
+      caption: 'Greece'
+    },
+    {
+      src: '/images/gallery/china1.jpg',
+      alt: 'China',
+      caption: 'China'
+    },
+    {
+      src: '/images/gallery/croatia1.jpg',
+      alt: 'Croatia',
+      caption: 'Croatia'
+    },
+    
+  ];
+
+  // Create gallery item
+  function createGalleryItem(item) {
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
+    
+    div.innerHTML = `
+      <figure class="gallery-item__image">
+        <div class="image-loading">
+          <div class="image-loading__placeholder"></div>
+          <img src="${item.src}" alt="${item.alt}" onload="this.parentElement.classList.add('loaded')">
+        </div>
+        <figcaption class="gallery-item__caption">${item.caption}</figcaption>
+      </figure>
+    `;
+    
+    return div;
+  }
+
+  // Initialize Masonry
+  function initMasonry() {
+    masonry = new Masonry(grid, {
+      itemSelector: '.gallery-item',
+      columnWidth: '.gallery-item',
+      percentPosition: true,
+      transitionDuration: '0.2s',
+      horizontalOrder: true
+    });
+  }
+
+  // Load initial items
+  function loadInitialItems() {
+    const initialItems = galleryItems.slice(0, itemsPerPage);
+    initialItems.forEach(item => {
+      const element = createGalleryItem(item);
+      grid.appendChild(element);
+    });
+
+    // Initialize Masonry after initial items are loaded
+    initMasonry();
+  }
+
+  // Load more items
+  function loadMoreItems() {
+    if (isLoading) return;
+    isLoading = true;
+    
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    const newItems = galleryItems.slice(start, end);
+    
+    if (newItems.length === 0) {
+      loadMoreBtn.style.display = 'none';
+      return;
+    }
+    
+    newItems.forEach(item => {
+      const element = createGalleryItem(item);
+      grid.appendChild(element);
+      if (masonry) {
+        masonry.appended(element);
+      }
+    });
+    
+    currentPage++;
+    isLoading = false;
+  }
+
+  // Initialize zoom functionality
+  const imagesOverlay = document.querySelector('.images-overlay');
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
+
+  grid.addEventListener('click', function(e) {
+    const galleryImage = e.target.closest('.gallery-item__image');
+    if (!galleryImage || isDragging) return;
+    
+    const img = galleryImage.querySelector('img');
+    const caption = galleryImage.querySelector('figcaption');
+    
+    imagesOverlay.classList.add('active');
+    imagesOverlay.innerHTML = '';
+    
+    const imgElement = document.createElement('img');
+    imgElement.src = img.src;
+    imagesOverlay.appendChild(imgElement);
+    
+    if (caption) {
+      const captionElement = document.createElement('p');
+      captionElement.className = 'image-overlay__description';
+      captionElement.textContent = caption.textContent;
+      imagesOverlay.appendChild(captionElement);
+    }
+    
+    document.body.style.overflow = 'hidden';
+  });
+
+  imagesOverlay.addEventListener('click', function() {
+    imagesOverlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  });
+
+  // Event listeners
+  loadMoreBtn.addEventListener('click', loadMoreItems);
+  
+  // Initialize
+  loadInitialItems();
+});
+</script>
+
+<style>
+.gallery-grid {
+  display: block;
+  margin: 0 -10px;
+}
+
+.gallery-item {
+  width: calc(50% - 20px);
+  margin: 10px;
+  break-inside: avoid;
+  float: left;
+}
+
+.gallery-item__image {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background: var(--background-alt-color);
+}
+
+.gallery-item__image:hover {
+  transform: translateY(-5px);
+}
+
+.gallery-item__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.gallery-item__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  margin: 0;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item__image:hover .gallery-item__caption {
+  opacity: 1;
+}
+
+.image-loading {
+  position: relative;
+  padding-bottom: 75%;
+  background: var(--background-alt-color);
+  overflow: hidden;
+}
+
+.image-loading__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    var(--background-alt-color) 25%, 
+    var(--background-color) 50%, 
+    var(--background-alt-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.image-loading img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-loading.loaded img {
+  opacity: 1;
+}
+
+.image-loading.loaded .image-loading__placeholder {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .gallery-item {
+    width: calc(100% - 20px);
+  }
+}
+</style>

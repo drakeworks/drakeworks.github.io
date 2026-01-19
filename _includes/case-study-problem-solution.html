@@ -1,0 +1,46 @@
+{% assign case_study = include.case_study %}
+
+<!-- Problem & Solution -->
+<section class="case-study-section">
+  <div class="section-card problem-solution-card">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <h2>Problem & Solution</h2>
+    </div>
+    
+    <div class="problem-section">
+      <h3>The Problem</h3>
+      <p>{{ case_study.problem.description }}</p>
+      <div class="problem-list">
+        {% for item in case_study.problem.items %}
+          <div class="problem-item">
+            <div class="problem-icon">
+              <i class="{{ item.icon }}"></i>
+            </div>
+            <div class="problem-content">
+              <h4>{{ item.title }}</h4>
+              <p>{{ item.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="solution-section">
+      <h3>The Solution</h3>
+      <p>{{ case_study.solution.description }}</p>
+      
+      <div class="project-highlights">
+        {% for highlight in case_study.solution.highlights %}
+          <div class="highlight-item">
+            <div class="highlight-icon">
+              <i class="{{ highlight.icon }}"></i>
+            </div>
+            <h3>{{ highlight.title }}</h3>
+            <p>{{ highlight.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

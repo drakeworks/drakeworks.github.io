@@ -1,0 +1,33 @@
+{% assign case_study = include.case_study %}
+
+<!-- Technical Architecture -->
+<section class="case-study-section">
+  <div class="section-card architecture-card">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <h2>Technical Architecture</h2>
+    </div>
+    
+    <h3>Technology Stack</h3>
+    <div class="tech-stack">
+      {% for tech in case_study.technical_architecture.tech_stack %}
+        <div class="tech-badge">
+          <span class="tech-label">{{ tech.label }}</span>
+          <span class="tech-value">{{ tech.value }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <h3>Core Components</h3>
+    <div class="architecture-components">
+      <div class="component-list">
+        {% for component in case_study.technical_architecture.components %}
+          <div class="component-item">
+            <span class="component-name">{{ component.name }}</span>
+            <span class="component-desc">{{ component.description }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

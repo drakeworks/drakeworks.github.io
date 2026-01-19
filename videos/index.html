@@ -1,0 +1,89 @@
+---
+layout: default
+title: Videos
+---
+
+<!-- begin videos-page -->
+<section class="section videos-page">
+  <div class="container">
+    <div class="section__inner">
+      <div class="row">
+        <div class="col col-8 col-d-12">
+          <section class="hero-page">
+            <div class="hero-page__inner">
+              <h1 class="hero-page__title">Videos</h1>
+              <p class="hero-page__description">Video content exploring product management insights, technical tutorials, and behind-the-scenes looks at my development process.</p>
+            </div>
+          </section>
+
+          {% assign video_posts = site.posts | where: "video", true | sort: 'date' | reverse %}
+          {% if video_posts.size > 0 %}
+          <div class="row">
+            {% for post in video_posts %}
+              <div class="article article--flexible col col-6 col-t-12 grid__post animate">
+                <div class="article__inner">
+                  <div class="article__head">
+                    {% if post.video %}
+                    <div class="video-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                        <polygon points="40,30 70,50 40,70"></polygon>
+                      </svg>
+                    </div>
+                    {% endif %}
+                    <a class="article__image" href="{{ post.url | relative_url }}">
+                      <img class="lazy" data-src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
+                    </a>
+                  </div>
+                  <div class="article__content">
+                    {% if post.tags and post.tags.size > 0 %}
+                    <div class="article__tags">
+                      {% for tag in post.tags %}
+                      {% assign tag_name = tag %}
+                      {% assign tag_color = site.tag-colors[tag_name] | default: "var(--dark-gray)" %}
+                      {% assign words = tag_name | replace:"-"," " | split: " " %}
+                      {% assign display_tag_name = "" %}
+                      {% for word in words %}
+                        {% assign capitalized_word = word | capitalize %}
+                        {% assign display_tag_name = display_tag_name | append: capitalized_word %}
+                        {% unless forloop.last %}
+                          {% assign display_tag_name = display_tag_name | append: " " %}
+                        {% endunless %}
+                      {% endfor %}
+                      <a href="/tags/?tag={{ tag_name | slugify }}" class="article__tag" style="background-color: {{ tag_color | strip }};">{{ display_tag_name }}</a>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                    <h2 class="article__title">
+                      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h2>
+                    <p class="article__excerpt">{{ post.excerpt }}</p>
+                    <div class="article__meta">
+                      <time class="article__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %Y" }}</time>
+                      {% if post.last_updated %}
+                      <span class="article__updated">&nbsp;• Updated {{ post.last_updated | date: "%d %b, %Y" }}</span>
+                      {% endif %}
+                      <div class="article__minutes">
+                        {% assign words = post.content | strip_html | number_of_words %}{% if words < 360 %}1 min read{% else %}{{ words | divided_by: 180 }} min read{% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="col col-12">
+            <p class="no-content">No videos available yet. Check back soon!</p>
+          </div>
+          {% endif %}
+        </div>
+        <div class="col col-4 col-d-12">
+          <aside class="sidebar">
+            {% include sidebar.html %}
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end videos-page --> 
