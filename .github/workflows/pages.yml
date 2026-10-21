@@ -1,0 +1,75 @@
+name: Build and Deploy Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  # Build and Deploy job (production only)
+  deploy:
+    if: github.repository == 'drakeworks/drakeworks.github.io'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+
+      - name: Type check (astro check)
+        run: npm run check
+
+      - name: Build with Astro
+        run: npm run build
+        env:
+          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+
+      - name: Check for unpublished editorial markers
+        run: |
+          if grep -rnE "TODO\(|EXPERT-CHECK|DATE-LOCK|panel instruction" dist --include='*.html' --include='*.xml' --include='*.json'; then
+            echo "::error::Editorial markers found in built site. Move work in progress to _workbench/."
+            exit 1
+          fi
+
+      - name: Check site size
+        run: |
+          echo "Checking site size..."
+          du -sh dist/
+          echo "Number of files:"
+          find dist/ -type f | wc -l
+          echo "Largest files:"
+          find dist/ -type f -exec du -h {} + | sort -hr | head -10
+
+      - name: Setup artifact upload context
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+        timeout-minutes: 10 
