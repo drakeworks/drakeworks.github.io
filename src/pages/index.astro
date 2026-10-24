@@ -1,7 +1,919 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/home.css';
 ---
 
-<BaseLayout title="Astro">
-	<h1>Astro</h1>
+<BaseLayout
+	title="Drake Kutz · Senior Product Manager (draft)"
+	description="Drake Kutz, senior product manager. Case studies on taking payments and crypto platforms from a one-line brief to live products."
+	viewport="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+>
+	<Fragment slot="head">
+		<meta name="theme-color" content="#0A0B0D" />
+		<meta name="color-scheme" content="dark" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Geist+Mono:wght@400;500&family=Caveat:wght@600&display=swap" />
+	</Fragment>
+<!-- ============ NAV ============ -->
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="w nin"><a class="brand" href="#home" data-go="home"><span class="logo">DK</span><span>Drake Kutz</span><span class="sample" title="First draft for review. Not published. Amber [TOKENS] mark content still to be written.">Draft</span></a>
+    <nav id="anav" class="links" aria-label="Primary" data-nav><a href="#work" data-go="home" data-anchor="work" data-work>Work</a><a href="#approach" data-go="home" data-anchor="approach">Approach</a><a href="#about" data-go="about">About</a></nav>
+    <div class="nr"><button class="kbtn" data-cmdk-open aria-label="Open command menu"><span>Search</span><kbd>⌘K</kbd></button><a class="btn sm" href="#contact" data-go="home" data-anchor="contact">Contact</a><button class="menu-btn" data-menu aria-controls="anav" aria-expanded="false">Menu</button></div>
+  </div>
+</header>
+<main id="main">
+  <!-- ============ HOME ============ -->
+  <div data-view="home">
+    <!-- 1. Hero: the napkin layout (variant 04). Grid areas put the sketch beside the copy on
+         desktop, and between the story and the introduction on phones. -->
+    <section class="w hero napkin">
+      <div class="nk-head">
+        <h1><span class="ln grad">Zero to one creates possibility.</span> <span class="ln grad dim">One to 100 makes an impact.</span></h1>
+      </div>
+      <p class="nk-story">I sketched a payments system at a company party. It&nbsp;now processes over US$1&nbsp;billion a year.</p>
+      <figure class="nk-sketch">
+        <svg viewBox="0 0 440 318" role="img" aria-label="Sketch: four products, a gateway, a wallet, a treasury and a console, each connected to one shared core of custody, screening, ledger and approvals, which processes over US$1 billion a year">
+          <g fill="none" stroke="#C9CCD3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 23Q58 18 106 22Q109 48 105 74Q57 78 9 73Q6 47 10 23Z"/>
+            <path d="M118 21Q166 25 214 20Q217 47 214 75Q166 71 117 75Q114 48 118 21Z"/>
+            <path d="M226 22Q274 19 322 23Q325 48 321 73Q273 77 225 74Q222 47 226 22Z"/>
+            <path d="M334 23Q382 18 430 21Q433 47 430 74Q382 77 333 73Q330 48 334 23Z"/>
+          </g>
+          <g fill="none" stroke="#C9CCD3" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="4 5">
+            <path d="M57 76L58 128"/><path d="M166 73.5L165 126"/><path d="M273 75.5L274 126"/><path d="M382 75.5L381 127.5"/>
+          </g>
+          <g fill="#C9CCD3"><circle cx="58" cy="128.4" r="2.6"/><circle cx="165" cy="126.2" r="2.6"/><circle cx="274" cy="126" r="2.6"/><circle cx="381" cy="127.7" r="2.6"/></g>
+          <path d="M16 130Q220 122 424 129Q431 175 423 220Q220 228 15 219Q9 175 16 130Z" fill="none" stroke="#8C9BFF" stroke-width="2" stroke-linejoin="round"/>
+          <g fill="none" stroke="#3DD6C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M220 224Q223 247 219 272"/><path d="M210 262L219 274L229 263"/>
+          </g>
+          <g font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">
+            <g font-size="16" fill="#C9CCD3"><text x="58" y="53">gateway</text><text x="166" y="53">wallet</text><text x="274" y="53">treasury</text><text x="382" y="53">console</text></g>
+            <text x="220" y="158" font-size="18" fill="#F4F5F7">one core</text>
+            <g font-size="14.5" fill="#8A8F98"><text x="220" y="184">custody · screening</text><text x="220" y="203">ledger · approvals</text></g>
+            <text x="220" y="305" font-size="22" fill="#3DD6C6">US$1B+ / year</text>
+          </g>
+        </svg>
+        <figcaption>The system that sketch grew into, redrawn napkin-style.</figcaption>
+      </figure>
+      <div class="nk-intro">
+        <p class="nk-hi">Hi, I’m Drake. <span aria-hidden="true">👋</span></p>
+        <p class="ask">So, what can we build together?</p>
+        <div class="ctas"><a class="btn" href="#work" data-go="home" data-anchor="work">Read the case studies</a><button class="btn ghost" type="button" data-contact-open>Send a message</button></div>
+      </div>
+    </section>
+    <!-- 2. Platform band (B10): the diagram, with the caption as a handwritten note -->
+    <section class="w band" aria-label="The platform">
+      <div class="band-frame">
+        <div class="mk" role="img" aria-label="Diagram: four products, a payment gateway, a consumer wallet, treasury and an admin console, run on one shared core of custody, screening, ledger and approvals, connected to five blockchain networks">
+              <div class="mk-bar"><i></i><i></i><i></i><span>platform — four products, one core</span></div>
+              <div class="mk-arch">
+                <div class="mk-row prod"><span class="mk-node up"><span class="nl">Payment Gateway</span><span class="ns">Gateway</span></span><span class="mk-node up"><span class="nl">Consumer Wallet</span><span class="ns">Wallet</span></span><span class="mk-node up">Treasury</span><span class="mk-node up"><span class="nl">Admin console</span><span class="ns">Console</span></span></div>
+                <div class="mk-core"><b>Shared core</b><span>Custody · transaction screening · ledger · approvals and permissions</span><i class="mk-pulse"></i></div>
+                <div class="mk-row nets"><span class="mk-node dn">TRON</span><span class="mk-node dn"><span class="nl">Ethereum</span><span class="ns">ETH</span></span><span class="mk-node dn"><span class="nl">BNB Smart Chain</span><span class="ns">BSC</span></span><span class="mk-node dn"><span class="nl">Solana</span><span class="ns">SOL</span></span><span class="mk-node dn"><span class="nl">Bitcoin</span><span class="ns">BTC</span></span></div>
+                <div class="mk-stat"><span><b>4</b> products</span><span><b>1</b> shared core</span><span><b>5</b> networks</span></div>
+              </div>
+            </div>
+        <p class="band-note">Every product here started as a blank page. I owned each one from the first spec to the last edge case.</p>
+      </div>
+    </section>
+    <!-- 3. Where I’ve built (B05): a slow ticker. Pauses on hover and focus, has a pause button,
+         and stands still as a plain list for visitors who reduce motion. -->
+    <section class="w tick" aria-labelledby="tickLab">
+      <p class="tick-lab" id="tickLab">Where I’ve built</p>
+      <div class="tick-wrap">
+        <ul class="tick-in">
+          <li>Payments</li>
+          <li>Digital Assets</li>
+          <li>Compliance Infrastructure</li>
+          <li>APIs</li>
+          <li>Digital Platforms</li>
+          <li>Web &amp; Mobile Apps</li>
+          <li class="dup" aria-hidden="true">Payments</li>
+          <li class="dup" aria-hidden="true">Digital Assets</li>
+          <li class="dup" aria-hidden="true">Compliance Infrastructure</li>
+          <li class="dup" aria-hidden="true">APIs</li>
+          <li class="dup" aria-hidden="true">Digital Platforms</li>
+          <li class="dup" aria-hidden="true">Web &amp; Mobile Apps</li>
+        </ul>
+      </div>
+      <button class="tick-btn" type="button" aria-pressed="false" aria-label="Pause the scrolling list"><svg class="i-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2h2v8H3zM7 2h2v8H7z"/></svg><svg class="i-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2l7 4-7 4z"/></svg></button>
+    </section>
+    <!-- 4. Selected work -->
+    <section class="w sec" id="work">
+      <div class="sh">
+        <h2 class="grad">What I’ve built</h2>
+        <p>Two zero-to-ones and a one-to-100: what I decided, what I traded off, and what shipped.</p>
+      </div>
+      <div class="cards">
+        <a class="card" data-spot href="#case-1" data-go="case-1">
+          <div class="cv">
+            <div class="mk" aria-hidden="true">
+              <div class="mk-bar"><i></i><i></i><i></i><span>gateway — incoming deposit</span></div>
+              <div class="mk-ap">
+                <div class="mk-head"><b>Deposit</b><span class="mk-chip">Two callbacks</span><span class="mk-fil">Every step logged</span></div>
+                <div class="mk-arow"><span class="mk-av lg">1</span>
+                  <div><b>Seen on the network</b><span>First callback <i class="">Sent</i></span></div>
+                  <span class="mk-btn sm">Sent</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">2</span>
+                  <div><b>Confirmed</b><span>Sender address screened <i class="">Clean</i></span></div>
+                  <span class="mk-btn sm">Pass</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">3</span>
+                  <div><b>Limits and fee</b><span>Within limits <i class="">Fee applied</i></span></div>
+                  <span class="mk-btn sm">Pass</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">4</span>
+                  <div><b>Credited</b><span>Clean balance <i class="">Final callback</i></span></div>
+                  <span class="mk-btn sm">Done</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ct"><span class="tag">Zero to one</span>
+            <h3>An in-house payment gateway, live in under a year</h3>
+            <p class="res"><b>68%</b> lower payment costs than the vendors it replaced</p>
+          </div>
+        </a>
+        <a class="card" data-spot href="#case-2" data-go="case-2">
+          <div class="cv">
+            <div class="mk" aria-hidden="true">
+              <div class="mk-bar"><i></i><i></i><i></i><span>treasury — payouts and approvals</span></div>
+              <div class="mk-ap">
+                <div class="mk-head"><b>Waiting for approval</b><span class="mk-chip">Up to 3 layers</span><span class="mk-fil">Every action logged</span></div>
+                <div class="mk-arow"><span class="mk-av lg">P</span>
+                  <div><b>Supplier payout</b><span>Approval 2 of 3 <i class="">Address screened</i></span></div>
+                  <span class="mk-btn sm">Approve</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">S</span>
+                  <div><b>Client settlement</b><span>Maker-checker <i class="">Wallet registered</i></span></div>
+                  <span class="mk-btn sm">Approve</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">W</span>
+                  <div><b>Customer withdrawal</b><span>Paid from deposit address <i class="">Smart routing</i></span></div>
+                  <span class="mk-btn sm">Sent</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">D</span>
+                  <div><b>Incoming deposit</b><span>Higher-risk source <i class="warn">Isolated for review</i></span></div>
+                  <span class="mk-btn sm">Review</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ct"><span class="tag">One to 100</span>
+            <h3>From payment gateway to payments platform</h3>
+            <p class="res">Clients: <b>2 → 20</b> · Volume: <b>Millions → $1B+</b></p>
+          </div>
+        </a>
+        <a class="card slim" data-spot href="#case-3" data-go="case-3">
+          <div class="cv">
+            <div class="mk" aria-hidden="true">
+              <div class="mk-bar"><i></i><i></i><i></i><span>payments — orchestration layer</span></div>
+              <div class="mk-arch">
+                <div class="mk-row prod"><span class="mk-node up">Internal teams</span><span class="mk-node up">Client apps</span></div>
+                <div class="mk-core"><b>One API</b><span>SDK or direct API · routing</span><i class="mk-pulse"></i></div>
+                <div class="mk-row nets"><span class="mk-node dn">Provider A</span><span class="mk-node dn">Provider B</span><span class="mk-node dn">Provider C</span><span class="mk-node dn ledg">Our own gateway</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ct"><span class="tag">Zero to one, then one to 100</span>
+            <h3>One API for every payment provider</h3>
+            <p class="res">Providers: <b>3 → 40+</b> · Integrations per team: <b>1</b></p>
+          </div>
+        </a>
+      </div>
+    </section>
+    <!-- 5. How I work -->
+    <section class="w sec" id="approach">
+      <div class="sh">
+        <h2 class="grad">How I build</h2>
+        <p>Learned building payments with a small team. They hold for any product people have to trust.</p>
+      </div>
+      <ul class="feat">
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3l7 4-7 4-7-4 7-4z"/><path d="M3 11l7 4 7-4"/></svg>
+          <h3>Be your own customer</h3>
+          <p>We ran our own wallet on the gateway, so we felt every rough edge before a client did.</p>
+        </li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v5m0 0l-5 5m5-5l5 5M5 13v4m10-4v4"/></svg>
+          <h3>Settings, not sprints</h3>
+          <p>New clients get onboarded, not built for. When sales asks “can we…?”, the answer should be a setting.</p>
+        </li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 10s3-5.5 8-5.5S18 10 18 10s-3 5.5-8 5.5S2 10 2 10z"/><circle cx="10" cy="10" r="2.5"/></svg>
+          <h3>Controls are product</h3>
+          <p>If a control is painful, people route around it, and then it isn’t a control.</p>
+        </li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="3.5"/><circle cx="10" cy="10" r=".8"/></svg>
+          <h3>Design the exits first</h3>
+          <p>Refunds, rejections and failed transfers are where trust is won or lost. They get an owner before launch.</p>
+        </li>
+      </ul>
+    </section>
+    <!-- 6. Numbers -->
+    <section class="w nums" aria-label="Proof points">
+      <ul>
+        <li><b data-to="17" data-since="2009">17</b><span>years in software, from games to payments</span></li>
+        <li><b data-to="8" data-since="2018">8</b><span>years leading product and delivery</span></li>
+        <li><b>4 → 14</b><span>people on the team I built and led</span></li>
+        <li><b>&lt;1 yr</b><span>from brief to a live gateway</span></li>
+      </ul>
+    </section>
+    <!-- 7. Principle quote (fills the testimonial space until consented quotes exist) -->
+    <section class="w quote">
+      <figure>
+        <blockquote>“Four engineers can’t build four products. They can build one core, very carefully, and then a set of products that are mostly configuration on top of it.”</blockquote>
+      </figure>
+    </section>
+    <!-- 8. Career -->
+    <section class="w sec">
+      <div class="sh">
+        <h2 class="grad">Career</h2>
+        <p>I started out testing games and recruiting the people who made them. Then came project management, then product. <strong>Product stuck.</strong></p>
+      </div>
+      <ol class="log">
+        <li><time>2026 – now</time>
+          <div><b>Senior Product Manager</b><span>sFOX</span></div>
+          <p>sFOX Connect B2B2C API product, sFOX Direct platform – onboarding and compliance.</p>
+        </li>
+        <li><time>2021 – 2026</time>
+          <div><b>Senior Product Manager (Head of Blockchain)</b><span>OG Global (Funpodium &amp; GmindTech)</span></div>
+          <p>Built the blockchain payments division from zero: a gateway that became a payments platform, a wallet, a treasury product and a 40+ provider orchestrator.</p>
+        </li>
+        <li><time>2018 – 2020</time>
+          <div><b>Senior Technical Project Manager</b><span>OG Global</span></div>
+          <p>Built the project and product team at a new startup in the group with the CEO, and moved outsourced projects to a new in-house engineering team.</p>
+        </li>
+        <li><time>2015 – 2018</time>
+          <div><b>Project Manager</b><span>LF Consulting</span></div>
+          <p>Delivered software projects for e-commerce and video game industry clients.</p>
+        </li>
+        <li><time>2009 – 2014</time>
+          <div><b>Quality Assurance Analyst, then Senior Recruiting Specialist</b><span>Electronic Arts</span></div>
+          <p>Helped ship AAA games at one of the world’s largest video game publishers, first in QA, then in recruiting.</p>
+        </li>
+      </ol>
+    </section>
+    <!-- 9. Contact -->
+    <section class="cta" id="contact">
+      <div class="glow2" aria-hidden="true"></div>
+      <div class="w">
+        <h2 class="grad">Got a one-line brief?</h2>
+        <p>Send it over, or find me on LinkedIn.</p>
+        <div class="ctas c"><a class="btn" href="#" data-link="linkedin" data-cta="Opens Drake’s LinkedIn profile.">LinkedIn</a><button class="btn ghost" type="button" data-contact-open>Send a message</button></div>
+      </div>
+    </section>
+  </div>
+  <!-- ============ CASE STUDY 1: ZERO TO ONE, THE IN-HOUSE PAYMENT GATEWAY ============ -->
+  <article data-view="case-1" hidden class="case">
+    <header class="w ch"><a class="back" href="#work" data-go="home" data-anchor="work">← Selected work</a><span class="tag">Zero to one · Payment gateway, 2021–2022</span>
+      <h1 class="grad">An in-house payment gateway, live in under a year</h1>
+      <p class="lede">The company was paying too much for third-party payment vendors it couldn’t fully trust with custody or compliance. I designed an in-house gateway, hired the engineers, and took it live in November 2021. In its first full year, payment costs fell 68%.</p>
+      <dl class="chips">
+        <div>
+          <dt>Role</dt>
+          <dd>Senior Product Manager (Head of Blockchain)</dd>
+        </div>
+        <div>
+          <dt>Team</dt>
+          <dd>4 engineers I hired</dd>
+        </div>
+        <div>
+          <dt>Duration</dt>
+          <dd>2021 – 2022</dd>
+        </div>
+        <div>
+          <dt>Company</dt>
+          <dd>OG Global</dd>
+        </div>
+      </dl>
+    </header>
+    <section class="w">
+      <ul class="kpis">
+        <li><b>68%</b><span>lower payment costs, first full year live (2022)</span><em>Primary</em></li>
+        <li><b>Nov 2021</b><span>live, the same year the work began</span><em>Speed</em></li>
+        <li><b>4</b><span>engineers, hired from zero</span><em>Team</em></li>
+        <li><b>1 core</b><span>custody, screening, ledger and approvals, built once</span><em>Foundation</em></li>
+      </ul>
+      <p class="fine dnote">Draft note: approximate figures from Drake’s own account; definitions, sources and approved wording pending (metric sheet).</p>
+    </section>
+    <div class="w cgrid">
+      <nav class="toc" aria-label="On this page">
+        <p>On this page</p>
+        <a href="#a1-context">Context</a><a href="#a1-goals">Goals and measures</a><a href="#a1-role">Role and constraints</a><a href="#a1-architecture">How it fits together</a><a href="#a1-options">Options considered</a><a href="#a1-decisions">Key decisions</a><a href="#a1-tradeoffs">Trade-offs</a><a href="#a1-execution">How it shipped</a><a href="#a1-lessons">What I’d carry forward</a>
+      </nav>
+      <div class="prose">
+        <section class="cs-sec" id="a1-context" data-sec>
+          <h2>Context</h2>
+          <p>Payments ran through third-party vendors. They cost too much, and the company couldn’t fully trust them with custody of funds or with the compliance checks it needed. Leadership wanted an in-house solution.</p>
+          <p>There was no product, no team and no code: a direction, and the freedom to hire. The brief fit in a sentence: “Bring crypto payments in-house: lower cost, our own custody, our own compliance checks.”</p>
+        </section>
+        <section class="cs-sec" id="a1-goals" data-sec>
+          <h2>Goals and measures</h2>
+          <ul class="cs-list">
+            <li>Replace third-party payment vendors with a gateway the company controls</li>
+            <li>Keep custody of funds and compliance checks in-house</li>
+            <li>Lower the cost of every payment</li>
+          </ul>
+          <div class="cs-tw">
+            <table class="cs-tbl">
+              <thead>
+                <tr>
+                  <th scope="col">Measure</th>
+                  <th scope="col">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Payment costs compared with the vendors</td>
+                  <td><span class="cs-pill k-primary">Primary</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="cs-sec" id="a1-role" data-sec>
+          <h2>Role and constraints</h2>
+          <p>I owned the product end to end. I designed the solution, got buy-in from the stakeholders, hired the engineering team, and finalized the design with them. I owned the division’s budget and vendor decisions, and reported to the CTO.</p>
+          <ul class="cs-list">
+            <li>A small team: four engineers, so one core instead of separate codebases</li>
+            <li>Other people’s money: every movement needed screening, approvals and an audit trail</li>
+            <li>An admin console had to be built alongside the gateway to run it</li>
+          </ul>
+        </section>
+        <section class="cs-sec" id="a1-architecture" data-sec>
+          <h2>How it fits together</h2>
+          <p>Three principles came out of the team’s size, and everything built later followed them: one core, many products; configuration over custom code; and controls are product.</p>
+          <figure class="art cs-art">
+            <div class="mk" role="img" aria-label="At launch: the payment gateway and its admin console on one shared core of custody, screening, ledger and approvals">
+              <div class="mk-bar"><i></i><i></i><i></i><span>the gateway at launch</span></div>
+              <div class="mk-arch">
+                <div class="mk-row prod"><span class="mk-node up"><span class="nl">Payment Gateway</span><span class="ns">Gateway</span></span><span class="mk-node up"><span class="nl">Admin console</span><span class="ns">Console</span></span></div>
+                <div class="mk-core"><b>Shared core</b><span>Custody · screening · ledger · approvals</span><i class="mk-pulse"></i></div>
+                <div class="mk-row nets"><span class="mk-node dn"><span class="nl">Blockchain networks</span><span class="ns">Networks</span></span></div>
+              </div>
+            </div>
+            <figcaption>At launch: the gateway and its admin console on one core. Everything added later was built on the same core.</figcaption>
+          </figure>
+        </section>
+        <section class="cs-sec" id="a1-options" data-sec>
+          <h2>Options considered</h2>
+          <div class="cs-opts">
+            <div class="cs-opt v-rejected"><span class="cs-v"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7m0-7l-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Rejected</span><b>Stay with third-party vendors</b>
+              <p>Costs kept rising, and custody and compliance stayed outside our control.</p>
+            </div>
+            <div class="cs-opt v-chosen"><span class="cs-v"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Chosen</span><b>Build an in-house gateway on one shared core</b>
+              <p>Full control of custody, screening and cost, with a team small enough to move fast.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a1-decisions" data-sec>
+          <h2>Key decisions</h2>
+          <div class="cs-decs">
+            <div class="cs-dec"><span>Decision 1</span><b>Build the core once</b>
+              <p>Custody, screening, the ledger and approvals were built once, so anything added later would be a client of the core, never a fork of it.</p>
+            </div>
+            <div class="cs-dec"><span>Decision 2</span><b>Keep screened funds apart</b>
+              <p>Clean, higher-risk and failed-screening funds each get their own balances and wallets, so they can’t be mixed by mistake.</p>
+            </div>
+            <div class="cs-dec"><span>Decision 3</span><b>Tell the client twice</b>
+              <p>One callback when a payment appears, another once it’s confirmed, screened and credited: one for the customer, one for the books.</p>
+            </div>
+          </div>
+          <blockquote class="cs-pull">Build the boring core once, and make every product a client of it.</blockquote>
+        </section>
+        <section class="cs-sec" id="a1-tradeoffs" data-sec>
+          <h2>Trade-offs</h2>
+          <div class="cs-trades">
+            <div class="cs-trade"><b>Separate balances for each risk class</b><span>over</span><s>One balance with a “flagged” column</s>
+              <p>A single balance is how clean-looking money gets spent on a bad day. Separate balances make that mistake impossible, not just unlikely.</p>
+            </div>
+            <div class="cs-trade"><b>Two callbacks</b><span>over</span><s>One simpler callback</s>
+              <p>The first spares the customer a spinner; the second makes sure the client never credits money that hasn’t cleared.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a1-execution" data-sec>
+          <h2>How it shipped</h2>
+          <ol class="cs-steps">
+            <li><span>2021</span>Designed the solution and got stakeholder buy-in</li>
+            <li><span>2021</span>Hired four engineers and finalized the design with them</li>
+            <li><span>2021</span>Built the gateway and its admin console on one core</li>
+            <li><span>Nov 2021</span>Live</li>
+          </ol>
+          <p>In 2022, its first full year live, payment costs came in 68% lower than with the vendors it replaced.</p>
+        </section>
+        <section class="cs-sec" id="a1-lessons" data-sec>
+          <h2>What I’d carry forward</h2>
+          <ul class="cs-list">
+            <li>A small team forces good architecture. Four engineers can’t maintain separate codebases, so we built one core.</li>
+            <li>Separate balances beat careful people. Make mixing flagged and clean funds impossible, not just unlikely.</li>
+            <li>Design the exits first. Refunds, rejections and failed transfers need an owner and an audit trail before the first deposit.</li>
+            <li>Network fees are a product problem. Getting caught out by them on TRON is what led to energy rental and smart withdrawal routing.</li>
+          </ul>
+        </section>
+        <aside class="askc" aria-labelledby="askc-1"><span class="ij-av lg" aria-hidden="true">DK</span>
+          <div>
+            <h2 id="askc-1">Ask Drake about this case</h2>
+            <p>Pre-written answers from the interview room, with the evidence attached.</p>
+            <div class="askc-chips"><button class="ij-chip" type="button" data-ask="zero">Have you taken a product from zero to one?</button><button class="ij-chip" type="button" data-ask="tradeoff">Tell me about a hard trade-off you made.</button></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <nav class="w pn" aria-label="More case studies"><a href="#case-3" data-go="case-3"><span>Previous</span>One API for every payment provider</a><a href="#case-2" data-go="case-2"><span>Next</span>From payment gateway to payments platform</a></nav>
+  </article>
+  <!-- ============ CASE STUDY 2: ONE TO 100, FROM PAYMENT GATEWAY TO PAYMENTS PLATFORM ============ -->
+  <article data-view="case-2" hidden class="case">
+    <header class="w ch"><a class="back" href="#work" data-go="home" data-anchor="work">← Selected work</a><span class="tag">One to 100 · Payments platform, 2022–2026</span>
+      <h1 class="grad">From payment gateway to payments platform</h1>
+      <p class="lede">Once the gateway worked for us, we opened it to outside businesses as a B2B payments platform, and my team and I built a consumer wallet and a treasury product on the same core. It grew from two internal clients to about 20, and to more than US$1 billion a year in transaction volume.</p>
+      <dl class="chips">
+        <div>
+          <dt>Role</dt>
+          <dd>Senior Product Manager (Head of Blockchain)</dd>
+        </div>
+        <div>
+          <dt>Team</dt>
+          <dd>Blockchain division, 4–14 people over time</dd>
+        </div>
+        <div>
+          <dt>Duration</dt>
+          <dd>2022 – 2026</dd>
+        </div>
+        <div>
+          <dt>Company</dt>
+          <dd>OG Global</dd>
+        </div>
+      </dl>
+    </header>
+    <section class="w">
+      <ul class="kpis">
+        <li><b>$1B+</b><span>annual transaction volume at full scale</span><em>Primary</em></li>
+        <li><b>2 → about 20</b><span>clients using the platform</span><em>Growth</em></li>
+        <li><b>4</b><span>products on one shared core</span><em>Scope</em></li>
+        <li><b>+8%</b><span>of new wallet customers verified and made a first deposit</span><em>Onboarding</em></li>
+      </ul>
+      <p class="fine dnote">Draft note: approximate figures from Drake’s own account; definitions, sources and approved wording pending (metric sheet).</p>
+    </section>
+    <div class="w cgrid">
+      <nav class="toc" aria-label="On this page">
+        <p>On this page</p>
+        <a href="#a2-context">Context</a><a href="#a2-goals">Goals and measures</a><a href="#a2-role">Role and constraints</a><a href="#a2-architecture">How it fits together</a><a href="#a2-options">Options considered</a><a href="#a2-decisions">Key decisions</a><a href="#a2-tradeoffs">Trade-offs</a><a href="#a2-onboarding">Scaling the wallet: onboarding</a><a href="#a2-execution">How it shipped</a><a href="#a2-lessons">What I’d carry forward</a>
+      </nav>
+      <div class="prose">
+        <section class="cs-sec" id="a2-context" data-sec>
+          <h2>Context</h2>
+          <p>Once the gateway was live, it served two internal clients. The infrastructure already existed, so the question was what else it could become.</p>
+          <p>Some clients didn’t want to build their own product on our API; they wanted something turnkey. And our own treasury team, like several clients, was still moving funds for settlements and payouts by hand.</p>
+        </section>
+        <section class="cs-sec" id="a2-goals" data-sec>
+          <h2>Goals and measures</h2>
+          <ul class="cs-list">
+            <li>Turn the gateway into a B2B payments platform and a new revenue stream</li>
+            <li>Give clients a turnkey option: a white-label consumer wallet</li>
+            <li>Give operations teams a safe way to hold and move funds, with approvals and records</li>
+          </ul>
+          <div class="cs-tw">
+            <table class="cs-tbl">
+              <thead>
+                <tr>
+                  <th scope="col">Measure</th>
+                  <th scope="col">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Clients using the platform</td>
+                  <td><span class="cs-pill k-primary">Primary</span></td>
+                </tr>
+                <tr>
+                  <td>Annual transaction volume</td>
+                  <td><span class="cs-pill k-secondary">Secondary</span></td>
+                </tr>
+                <tr>
+                  <td>Onboarding completion: identity checks and a first deposit</td>
+                  <td><span class="cs-pill k-secondary">Secondary</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="cs-sec" id="a2-role" data-sec>
+          <h2>Role and constraints</h2>
+          <p>Product ownership was mine: the roadmap, the design of every product and the trade-offs. Opening the gateway to outside clients needed the CTO, the COO and the rest of the leadership team to agree and fund it, and sales to find the clients.</p>
+          <ul class="cs-list">
+            <li>One admin console, shared safely between our own operators and many client teams</li>
+            <li>Responsible for compliance for other businesses’ customers, not just our own</li>
+            <li>One team, splitting its time between internal needs and outside clients</li>
+          </ul>
+        </section>
+        <section class="cs-sec" id="a2-architecture" data-sec>
+          <h2>How it fits together</h2>
+          <p>The wallet is a client of the gateway, like any business that integrates with us, so it gets the same custody, screening and approval controls. Products are configured, not forked: assets, payment methods, limits and fees are settings at platform, client and brand level.</p>
+          <figure class="art cs-art">
+            <div class="mk" role="img" aria-label="Platform map: four products on one shared core, connected to five networks">
+              <div class="mk-bar"><i></i><i></i><i></i><span>the platform map</span></div>
+              <div class="mk-arch">
+                <div class="mk-row prod"><span class="mk-node up"><span class="nl">Payment Gateway</span><span class="ns">Gateway</span></span><span class="mk-node up"><span class="nl">Consumer Wallet</span><span class="ns">Wallet</span></span><span class="mk-node up">Treasury</span><span class="mk-node up"><span class="nl">Admin console</span><span class="ns">Console</span></span></div>
+                <div class="mk-core"><b>Shared core</b><span>Custody and wallets · transaction screening · ledger · approvals and permissions</span><i class="mk-pulse"></i></div>
+                <div class="mk-row nets"><span class="mk-node dn">TRON</span><span class="mk-node dn"><span class="nl">Ethereum</span><span class="ns">ETH</span></span><span class="mk-node dn"><span class="nl">BNB Smart Chain</span><span class="ns">BSC</span></span><span class="mk-node dn"><span class="nl">Solana</span><span class="ns">SOL</span></span><span class="mk-node dn"><span class="nl">Bitcoin</span><span class="ns">BTC</span></span></div>
+              </div>
+            </div>
+            <figcaption>Four products, one core. The consumer wallet is itself a client of the payment gateway.</figcaption>
+          </figure>
+        </section>
+        <section class="cs-sec" id="a2-options" data-sec>
+          <h2>Options considered</h2>
+          <div class="cs-opts">
+            <div class="cs-opt v-rejected"><span class="cs-v"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7m0-7l-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Rejected</span><b>Keep the gateway internal</b>
+              <p>Build only for our own needs, with no outside clients to support.</p>
+            </div>
+            <div class="cs-opt v-chosen"><span class="cs-v"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Chosen</span><b>Open it to outside clients as a B2B platform</b>
+              <p>The infrastructure already existed, so it could earn revenue and grow the team.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a2-decisions" data-sec>
+          <h2>Key decisions</h2>
+          <div class="cs-decs">
+            <div class="cs-dec"><span>Decision 1</span><b>Take the gateway to market</b>
+              <p>With the CTO, the COO and sales, turned an internal tool into a B2B product and a new revenue stream. Product ownership stayed with me.</p>
+            </div>
+            <div class="cs-dec"><span>Decision 2</span><b>Make the wallet a client of the gateway</b>
+              <p>Our own consumer app went through the same controls as any client, so we felt every rough edge before a client did.</p>
+            </div>
+            <div class="cs-dec"><span>Decision 3</span><b>Test onboarding before switching</b>
+              <p>Ran automated identity checks from two vendors against the old manual review, chose the winner on the results, and got compliance sign-off.</p>
+            </div>
+          </div>
+          <blockquote class="cs-pull">Quoting a new client was a settings change, not a sprint.</blockquote>
+        </section>
+        <section class="cs-sec" id="a2-tradeoffs" data-sec>
+          <h2>Trade-offs</h2>
+          <div class="cs-trades">
+            <div class="cs-trade"><b>New revenue from outside clients</b><span>over</span><s>A team focused only on internal needs</s>
+              <p>It meant rebuilding the admin console as multi-tenant, splitting the team’s time, and taking on support and compliance responsibility for other businesses’ customers.</p>
+            </div>
+            <div class="cs-trade"><b>Configuration</b><span>over</span><s>Custom builds for each client</s>
+              <p>Assets, payment methods, limits and fees are settings, so new clients get onboarded, not built for.</p>
+            </div>
+            <div class="cs-trade"><b>Vendor capability</b><span>over</span><s>Building identity checks ourselves</s>
+              <p>Specialist vendors could verify customers better than we could have built in-house.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a2-onboarding" data-sec>
+          <h2>Scaling the wallet: onboarding</h2>
+          <p>Onboarding was manual: customers entered their details, uploaded documents and waited for a person to review them. Our B2B partners needed a better onboarding and compliance flow for the white-label wallet to succeed.</p>
+          <p>I chose two identity-verification vendors to test, designed an A/B test against the old flow and what counted as success, picked the better vendor on the results, and took them to compliance, who reviewed the vendor and signed off. People still reviewed anything unusual.</p>
+          <p>The share of new customers who completed their identity checks and made a first deposit rose 8% against the old manual flow.</p>
+          <figure class="art cs-art">
+            <div class="mk" role="img" aria-label="The automated onboarding flow: identity and business checks pass automatically, an unusual case goes to a person, then the first deposit">
+              <div class="mk-bar"><i></i><i></i><i></i><span>onboarding — variant B</span></div>
+              <div class="mk-ap">
+                <div class="mk-head"><b>New customer</b><span class="mk-chip">Automated checks</span><span class="mk-fil">A/B test</span></div>
+                <div class="mk-arow"><span class="mk-av lg">1</span>
+                  <div><b>Identity check (KYC)</b><span>Verified <i class="">Automatic</i></span></div>
+                  <span class="mk-btn sm">Done</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">2</span>
+                  <div><b>Business check (KYB)</b><span>Verified <i class="">Automatic</i></span></div>
+                  <span class="mk-btn sm">Done</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">3</span>
+                  <div><b>Unusual case</b><span>Flagged <i class="warn">Needs a person</i></span></div>
+                  <span class="mk-btn sm">Review</span>
+                </div>
+                <div class="mk-arow"><span class="mk-av lg">4</span>
+                  <div><b>First deposit</b><span>Received <i class="">Onboarded</i></span></div>
+                  <span class="mk-btn sm">Done</span>
+                </div>
+              </div>
+            </div>
+            <figcaption>The new flow: identity and business checks run automatically, and anything unusual goes to a person.</figcaption>
+          </figure>
+        </section>
+        <section class="cs-sec" id="a2-execution" data-sec>
+          <h2>How it shipped</h2>
+          <ol class="cs-steps">
+            <li><span>2022</span>B2B direct API and a multi-tenant console for outside merchants</li>
+            <li><span>Next</span>More blockchains and tokens</li>
+            <li><span>Late 2022 – 2023</span>Consumer wallet, live in 2023</li>
+            <li><span>Late 2023</span>Treasury: custody and payouts with layered approvals</li>
+            <li><span>2024</span>Onboarding and identity checks automated, after an A/B test</li>
+          </ol>
+          <p>Until 2026, the team kept building on the core: TRON energy rental and a peer-to-peer exchange in the wallet, and steady improvements to the gateway and back-end transaction flows.</p>
+        </section>
+        <section class="cs-sec" id="a2-lessons" data-sec>
+          <h2>What I’d carry forward</h2>
+          <ul class="cs-list">
+            <li>Design for outside clients from day one. We built the console for ourselves first, then had to rebuild it as multi-tenant.</li>
+            <li>Be your own customer. Running our wallet on the gateway gave us a live reference for every sales call.</li>
+            <li>Test vendors side by side on real users, not on their pitch.</li>
+            <li>Bring compliance the data, not a request. The results made the approval easy.</li>
+          </ul>
+        </section>
+        <aside class="askc" aria-labelledby="askc-2"><span class="ij-av lg" aria-hidden="true">DK</span>
+          <div>
+            <h2 id="askc-2">Ask Drake about this case</h2>
+            <p>Pre-written answers from the interview room, with the evidence attached.</p>
+            <div class="askc-chips"><button class="ij-chip" type="button" data-ask="tradeoff">Tell me about a hard trade-off you made.</button><button class="ij-chip" type="button" data-ask="measure">How do you measure success?</button></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <nav class="w pn" aria-label="More case studies"><a href="#case-1" data-go="case-1"><span>Previous</span>An in-house payment gateway, live in under a year</a><a href="#case-3" data-go="case-3"><span>Next</span>One API for every payment provider</a></nav>
+  </article>
+  <!-- ============ CASE STUDY 3: ONE API FOR EVERY PAYMENT PROVIDER ============ -->
+  <article data-view="case-3" hidden class="case">
+    <header class="w ch"><a class="back" href="#work" data-go="home" data-anchor="work">← Selected work</a><span class="tag">Zero to one, then one to 100 · Payment orchestration, 2023 onward</span>
+      <h1 class="grad">One API for every payment provider</h1>
+      <p class="lede">Every payment provider came with its own integration, so each team and client system integrated with each one separately. I designed an orchestration layer with one API. It launched with our own gateway and two outside payment service providers (PSPs), then grew to more than 40.</p>
+      <dl class="chips">
+        <div>
+          <dt>Role</dt>
+          <dd>Senior Product Manager (Head of Blockchain)</dd>
+        </div>
+        <div>
+          <dt>Team</dt>
+          <dd>Blockchain division, 4–14 people over time</dd>
+        </div>
+        <div>
+          <dt>Duration</dt>
+          <dd>2023 onward</dd>
+        </div>
+        <div>
+          <dt>Company</dt>
+          <dd>OG Global</dd>
+        </div>
+      </dl>
+    </header>
+    <section class="w">
+      <ul class="kpis">
+        <li><b>3 → 40+</b><span>providers behind one API</span><em>Growth</em></li>
+        <li><b>1 API</b><span>instead of one integration per provider</span><em>Primary</em></li>
+        <li><b>SDK or API</b><span>two ways for teams and clients to integrate</span><em>Access</em></li>
+        <li><b>Our gateway</b><span>one of the providers behind it</span><em>Reuse</em></li>
+      </ul>
+      <p class="fine dnote">Draft note: 40+ is Drake’s own count; any measured time savings are still to be confirmed.</p>
+    </section>
+    <div class="w cgrid">
+      <nav class="toc" aria-label="On this page">
+        <p>On this page</p>
+        <a href="#a3-context">Context</a><a href="#a3-goals">Goals and measures</a><a href="#a3-role">Role and constraints</a><a href="#a3-options">Options considered</a><a href="#a3-decisions">Key decisions</a><a href="#a3-tradeoffs">Trade-offs</a><a href="#a3-execution">How it shipped</a><a href="#a3-lessons">What I’d carry forward</a>
+      </nav>
+      <div class="prose">
+        <section class="cs-sec" id="a3-context" data-sec>
+          <h2>Context</h2>
+          <p>Each payment service provider (PSP) has its own, unique integration. Every internal team and every client system had to integrate with each provider one by one, and every new provider meant doing it all again.</p>
+        </section>
+        <section class="cs-sec" id="a3-goals" data-sec>
+          <h2>Goals and measures</h2>
+          <ul class="cs-list">
+            <li>One simplified API that internal teams and outside clients integrate once</li>
+            <li>Access to any provider behind it, through an SDK or the direct API</li>
+            <li>Cut integration time for internal teams</li>
+          </ul>
+          <div class="cs-tw">
+            <table class="cs-tbl">
+              <thead>
+                <tr>
+                  <th scope="col">Measure</th>
+                  <th scope="col">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Integration time for internal teams</td>
+                  <td><span class="cs-pill k-primary">Primary</span></td>
+                </tr>
+                <tr>
+                  <td>Providers available behind the API</td>
+                  <td><span class="cs-pill k-secondary">Secondary</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="cs-sec" id="a3-role" data-sec>
+          <h2>Role and constraints</h2>
+          <p>I designed the orchestration layer and owned which providers it supported. Teams tracking client and market needs helped me prioritize providers, and we added them one by one, in priority order.</p>
+          <ul class="cs-list">
+            <li>Ran in parallel with the rest of the platform roadmap</li>
+            <li>Every provider differed in authentication, callbacks and settlement formats</li>
+            <li>Compliance requirements varied from provider to provider</li>
+          </ul>
+        </section>
+        <section class="cs-sec" id="a3-options" data-sec>
+          <h2>Options considered</h2>
+          <div class="cs-opts">
+            <div class="cs-opt v-rejected"><span class="cs-v"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7m0-7l-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Rejected</span><b>Keep integrating each provider separately</b>
+              <p>Every team repeated the work for every provider.</p>
+            </div>
+            <div class="cs-opt v-chosen"><span class="cs-v"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Chosen</span><b>An abstraction layer with one simplified API</b>
+              <p>Integrate once, use any provider behind it.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a3-decisions" data-sec>
+          <h2>Key decisions</h2>
+          <div class="cs-decs">
+            <div class="cs-dec"><span>Decision 1</span><b>Start with three providers</b>
+              <p>Launched with our own payment gateway and two outside PSPs before adding any more.</p>
+            </div>
+            <div class="cs-dec"><span>Decision 2</span><b>One API, two ways in</b>
+              <p>Offered as an SDK or a direct API, so internal teams and clients could integrate the way that fit them.</p>
+            </div>
+            <div class="cs-dec"><span>Decision 3</span><b>Add providers by priority</b>
+              <p>Grew to more than 40 providers, one at a time, as client and market needs came up.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a3-tradeoffs" data-sec>
+          <h2>Trade-offs</h2>
+          <div class="cs-trades">
+            <div class="cs-trade"><b>A common API</b><span>over</span><s>Every provider’s unique features</s>
+              <p>Some provider-specific features weren’t exposed, in exchange for one integration that works with every provider.</p>
+            </div>
+          </div>
+        </section>
+        <section class="cs-sec" id="a3-execution" data-sec>
+          <h2>How it shipped</h2>
+          <ol class="cs-steps">
+            <li><span>2023</span>Zero to one: the orchestration layer and its API, launched with our own gateway and two outside PSPs</li>
+            <li><span>2023 onward</span>One to 100: providers added one by one, in priority order, to more than 40</li>
+          </ol>
+        </section>
+        <section class="cs-sec" id="a3-lessons" data-sec>
+          <h2>What I’d carry forward</h2>
+          <ul class="cs-list">
+            <li>Design the abstraction around the most different provider, not the first one.</li>
+            <li>Prioritize providers by client demand, not by how easy they are to integrate.</li>
+          </ul>
+        </section>
+        <aside class="askc" aria-labelledby="askc-3"><span class="ij-av lg" aria-hidden="true">DK</span>
+          <div>
+            <h2 id="askc-3">Ask Drake about this case</h2>
+            <p>Pre-written answers from the interview room, with the evidence attached.</p>
+            <div class="askc-chips"><button class="ij-chip" type="button" data-ask="eng">How do you work with engineering?</button><button class="ij-chip" type="button" data-ask="notbuild">How do you decide what not to build?</button></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <nav class="w pn" aria-label="More case studies"><a href="#case-2" data-go="case-2"><span>Previous</span>From payment gateway to payments platform</a><a href="#case-1" data-go="case-1"><span>Next</span>An in-house payment gateway, live in under a year</a></nav>
+  </article>
+  <!-- ============ ABOUT ============ -->
+  <div data-view="about" hidden>
+    <header class="w ch"><span class="tag">About</span>
+      <h1 class="grad">Builder at heart. Strategist by instinct. Leader by experience.</h1>
+      <p class="lede">I’m Drake, a senior product manager based in Charlotte, NC. I like owning the hard part of a product and working close to the engineers who build it. Former digital nomad, digital privacy advocate, PMP and CSPO.</p>
+    </header>
+    <div class="w sec">
+      <ul class="feat two">
+        <li>
+          <h3>Engineering</h3>
+          <p>I work at the level of the build: schema-level specs, API design with the system architect, and prototypes when they help.</p>
+        </li>
+        <li>
+          <h3>Compliance</h3>
+          <p>Rules are designed with compliance leadership and built into the product, not bolted on afterwards.</p>
+        </li>
+        <li>
+          <h3>Leadership</h3>
+          <p>I propose the roadmap and own the product decisions; budget and direction are agreed with the C-level team.</p>
+        </li>
+        <li>
+          <h3>Sales and customer success</h3>
+          <p>The people closest to clients bring me the problems. I turn the biggest ones into the roadmap.</p>
+        </li>
+        <li>
+          <h3>Data</h3>
+          <p>Where a change can be tested, it is. An A/B test, not an opinion, picked our onboarding vendor.</p>
+        </li>
+        <li>
+          <h3>Based in</h3>
+          <p>Charlotte, NC. Remote-first, open to hybrid or on-site.</p>
+        </li>
+      </ul>
+    </div>
+    <!-- Fills the testimonials space until consented quotes exist -->
+    <div class="w sec">
+      <div class="next-cta">
+        <div>
+          <h2 class="grad">Want the full story?</h2>
+          <p>The platform case study covers the decisions, the trade-offs and what I’d carry forward.</p>
+        </div>
+        <div class="ctas"><a class="btn" href="#case-2" data-go="case-2">Read the platform case study</a><button class="btn ghost" type="button" data-contact-open>Send a message</button></div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="w fin"><span>© 2026 Drake Kutz</span><span>Draft for review. Not published.</span><button class="kbtn" data-cmdk-open>Press <kbd>⌘K</kbd> to navigate</button></div>
+</footer>
+<!-- ============ COMMAND MENU (⌘K) ============ -->
+<div class="cmdk" id="cmdk" hidden role="dialog" aria-modal="true" aria-label="Command menu">
+  <div class="ck-panel">
+    <div class="ck-top"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="cmdkIn" type="text" placeholder="Search pages, case studies and actions" aria-label="Search commands" aria-controls="cmdkList" autocomplete="off"><kbd>esc</kbd></div>
+    <ul id="cmdkList" role="listbox" aria-label="Commands">
+      <li class="ck-g" data-grp="Go to" role="presentation">Go to</li>
+      <li role="option" id="ck1" data-g="Go to" aria-selected="false" data-go="home"><span>Home</span></li>
+      <li role="option" id="ck2" data-g="Go to" aria-selected="false" data-go="home" data-anchor="work"><span>Selected work</span></li>
+      <li role="option" id="ck3" data-g="Go to" aria-selected="false" data-go="about"><span>About</span></li>
+      <li role="option" id="ck4" data-g="Go to" aria-selected="false" data-go="home" data-anchor="contact"><span>Contact</span></li>
+      <li class="ck-g" data-grp="Case studies" role="presentation">Case studies</li>
+      <li role="option" id="ck5" data-g="Case studies" aria-selected="false" data-go="case-1"><span>An in-house payment gateway, live in under a year</span><em>Zero to one</em></li>
+      <li role="option" id="ck6" data-g="Case studies" aria-selected="false" data-go="case-2"><span>From payment gateway to payments platform</span><em>One to 100</em></li>
+      <li role="option" id="ck7" data-g="Case studies" aria-selected="false" data-go="case-3"><span>One API for every payment provider</span><em>Orchestration</em></li>
+      <li class="ck-g" data-grp="Actions" role="presentation">Actions</li>
+      <li role="option" id="ck8" data-g="Actions" aria-selected="false" data-contact-open><span>Send a message</span></li>
+      <li role="option" id="ck9" data-g="Actions" aria-selected="false" data-link="linkedin" data-cta="Opens Drake’s LinkedIn profile."><span>Open LinkedIn</span></li>
+      <li id="cmdkEmpty" class="ck-empty" hidden role="presentation">No matches. Try “platform” or “message”.</li>
+    </ul>
+    <div class="ck-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
+  </div>
+</div>
+
+<!-- ============ INTERVIEW ROOM: the chat widget ============ -->
+<!-- Launcher in the corner → compact panel → full-screen chat app; phones get a full-screen sheet.
+     data-mode is closed | compact | expanded | sheet. The INTERVIEW ROOM script fills the lists and messages. -->
+<div class="ij" id="ij" data-mode="closed">
+  <div class="ij-scrim" data-ij="collapse" aria-hidden="true"></div>
+  <div class="ij-nudge" id="ijNudge" hidden>
+    <button class="ij-nudge-open" type="button" data-ij="nudge"><span class="ij-av sm" aria-hidden="true">DK</span><span>Hiring for a product role? Ask me what panels usually ask.</span></button>
+    <button class="ij-icon ij-nudge-x" type="button" data-ij="dismiss" aria-label="Dismiss"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 5.5l9 9m0-9l-9 9"/></svg></button>
+  </div>
+  <button class="ij-launch" id="ijLaunch" type="button" data-ij="launch" aria-controls="ijPanel" aria-expanded="false" aria-label="Ask Drake">
+    <span class="ij-av" aria-hidden="true">DK<i class="ij-dot"></i></span>
+    <span class="ij-launch-l">Ask Drake</span>
+    <svg class="ij-chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>
+  </button>
+  <section class="ij-panel" id="ijPanel" role="dialog" aria-labelledby="ijTitle" hidden>
+    <div class="ij-wrap">
+      <!-- Sidebar: shown when the panel is at least 860px wide (the expanded view on desktop) -->
+      <aside class="ij-side" aria-label="Interview room">
+        <div class="ij-prof"><span class="ij-av lg" aria-hidden="true">DK</span><div><b>Drake Kutz</b><span>Senior Product Manager</span></div></div>
+        <p class="ij-status loc"><i></i>Charlotte, NC · Remote US</p>
+        <div class="ij-side-acts">
+          <button class="ij-sbtn" type="button" data-ij="new"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5H5A1.5 1.5 0 003.5 5v10A1.5 1.5 0 005 16.5h10a1.5 1.5 0 001.5-1.5v-5"/><path d="M14.2 3.3a1.4 1.4 0 012 2L10 11.5l-2.5.5.5-2.5z"/></svg>New chat</button>
+          <button class="ij-sbtn" type="button" data-ij="all" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5.5h9.5M7 10h9.5M7 14.5h9.5M3.5 5.5h.01M3.5 10h.01M3.5 14.5h.01"/></svg>Read all answers</button>
+        </div>
+        <div class="ij-qs" id="ijQs" role="group" aria-label="All ten questions"></div>
+        <div class="ij-cases"><p>Prefer to read? Case studies</p><ul id="ijCases"></ul></div>
+        <div class="ij-side-foot"><button class="btn sm" type="button" data-contact-open>Send a message</button><a class="btn sm ghost" href="#" data-link="linkedin" data-cta="Opens Drake’s LinkedIn profile.">LinkedIn</a></div>
+      </aside>
+      <div class="ij-main">
+        <header class="ij-head">
+          <span class="ij-av" aria-hidden="true">DK<i class="ij-dot"></i></span>
+          <div class="ij-ttl"><h2 id="ijTitle" tabindex="-1">Ask Drake</h2><p><span class="ij-sub-long">Interview room · written answers</span><span class="ij-sub-short">Written answers</span></p></div>
+          <div class="ij-tools">
+            <button class="ij-icon ij-allbtn" type="button" data-ij="all" aria-pressed="false" aria-label="Read all answers" title="Read all answers"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5.5h9.5M7 10h9.5M7 14.5h9.5M3.5 5.5h.01M3.5 10h.01M3.5 14.5h.01"/></svg></button>
+            <button class="ij-icon" type="button" data-ij="new" aria-label="New chat" title="New chat"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5H5A1.5 1.5 0 003.5 5v10A1.5 1.5 0 005 16.5h10a1.5 1.5 0 001.5-1.5v-5"/><path d="M14.2 3.3a1.4 1.4 0 012 2L10 11.5l-2.5.5.5-2.5z"/></svg></button>
+            <button class="ij-icon ij-expand" id="ijExpand" type="button" data-ij="expand" aria-label="Expand to full screen" title="Expand"><svg class="ij-out" viewBox="0 0 20 20" aria-hidden="true"><path d="M12 3.5h4.5V8M8 16.5H3.5V12M16.5 3.5l-5 5M3.5 16.5l5-5"/></svg><svg class="ij-in" viewBox="0 0 20 20" aria-hidden="true"><path d="M15.5 8.5H11.5V4.5M4.5 11.5h4v4M11.5 8.5l5-5M8.5 11.5l-5 5"/></svg></button>
+            <button class="ij-icon" type="button" data-ij="close" aria-label="Close the interview room" title="Close"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 5.5l9 9m0-9l-9 9"/></svg></button>
+          </div>
+        </header>
+        <div class="ij-scroll" id="ijScroll">
+          <div class="ij-log is-empty" id="ijLog"></div>
+          <div class="ij-all" id="ijAll" hidden></div>
+        </div>
+        <div class="ij-sugg" id="ijSugg" role="group" aria-label="Suggested questions" hidden></div>
+        <form class="ij-comp" id="ijForm">
+          <label class="sr" for="ijInput">Ask Drake a question</label>
+          <textarea id="ijInput" rows="1" enterkeyhint="send" autocomplete="off" placeholder="Ask about trade-offs, teams, results…"></textarea>
+          <button class="ij-send" id="ijSend" type="submit" aria-label="Send" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5.5 9L10 4.5 14.5 9"/></svg></button>
+        </form>
+        <div class="ij-how">
+          <p><span class="tok">[DISCLOSURE: how the answers are written, chosen in round 2]</span> <button type="button" data-ij="how" aria-expanded="false" aria-controls="ijHow">How this works</button></p>
+          <p id="ijHow" hidden>A typed question is matched to the closest written answer by keywords, and the reply says which answer it matched. Each answer links to the case study behind it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- ============ CONTACT FORM (replaces a published email address) ============ -->
+<dialog class="cf" id="contactDialog" aria-labelledby="cfTitle">
+  <form class="cf-form" id="contactForm" action="https://formspree.io/f/mrbqndeg" method="POST">
+    <div class="cf-head"><h2 id="cfTitle">Send Drake a message</h2><button class="ij-icon" type="button" data-contact-close aria-label="Close"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 5.5l9 9m0-9l-9 9"/></svg></button></div>
+    <input class="cf-hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label for="cfName">Your name</label>
+    <input id="cfName" type="text" name="name" autocomplete="name" required>
+    <label for="cfEmail">Your email</label>
+    <input id="cfEmail" type="email" name="_replyto" autocomplete="email" required>
+    <label for="cfMsg">Message</label>
+    <textarea id="cfMsg" name="message" rows="5" required></textarea>
+    <p class="cf-note">Messages are delivered by Formspree, a form service, after a quick spam check on its page. Your name and email are used only to reply.</p>
+    <div class="cf-acts"><button class="btn" type="submit">Send message</button><button class="btn ghost" type="button" data-contact-close>Cancel</button></div>
+    <p class="cf-status" id="contactStatus" role="status" aria-live="polite"></p>
+  </form>
+</dialog>
+<div class="sr" id="ijAnnounce" aria-live="polite"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+	import '../scripts/home.js';
+</script>
 </BaseLayout>
