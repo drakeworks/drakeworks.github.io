@@ -86,14 +86,17 @@
     </div>
 
     {/* 3 · Payments */}
-    <div class="hd-scene" data-cat="Payments" role="img" aria-label="Payments: a phone checkout sheet pays $240.00, shows processing and then a receipt, while the payment's timeline beside it moves from authorised to screened to settled and a payment.settled webhook goes out.">
+    <div class="hd-scene" data-cat="Payments" role="img" aria-label="Payments: a phone checkout lists the order and three ways to pay, by card, Apple Pay or USDC. Its checkout sheet pays $240.00 by card, shows processing and then a receipt, while the payment's timeline beside it moves from authorized to screened to settled and a payment.settled webhook goes out.">
       <div class="sc">
         <div class="ph ios py-ph in" style="--d:0"><div class="ph-s">
           <div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><u></u></span></div>
           <div class="py-shop">
             <div class="py-t"><b>Checkout</b><span class="chip">1 item</span></div>
             <div class="py-item"><i class="tile"></i><span class="sk-l"><i></i><i></i><i></i></span></div>
-            <div class="py-sum"><span><i></i><i></i></span><span><i></i><i></i></span><span><i></i><i></i></span></div>
+            <div class="py-sum"><span>Subtotal<b>$225.00</b></span><span>Shipping<b>$15.00</b></span></div>
+            <div class="py-pay"><p class="lab">pay with</p><div class="pm on"><i class="cc"></i><span>···· 4242</span><u></u></div></div>
+            <div class="pm"><i class="usdc"></i><span>USDC<span class="net"> · Ethereum</span></span><u></u></div>
+            <div class="pm"><i class="apl"></i><span>Apple Pay</span><u></u></div>
           </div>
           <div class="sheet py-sheet"><i class="grab"></i>
             <div class="stk">
@@ -112,7 +115,7 @@
             <div class="mk-bar"><i></i><i></i><i></i><span><span class="nl">payments — pay_8f2k</span><span class="ns">pay_8f2k</span></span></div>
             <div class="py-amt"><b>$240.00</b><span class="stk"><span class="st wait">Pending</span><span class="st">Settled</span></span></div>
             <div class="tl">
-              <div class="tl-r" style="--d:0"><i></i><div><b>Authorised</b><small>Issuer approved</small></div><em>✓</em></div>
+              <div class="tl-r" style="--d:0"><i></i><div><b>Authorized</b><small>Issuer approved</small></div><em>✓</em></div>
               <div class="tl-r" style="--d:1"><i></i><div><b>Screened</b><small>Risk and sanctions</small></div><em>✓</em></div>
               <div class="tl-r" style="--d:2"><i></i><div><b>Settled</b><small>Ledger updated</small></div><em>✓</em></div>
             </div>
@@ -123,7 +126,7 @@
     </div>
 
     {/* 4 · Digital Assets */}
-    <div class="hd-scene" data-cat="Digital Assets" role="img" aria-label="Digital assets: a wallet app shows balances on Bitcoin, Ethereum, Solana and TRON. A withdrawal of 0.25 ETH to a screened address gets its second approval in the treasury console behind it, going from 1 of 3 to 2 of 3, and then fills its network confirmations.">
+    <div class="hd-scene" data-cat="Digital assets" role="img" aria-label="Digital assets: a wallet app shows balances on Bitcoin, Ethereum, Solana and TRON. A withdrawal of 0.25 ETH to a screened address gets its second approval in the treasury console behind it, going from 1 of 3 to 2 of 3, and then fills its network confirmations.">
       <div class="sc">
         <div class="crop da-crop">
           <div class="mk win da-w in" style="--d:1">
@@ -161,7 +164,7 @@
     </div>
 
     {/* 5 · Mobile Apps */}
-    <div class="hd-scene" data-cat="Mobile Apps" role="img" aria-label="Mobile apps: an iPhone and an Android phone mid-onboarding. One scans an ID and ticks off ID check, selfie and Face ID; the other matches a selfie and turns on biometric login. Both talk to one API, and a push notification arrives to say the account is ready.">
+    <div class="hd-scene" data-cat="Mobile apps" role="img" aria-label="Mobile apps: an iPhone and an Android phone mid-onboarding. One scans an ID and ticks off ID check, selfie and Face ID; the other matches a selfie and turns on biometric login. Both talk to one API, and a push notification arrives to say the account is ready.">
       <div class="sc">
         <svg class="mo-bus" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="l" d="M27.4 79V91.5H65.4V85"/><path class="s" d="M29.2 82V92.5H67.2V86"/><path class="p" d="M26 75.8V92H74V81.8"/></svg>
         <div class="ph ios mo-a in" style="--d:0"><div class="ph-s">
@@ -193,7 +196,7 @@
     </div>
 
     {/* 6 · Web Apps */}
-    <div class="hd-scene" data-cat="Web Apps" role="img" aria-label="Web apps: a console with a sidebar, role chips and an approvals table, where a cursor approves a pending request and a confirmation appears, while a deploy moves from commit to preview to production.">
+    <div class="hd-scene" data-cat="Web apps" role="img" aria-label="Web apps: a console with a sidebar, role chips and an approvals table, where a cursor approves a pending request and a confirmation appears, while a deploy moves from commit to preview to production.">
       <div class="sc">
         <div class="mk win wa-w in" style="--d:0">
           <div class="mk-bar"><i></i><i></i><i></i><span>console — approvals</span></div>
@@ -417,14 +420,27 @@
 
 /* ---------- 3 · Payments: a phone checkout, beside the payment's timeline ---------- */
 .py-ph{--h:90;left:9%;top:5%}
-.py-shop{display:flex;flex-direction:column;gap:.8em;padding-top:.5em}
+/* The checkout fills the space above the sheet. Its parts wrap into a hidden second column when
+   the phone is too short, so they drop whole, from the bottom (Apple Pay first). */
+.py-shop{flex:1 1 0;min-height:0;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;column-gap:2em;overflow:hidden;padding-top:.5em}
+.py-shop>*{flex:none;width:100%}
+.py-shop>*+*{margin-top:.8em}
+.py-shop>.pm,.py-pay .pm{margin-top:.35em}
 .py-t{display:flex;align-items:center;justify-content:space-between}
 .py-t b{font-size:1.1em}
-.py-item{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:.75em;align-items:center}
-.py-sum{display:grid;gap:.6em;padding-top:.75em;border-top:1px solid var(--mk-line)}
-.py-sum span{display:flex;justify-content:space-between;gap:1em}
-.py-sum i{height:.42em;width:38%;border-radius:3px;background:var(--mk-line)}
-.py-sum i+i{width:22%;background:var(--mk-line2)}
+.py-item{display:grid;grid-template-columns:2.6em minmax(0,1fr);gap:.75em;align-items:center}
+.py-sum{display:grid;gap:.35em;padding-top:.7em;border-top:1px solid var(--mk-line)}
+.py-sum span{display:flex;justify-content:space-between;gap:1em;color:var(--mk-mut);font-size:max(9px,.84em);white-space:nowrap}
+.py-sum b{font-weight:500;color:var(--mk-ink)}
+/* Pay with: the methods one API can route, the card picked (the sheet below pays with it) */
+.pm{display:flex;align-items:center;gap:.6em;padding:.4em .6em;border:1px solid var(--mk-line);border-radius:.55em;background:var(--mk-card);font-size:max(9px,.84em);white-space:nowrap}
+.pm span{color:var(--mk-mut);overflow:hidden;text-overflow:ellipsis}
+.pm.on{border-color:color-mix(in srgb,var(--mk-acc) 60%,transparent)}
+.pm.on span{color:var(--mk-ink)}
+.pm u{flex:none;width:1em;height:1em;margin-left:auto;border-radius:50%;border:1.5px solid var(--mk-line2)}
+.pm.on u{border:.3em solid var(--mk-acc)}
+.apl{width:1.8em;height:1.2em;border-radius:.25em;flex:none;background:#F4F5F7}
+.usdc{width:1.2em;height:1.2em;margin:0 .3em;border-radius:50%;flex:none;background:#4A90E2}
 .tile{aspect-ratio:1;border-radius:.6em;background:linear-gradient(135deg,color-mix(in srgb,var(--mk-acc) 60%,#1A1C22),#1A1C22)}
 .py-sheet .stk{align-items:center}
 .py-s1{display:grid;gap:.5em}
@@ -620,9 +636,12 @@
 .is-run .dp i{animation:ps-dotw .3s ease both;animation-delay:calc(2.4s + var(--d) * 450ms)}
 
 @container hd (max-width:480px){.nw{display:none}}
+@container hd (orientation:landscape) and (max-width:430px){.pm .net{display:none}}
+/* Short stages: the checkout keeps its ways to pay over the order summary */
+@container hd (max-height:300px){.py-sum{display:none}}
 /* Very short landscape stages (667×375): drop a few secondary parts */
 @container hd (orientation:landscape) and (max-height:262px){
-  .py-sum,.coin:nth-child(3),.krow:nth-child(2),.trow:nth-child(n+3),.li:nth-child(n+3){display:none}
+  .coin:nth-child(3),.krow:nth-child(2),.trow:nth-child(n+3),.li:nth-child(n+3){display:none}
   .pl-top{padding:.6em 1em .55em}
 }
 

@@ -3,8 +3,9 @@
 //   - shows one scene at a time. The shown scene has .is-on; .is-run starts its animations and
 //     stays on the outgoing scene until its fade ends, so it doesn't snap back to its first frame
 //   - advances when the active tab's progress bar finishes (data-interval on .hd or a scene, ms)
-//   - hover or focus inside the figure holds the rotation but lets the scene keep moving;
-//     the pause button, a hidden tab or an off-screen figure freezes everything (.is-paused)
+//   - keyboard focus (:focus-visible) inside the figure holds the rotation but lets the scene keep
+//     moving. Hover and clicks don't: the pointer often rests here, and the pause button is how to
+//     stop it. The pause button, a hidden tab or an off-screen figure freezes everything (.is-paused)
 //   - with reduced motion it never advances on its own, and the scenes show their last frame
 // Each .hd element gets el.hd = {go(i), index, paused, reduced}, used by the breakpoint checker.
 const RM = matchMedia("(prefers-reduced-motion: reduce)");
@@ -98,11 +99,9 @@ document.querySelectorAll("[data-hd]").forEach((hd) => {
   });
   play.addEventListener("click", () => { st.held = !st.held; sync(); });
 
-  // Hold while someone is looking at it or using it.
-  hd.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { st.wait = true; sync(); } });
-  hd.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { st.wait = hd.contains(document.activeElement); sync(); } });
-  hd.addEventListener("focusin", () => { st.wait = true; sync(); });
-  hd.addEventListener("focusout", (e) => { if (!hd.contains(e.relatedTarget)) { st.wait = hd.matches(":hover"); sync(); } });
+  // Hold while a control has keyboard focus. Hovering, or focus from a click, doesn't hold.
+  hd.addEventListener("focusin", (e) => { st.wait = e.target.matches(":focus-visible"); sync(); });
+  hd.addEventListener("focusout", (e) => { if (!hd.contains(e.relatedTarget)) { st.wait = false; sync(); } });
 
   // Freeze when nobody can see it.
   const away = () => { st.away = document.hidden || offscreen; sync(); };

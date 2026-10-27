@@ -9,7 +9,7 @@ import { CASE_OPTIONS } from "./case-options";
 import { PHASES as PHASE_BOXES, PRODUCTS } from "./platform-phases";
 
 const PX = {
-  name: "Drake Kutz", first: "Drake", initials: "DK",
+  name: "Drake", first: "Drake", initials: "DK",
   email: "",        // no published address: contact goes through the form (DEC-13)
   resumeUrl: "",    // résumé button off for now
   linkedinUrl: "https://www.linkedin.com/in/drakekutz"
@@ -25,9 +25,9 @@ const INTENTS = [];
 
 // Case studies the chat cites as sources (headline result in "m").
 const CASES = [
-  { id: 1, type: "Zero to one, then one to 100", title: "From a one-line brief to a payments platform", m: "Payment costs −68%, clients 2 → ~20, volume millions → $1B+" },
-  { id: 2, type: "Zero to one, then one to 100", title: "One API for every payment provider", m: "Providers 3 → 40+, integrations per team 1" },
-  ...(CASE_OPTIONS.walletCase ? [{ id: 3, type: "Zero to one", title: "A turnkey wallet, built on our own gateway", m: "Clients 1 → 3, identity checks 24–48 h → instant" }] : [])
+  { id: 1, type: "Build and scale", title: "From a one-line brief to a payments platform", m: "Payment costs −68%, clients 2 → ~20, volume millions → $1B+" },
+  { id: 2, type: "Platform design", title: "One API for every payment provider", m: "Providers 3 → 40+, integrations per team 1" },
+  ...(CASE_OPTIONS.walletCase ? [{ id: 3, type: "Customer-led", title: "A turnkey wallet, built on our own gateway", m: "Clients 1 → 3, identity checks 24–48 h → instant" }] : [])
 ];
 
 // The written answers come in round 2. Each: { id, g, q, kw, ev, next, a }.
@@ -278,27 +278,40 @@ const QA = [];
     s.style.setProperty("--my", e.clientY - r.top + "px");
   }, { passive: true });
 
-  /* ---------- Numbers count up when first seen ---------- */
-  (function countUp() {
-    function run(el) {
-      if (el._done) return;
-      el._done = true;
-      const to = parseFloat(el.dataset.to), pre = el.dataset.pre || "", suf = el.dataset.suf || "";
-      if (reduceMotion.matches) { el.textContent = pre + to + suf; return; }
+  /* ---------- Numbers band: rises in and counts up every time it comes into view ----------
+     The figures rise in one after another, and each [data-to] counts up from data-from (or 0). The band resets
+     only once it's fully out of view, so the reset is never seen; a hidden view counts as out of view, so
+     coming back to the homepage replays it too. The markup holds the final numbers, which is what shows without
+     IntersectionObserver or with reduced motion. */
+  (function numbers() {
+    const band = $(".nums");
+    if (!band || !("IntersectionObserver" in window) || reduceMotion.matches) return;
+    const nums = $$("[data-to]", band);
+    let raf = 0, played = false;
+    const set = (k) => nums.forEach((el) => {
+      const from = +(el.dataset.from || 0), to = +el.dataset.to;
+      el.textContent = Math.round(from + (to - from) * k);
+    });
+    const reset = () => { cancelAnimationFrame(raf); band.classList.remove("is-play"); set(0); };
+    const play = () => {
+      reset();
+      void band.offsetWidth;   // restart the rise animations
+      band.classList.add("is-play");
       let t0 = 0;
       const step = (t) => {
         if (!t0) t0 = t;
-        const p = Math.min(1, (t - t0) / 1200), k = 1 - Math.pow(1 - p, 3);
-        el.textContent = pre + Math.round(to * k) + suf;
-        if (p < 1) requestAnimationFrame(step);
+        const p = Math.min(1, (t - t0) / 1200);
+        set(1 - Math.pow(1 - p, 3));
+        if (p < 1) raf = requestAnimationFrame(step);
       };
-      requestAnimationFrame(step);
-    }
-    if (!("IntersectionObserver" in window)) { $$("[data-to]").forEach(run); return; }
-    const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } }), { threshold: 0.4 });
-    const scan = () => $$("[data-view]:not([hidden]) [data-to]").forEach((el) => { if (!el._done) io.observe(el); });
-    scan();
-    doc.addEventListener("viewchange", () => setTimeout(scan, 30));
+      raf = requestAnimationFrame(step);
+    };
+    band.classList.add("is-armed");
+    reset();
+    new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) { if (played) { played = false; reset(); } return; }
+      if (!played && e.intersectionRatio >= 0.4) { played = true; play(); }
+    }), { threshold: [0, 0.4, 1] }).observe(band);
   })();
 
   /* ---------- Case pages: the contents rail follows the section in view ---------- */
