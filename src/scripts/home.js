@@ -1,8 +1,13 @@
 /* =========================================================================
    CONTENT — what the scripts need: contact details, the case index the chat
    cites and the written interview answers. DRAFT for review: the interview
-   room is off (CHAT_OPTIONS.enabled) until its answers are written in round 2.
+   room is off (CHAT_OPTIONS.enabled in chat-options.ts) until its answers are
+   written in round 2.
    ========================================================================= */
+import { CHAT_OPTIONS } from "./chat-options";
+import { CASE_OPTIONS } from "./case-options";
+import { PHASES as PHASE_BOXES, PRODUCTS } from "./platform-phases";
+
 const PX = {
   name: "Drake Kutz", first: "Drake", initials: "DK",
   email: "",        // no published address: contact goes through the form (DEC-13)
@@ -10,25 +15,19 @@ const PX = {
   linkedinUrl: "https://www.linkedin.com/in/drakekutz"
 };
 
-// Chat widget options.
-const CHAT_OPTIONS = {
-  enabled: false,  // feature flag: the interview room and "Ask about this case" stay hidden until round 2
-  nudge: false     // true: once per visit on desktop, a speech bubble by the chat button invites questions
-};
-
 const GROUPS = ["Strategy", "Execution", "Leadership", "Fit"];
 
 // The question each case study's "Ask about this case" block leads with.
-const ASK_FOR = { 1: "zero", 2: "tradeoff", 3: "eng" };
+const ASK_FOR = { 1: "zero", 2: "eng", 3: "measure" };
 
 // Small talk the chat answers when no written answer matches (round 2).
 const INTENTS = [];
 
 // Case studies the chat cites as sources (headline result in "m").
 const CASES = [
-  { id: 1, type: "Zero to one", title: "An in-house payment gateway, live in under a year", m: "68% lower payment costs than the vendors it replaced" },
-  { id: 2, type: "One to 100", title: "From payment gateway to payments platform", m: "Clients 2 → 20, volume millions → $1B+" },
-  { id: 3, type: "Zero to one, then one to 100", title: "One API for every payment provider", m: "3 → 40+ providers behind one API" }
+  { id: 1, type: "Zero to one, then one to 100", title: "From a one-line brief to a payments platform", m: "Payment costs −68%, clients 2 → ~20, volume millions → $1B+" },
+  { id: 2, type: "Zero to one, then one to 100", title: "One API for every payment provider", m: "Providers 3 → 40+, integrations per team 1" },
+  ...(CASE_OPTIONS.walletCase ? [{ id: 3, type: "Zero to one", title: "A turnkey wallet, built on our own gateway", m: "Clients 1 → 3, identity checks 24–48 h → instant" }] : [])
 ];
 
 // The written answers come in round 2. Each: { id, g, q, kw, ev, next, a }.
@@ -79,7 +78,7 @@ const QA = [];
     const isCase = view.startsWith("case");
     $$("[data-nav] [data-go]").forEach((a) => {
       const g = a.dataset.go;
-      const on = (g === view && !a.hasAttribute("data-anchor")) || (isCase && (a.hasAttribute("data-work") || g === "work"));
+      const on = (g === view && !a.hasAttribute("data-anchor")) || (isCase && a.hasAttribute("data-work"));
       if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
     });
   }
@@ -182,11 +181,6 @@ const QA = [];
   });
 
   /* ---------- Copy to clipboard ---------- */
-  $$("[data-copy]").forEach((b) => {
-    b.dataset.copy = PX.email;
-    const l = $(".cl", b);
-    if (l) l.textContent = l.textContent.replace(/\S+@\S+/, PX.email);
-  });
   doc.addEventListener("click", (e) => {
     const b = e.target.closest && e.target.closest("[data-copy]");
     if (!b) return;
@@ -247,6 +241,7 @@ const QA = [];
     // After an item runs, keep focus where its action put it (a new page's heading); otherwise go back.
     function afterRun() { const a = doc.activeElement; if (!a || a === doc.body || ck.contains(a)) restore(); }
     doc.addEventListener("keydown", (e) => {
+      if (doc.querySelector("dialog[open]")) return;   // a modal dialog (the contact form) makes the menu inert, so leave its keys alone
       if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) { e.preventDefault(); if (ck.hidden) open(); else dismiss(); return; }
       if (ck.hidden) return;
       if (e.key === "Escape") { e.preventDefault(); dismiss(); }
@@ -272,27 +267,6 @@ const QA = [];
       const k = visible().indexOf(o);
       if (k > -1 && k !== idx) { idx = k; mark(); }
     });
-  })();
-
-  /* ---------- Hero visual: tilts flat as it scrolls into view ---------- */
-  (function tilt() {
-    const el = $("#tilt");
-    if (!el) return;
-    let queued = false;
-    function update() {
-      queued = false;
-      if (reduceMotion.matches) { el.style.removeProperty("--rx"); el.style.removeProperty("--sc"); return; }
-      const r = el.getBoundingClientRect(), vh = innerHeight;
-      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.9)));
-      el.style.setProperty("--rx", (22 * (1 - p)).toFixed(2) + "deg");
-      el.style.setProperty("--sc", (0.94 + 0.06 * p).toFixed(3));
-    }
-    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    update();
-    addEventListener("scroll", queue, { passive: true });
-    addEventListener("resize", queue);
-    reduceMotion.addEventListener("change", update);
-    doc.addEventListener("viewchange", () => setTimeout(update, 20));
   })();
 
   /* ---------- Cursor-following borders on cards ---------- */
@@ -358,12 +332,7 @@ const QA = [];
      ========================================================================= */
   (function interviewRoom() {
     const ij = $("#ij");
-    if (!ij) return;
-    if (!CHAT_OPTIONS.enabled) {   // feature flag: off until the answers are written
-      ij.hidden = true;
-      $$(".askc").forEach((a) => { a.hidden = true; });
-      return;
-    }
+    if (!ij || !CHAT_OPTIONS.enabled) return;   // feature flag: off until the answers are written, and its markup isn't rendered
     /* ---------- Matching a typed question to a written answer ----------
        Deterministic and explainable: keywords count only at the start of a word
        (so "skills" doesn't match "kill"), longer keywords score higher, and words
@@ -890,7 +859,7 @@ const QA = [];
   /* ---------- Hero headline: each line stays on one line. CSS scales it to the column (cqi);
      this only shrinks it further if a fallback font runs wider than Inter. ---------- */
   (function fitHeadline() {
-    const h = $(".napkin h1");
+    const h = $(".hr h1");
     if (!h) return;
     const lines = $$(".ln", h);
     let queued = false;
@@ -907,11 +876,153 @@ const QA = [];
     if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(fit);
   })();
 
-  /* ---------- "Where I’ve built" ticker: the button pauses and resumes it (hover and focus pause it too) ---------- */
-  (function ticker() {
-    const t = $(".tick"), b = t && $(".tick-btn", t);
-    if (!b) return;
-    b.addEventListener("click", () => b.setAttribute("aria-pressed", String(t.classList.toggle("is-paused"))));
+  /* ---------- Flagship case: the platform diagram stays pinned while the three chapters scroll past (wide,
+     tall screens only; elsewhere each chapter shows a still copy). Each chapter rebuilds it: boxes that stay
+     slide over, boxes that go fade out, new boxes fade in and connect. Lights show payments, weighted per
+     phase and busier each phase. ---------- */
+  (function platformStory() {
+    const sec = $(".fl-story"), pin = sec && $(".st-pin", sec), arch = pin && $(".mk-arch", pin);
+    if (!arch || !("IntersectionObserver" in window)) return;
+    const EASE = "cubic-bezier(.2,.7,.2,1)";
+    // The boxes and labels per phase come from platform-phases.ts. Here: how many lights start at each
+    // product (gateway busiest, then wallet, then treasury; the console rarely) and end at each network
+    // (busiest 4 : second 2 : normal 1), and the average ms between payments.
+    const LIGHTS = [
+      { every: 1000, from: { gw: 20, con: 1 }, to: { tron: 4, eth: 2 } },
+      { every: 480, from: { gw: 20, wal: 10, con: 1 }, to: { tron: 4, eth: 2, bsc: 1, sol: 1, btc: 1 } },
+      { every: 200, from: { gw: 20, wal: 10, tre: 5, con: 1 }, to: { tron: 4, eth: 2, bsc: 1, sol: 1, btc: 1 } }
+    ];
+    const PHASES = PHASE_BOXES.map((p, i) => ({ ...p, ...LIGHTS[i] }));
+    const fx = $(".st-fx", arch), stat = $(".mk-stat", arch), title = $(".st-title", pin), steps = $$(".st-step", sec);
+    const nodes = new Map($$("[data-n]", arch).map((n) => [n.dataset.n, n]));
+    let phase = 0, anims = [], readyAt = 0;
+
+    function run(el, frames, opts, drop) {
+      const a = el.animate(frames, opts);
+      anims.push(a);
+      if (drop) a.onfinish = () => el.remove();
+    }
+    // Where each shown box sits, relative to the effects layer.
+    function measure() {
+      const b = fx.getBoundingClientRect(), m = new Map();
+      nodes.forEach((n, k) => {
+        if (n.hidden) return;
+        const r = n.getBoundingClientRect();
+        m.set(k, { x: r.left - b.left, y: r.top - b.top, w: r.width, h: r.height });
+      });
+      return m;
+    }
+    // A leaving box is copied onto the effects layer, so it can animate out after the real one is hidden.
+    function ghost(k, f) {
+      const g = nodes.get(k).cloneNode(true);
+      g.hidden = false;
+      g.removeAttribute("data-n");
+      g.classList.add("st-ghost");
+      g.style.cssText = `left:${f.x}px;top:${f.y}px;width:${f.w}px;height:${f.h}px`;
+      fx.append(g);
+      return g;
+    }
+    // An arriving box fades in, its connector draws in (down to the core, or down from it to a
+    // destination), and its border glows for a moment. A browser that can't animate a pseudo-element
+    // would apply the clip to the whole box, so there the connector just appears.
+    const LINES = typeof KeyframeEffect === "function" && "pseudoElement" in KeyframeEffect.prototype;
+    function arrive(n, delay) {
+      run(n, [{ opacity: 0, transform: "translateY(8px) scale(.86)" }, { opacity: 1, transform: "none" }], { duration: 480, delay, easing: EASE, fill: "backwards" });
+      if (LINES) run(n, [{ clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0 0)" }], { pseudoElement: n.classList.contains("up") ? "::after" : "::before", duration: 360, delay: delay + 300, easing: "ease-out", fill: "backwards" });
+      const lit = { borderColor: "rgba(140,155,255,.95)", boxShadow: "0 0 0 3px rgba(140,155,255,.18)" };
+      run(n, [lit, { ...lit, offset: 0.4 }, { borderColor: "rgba(255,255,255,.14)", boxShadow: "0 0 0 0 rgba(140,155,255,0)" }], { duration: 2200, delay: delay + 250, easing: "ease-out" });
+    }
+    // FLIP from the old layout (first) to the new one (last).
+    function move(first, last) {
+      let p = 0, q = 0;
+      last.forEach((l, k) => {
+        const f = first.get(k);
+        if (f && (Math.abs(f.x - l.x) > 0.5 || Math.abs(f.y - l.y) > 0.5)) run(nodes.get(k), [{ transform: `translate(${f.x - l.x}px,${f.y - l.y}px)` }, { transform: "none" }], { duration: 700, easing: EASE });
+      });
+      first.forEach((f, k) => {
+        if (!last.has(k)) run(ghost(k, f), [{ opacity: 1 }, { opacity: 0, transform: "scale(.85)" }], { duration: 300, easing: "ease-in", fill: "forwards" }, true);
+      });
+      last.forEach((l, k) => {
+        if (!first.has(k)) { const n = nodes.get(k); arrive(n, n.classList.contains("up") ? 220 + p++ * 150 : 440 + q++ * 150); }
+      });
+    }
+    function setPhase(i) {
+      if (i === phase) return;
+      const P = PHASES[i], animate = !reduceMotion.matches, first = animate && measure();
+      anims.forEach((a) => a.cancel());
+      anims = [];
+      fx.replaceChildren();   // copies and lights from the last phase go too
+      nodes.forEach((n, k) => { n.hidden = !P.on.includes(k); });
+      phase = i;
+      arch.dataset.phase = String(i + 1);
+      arch.setAttribute("aria-label", `Platform diagram, phase ${i + 1}: ${P.say}`);
+      title.textContent = `platform — ${P.count} products, one core`;
+      stat.innerHTML = `<span><b>${P.on.filter((k) => PRODUCTS.includes(k)).length}</b> products</span><span><b>1</b> shared core</span>`;
+      steps.forEach((s, j) => s.classList.toggle("on", j === i));
+      if (!animate) return;
+      readyAt = performance.now() + 1400;   // lights wait until the new boxes have landed and connected
+      run(title, [{ opacity: 0 }, { opacity: 1 }], { duration: 500 });
+      run($("b", stat), [{ transform: "translateY(70%)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 420, delay: 200, easing: EASE, fill: "backwards" });
+      move(first, measure());
+    }
+
+    /* Lights: each payment leaves a product for the core, and 420ms later another leaves the core for a
+       destination. Both ends are dealt from shuffled decks built from the phase's weights, so the mix
+       holds over every few seconds, not just on average. */
+    const decks = {};
+    function deal(side) {
+      const key = side + phase;
+      if (!decks[key] || !decks[key].length) {
+        const w = PHASES[phase][side], d = [];
+        Object.keys(w).forEach((k) => { for (let c = 0; c < w[k]; c++) d.push(k); });
+        for (let j = d.length - 1; j > 0; j--) { const r = Math.floor(Math.random() * (j + 1)); [d[j], d[r]] = [d[r], d[j]]; }
+        decks[key] = d;
+      }
+      return nodes.get(decks[key].pop());
+    }
+    function light(n, fromProduct) {
+      const len = parseFloat(getComputedStyle(arch).getPropertyValue("--gap")) || 26;   // the connector's length
+      const b = fx.getBoundingClientRect(), r = n.getBoundingClientRect(), d = doc.createElement("i");
+      d.className = "st-dot";
+      d.style.cssText = `left:${r.left + r.width / 2 - b.left}px;top:${(fromProduct ? r.bottom : r.top - len) - b.top}px`;
+      fx.append(d);
+      d.animate([{ transform: "translate(-50%,-50%)", opacity: 0 }, { opacity: 1, offset: 0.2 }, { opacity: 1, offset: 0.8 }, { transform: `translate(-50%,calc(-50% + ${len}px))`, opacity: 0 }], { duration: 560 }).onfinish = () => d.remove();
+    }
+    let seen = false, timer = 0;
+    function tick() {
+      clearTimeout(timer);
+      if (!seen || doc.hidden || reduceMotion.matches) return;
+      const wait = readyAt - performance.now();
+      if (wait > 0) { timer = setTimeout(tick, wait); return; }
+      const at = phase;
+      light(deal("from"), true);
+      setTimeout(() => { if (seen && !doc.hidden && phase === at && performance.now() >= readyAt) light(deal("to"), false); }, 420);
+      timer = setTimeout(tick, PHASES[at].every * (0.6 + Math.random() * 0.8));
+    }
+    new IntersectionObserver((es) => { seen = es[es.length - 1].isIntersecting; tick(); }).observe($(".mk", pin));
+    doc.addEventListener("visibilitychange", tick);
+    reduceMotion.addEventListener("change", tick);
+
+    // The chapter whose top has passed the trigger line sets the phase. The line sits just below the
+    // middle of the screen, so a chapter's opening is readable as it switches. Checked once per frame
+    // while scrolling, so a jump of any size lands on the right phase. While the case is hidden, or the
+    // pin isn't shown (narrow or short screens, where each chapter has its own still), nothing changes.
+    let line = 0, queued = false;
+    function measureLine() { line = Math.min(innerHeight * 0.6, innerHeight - 200); }
+    function pick() {
+      queued = false;
+      if (!pin.getClientRects().length) return;
+      let i = 0;
+      steps.forEach((s, j) => { if (s.getBoundingClientRect().top <= line) i = j; });
+      setPhase(i);
+    }
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(pick); } };
+    const relayout = () => { measureLine(); queue(); };
+    addEventListener("scroll", queue, { passive: true });
+    addEventListener("resize", relayout);
+    doc.addEventListener("viewchange", () => setTimeout(relayout, 30));
+    sec.classList.add("is-live");   // CSS shows the pin (wide, tall screens) only once this script runs
+    relayout();
   })();
 
   /* ---------- Years that count themselves: data-since="2009" shows this year minus 2009 ---------- */
@@ -925,7 +1036,7 @@ const QA = [];
   (function contactForm() {
     const dlg = $("#contactDialog"), form = $("#contactForm"), status = $("#contactStatus");
     if (!dlg || !form) return;
-    let last = null;
+    let last = null, downOnBackdrop = false, upOnBackdrop = false;
     const open = () => {
       last = doc.activeElement;
       status.textContent = "";
@@ -934,10 +1045,14 @@ const QA = [];
     };
     const shut = () => { if (dlg.open) dlg.close(); };
     dlg.addEventListener("close", () => { if (last && doc.contains(last)) try { last.focus({ preventScroll: true }); } catch (_) { /* ignore */ } });
+    // A backdrop click closes it only when the press and the release are both on the backdrop, so a
+    // drag between a field and the backdrop (a text selection, say) doesn't: its click lands on the dialog too.
+    dlg.addEventListener("pointerdown", (e) => { downOnBackdrop = e.target === dlg; });
+    dlg.addEventListener("pointerup", (e) => { upOnBackdrop = e.target === dlg; });
     doc.addEventListener("click", (e) => {
       if (!e.target.closest) return;
       if (e.target.closest("[data-contact-open]")) { e.preventDefault(); open(); return; }
-      if (e.target.closest("[data-contact-close]") || e.target === dlg) shut();
+      if (e.target.closest("[data-contact-close]") || (e.target === dlg && downOnBackdrop && upOnBackdrop)) shut();
     });
     // The form posts normally (no fetch): Formspree's reCAPTCHA rejects AJAX submissions, so the
     // browser goes to Formspree's spam check, then its thank-you page.

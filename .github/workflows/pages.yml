@@ -48,10 +48,20 @@ jobs:
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
 
+      # Keep this step identical in staging-status.yml, build-deploy-production.yml and deploy-to-production.yml
       - name: Check for unpublished editorial markers
         run: |
-          if grep -rnE "TODO\(|EXPERT-CHECK|DATE-LOCK|panel instruction" dist --include='*.html' --include='*.xml' --include='*.json'; then
-            echo "::error::Editorial markers found in built site. Move work in progress to _workbench/."
+          # Fixed strings, one -e each. grep exits 0 on a match, 1 on none and 2 on an error
+          # (such as a missing dist/); only 1 passes.
+          status=0
+          grep -rnoIF \
+            -e 'TODO(' -e 'EXPERT-CHECK' -e 'DATE-LOCK' -e 'panel instruction' \
+            -e 'Jordan Hale' -e 'hale.example' -e 'Kestrel' -e 'Tessel' -e 'Railpay' -e 'Ordinal' -e 'northpoint' \
+            -e 'Sample persona' -e 'fictional' -e 'Illustrative' -e 'Prototype:' \
+            -e '[CANDIDATE' -e '[VERIFIED' -e '[ACTUAL' -e '[CONFIRMED' -e '[EVIDENCE' -e '[DISCLOSURE' -e 'class="tok"' \
+            dist || status=$?
+          if [ "$status" -ne 1 ]; then
+            echo "::error::Editorial markers or placeholder content found in built site, or dist/ couldn't be scanned. Move work in progress to _workbench/."
             exit 1
           fi
 

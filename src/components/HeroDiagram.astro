@@ -1,0 +1,722 @@
+---
+// The home hero's rotating diagram: six product scenes, one per area of work (Platforms, APIs,
+// Payments, Digital Assets, Mobile Apps, Web Apps). Each shows the product itself in the right
+// device, plays a short demo, and carries one small system hint on a flowing connector.
+// hero-rotator.js shows one scene at a time: .is-on marks the visible scene and .is-run starts its
+// animations. The base style of every scene is the end of its demo, so reduced motion and no-JS
+// both show a finished picture. The stage ratio, controls and pause rules live in home.css.
+// Built from _workbench/discovery/prototypes/hero-diagrams/d07-screens.html.
+---
+<div class="hd" data-hd>
+  <div class="hd-stage">
+
+    {/* 1 · Platforms */}
+    <div class="hd-scene" data-cat="Platforms" role="img" aria-label="Platforms: an admin console switches from the consumer app to the business app and then the partner portal, while its shared services panel, with identity, ledger, permissions and audit log, stays the same for every product.">
+      <div class="sc">
+        <div class="mk win pl-w in" style="--d:0">
+          <div class="mk-bar"><i></i><i></i><i></i><span>admin — products</span></div>
+          <div class="pl-top">
+            <div class="sw">
+              <span class="sw-pill"></span>
+              <span class="sw-t t1"><span class="nl">Consumer app</span><span class="ns">Consumer</span></span>
+              <span class="sw-t t2"><span class="nl">Business app</span><span class="ns">Business</span></span>
+              <span class="sw-t t3"><span class="nl">Partner portal</span><span class="ns">Partners</span></span>
+              <span class="cur pl-cur"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1v12.5l3.3-3.1 2.1 4.6 2.2-1-2.1-4.5h4.5z"/></svg><i></i></span>
+            </div>
+            <span class="av pl-av"><b>DK</b></span>
+          </div>
+          <div class="pl-body">
+            <div class="pl-main">
+              <div class="pv v1">
+                <div class="pv-h"><i class="ic" style="--c:var(--mk-acc)"></i><div><b>Consumer app</b><small>Accounts, cards, transfers</small></div></div>
+                <div class="c1"><span class="cardg"></span><div><div class="li"><i></i><span class="sk-l"><i></i><i></i></span></div><div class="li"><i></i><span class="sk-l"><i></i><i></i></span></div><div class="li"><i></i><span class="sk-l"><i></i><i></i></span></div></div></div>
+              </div>
+              <div class="pv v2">
+                <div class="pv-h"><i class="ic" style="--c:var(--mk-warn)"></i><div><b>Business app</b><small>Teams, payouts, invoices</small></div></div>
+                <div><div class="trow"><i></i><i></i><i></i><u></u></div><div class="trow"><i></i><i></i><i></i><u class="wn"></u></div><div class="trow"><i></i><i></i><i></i><u></u></div><div class="trow"><i></i><i></i><i></i><u></u></div></div>
+              </div>
+              <div class="pv v3">
+                <div class="pv-h"><i class="ic" style="--c:var(--mk-acc2)"></i><div><b>Partner portal</b><small>Keys, webhooks, reports</small></div></div>
+                <div style="display:grid;gap:.45em"><div class="krow"><i></i><span></span><i class="tg"></i></div><div class="krow"><i></i><span></span><i class="tg"></i></div><div class="krow"><i></i><span></span><i class="tg off"></i></div></div>
+              </div>
+            </div>
+            <div class="pl-sh">
+              <p class="lab"><span>Shared services</span><span class="po">every product</span></p>
+              <span class="svc" style="--d:0"><i></i>Identity<em>shared</em></span>
+              <span class="svc" style="--d:1"><i></i>Ledger<em>shared</em></span>
+              <span class="svc" style="--d:2"><i></i>Permissions<em>shared</em></span>
+              <span class="svc" style="--d:3"><i></i>Audit log<em>shared</em></span>
+            </div>
+          </div>
+        </div>
+        <div class="hint pl-h in" style="--d:3"><i class="lv"></i><span><b>shared core</b> · <span class="nl">built once, reused by every product</span><span class="ns">built once, reused</span></span></div>
+      </div>
+    </div>
+
+    {/* 2 · APIs */}
+    <div class="hd-scene" data-cat="APIs" role="img" aria-label="APIs: a developer console sends POST /v1/payments with an idempotency key, a 201 Created response with the new payment slides in, and payment.created and payment.settled webhooks are delivered, all through one gateway with keys, rate limits and versions.">
+      <div class="sc">
+        <div class="mk win ap-w in" style="--d:0">
+          <div class="mk-bar"><i></i><i></i><i></i><span>developers — payments api</span></div>
+          <div class="ap-b">
+            <div class="ap-req">
+              <p class="lab">Request</p>
+              <div class="ap-url"><span class="meth">POST</span><code>/v1/payments</code><span class="btn-p ap-send">Send<span class="cur ap-cur"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1v12.5l3.3-3.1 2.1 4.6 2.2-1-2.1-4.5h4.5z"/></svg><i></i></span></span></div>
+              <div class="kv"><span>Idempotency-Key</span><code>7f3c…a21</code></div>
+              <div class="kv"><span>Version</span><code>v1</code></div>
+              <div class="cd">
+                <div class="cd-tabs"><span class="on">node</span><span>python</span><span>curl</span></div>
+                <div class="cl"><span><span class="k">api</span>.payments.create(&#123;</span><span>  amount: <span class="n">24000</span>,</span><span>  currency: <span class="s">"usd"</span></span><span>&#125;)</span></div>
+              </div>
+            </div>
+            <div class="ap-res">
+              <p class="lab">Response <span class="ap-st">201 Created</span></p>
+              <div class="json">
+                <span class="jw"><i></i><i></i><i></i></span>
+                <div class="cl"><span style="--i:0">&#123;</span><span style="--i:1">  "id": <span class="s">"pay_8f2k"</span>,</span><span style="--i:2">  "status": <span class="s">"pending"</span>,</span><span style="--i:3">  "amount": <span class="n">24000</span></span><span style="--i:4">&#125;</span></div>
+              </div>
+              <p class="lab wh">Webhooks</p>
+              <div class="hook h1"><i></i><span>payment.created</span><em>200</em></div>
+              <div class="hook h2"><i></i><span>payment.settled</span><em>200</em></div>
+            </div>
+          </div>
+        </div>
+        <div class="hint ap-h mid in" style="--d:3"><i class="lv"></i><span><b>gateway</b> · keys · rate limits · v1 · v2</span></div>
+      </div>
+    </div>
+
+    {/* 3 · Payments */}
+    <div class="hd-scene" data-cat="Payments" role="img" aria-label="Payments: a phone checkout sheet pays $240.00, shows processing and then a receipt, while the payment's timeline beside it moves from authorised to screened to settled and a payment.settled webhook goes out.">
+      <div class="sc">
+        <div class="ph ios py-ph in" style="--d:0"><div class="ph-s">
+          <div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><u></u></span></div>
+          <div class="py-shop">
+            <div class="py-t"><b>Checkout</b><span class="chip">1 item</span></div>
+            <div class="py-item"><i class="tile"></i><span class="sk-l"><i></i><i></i><i></i></span></div>
+            <div class="py-sum"><span><i></i><i></i></span><span><i></i><i></i></span><span><i></i><i></i></span></div>
+          </div>
+          <div class="sheet py-sheet"><i class="grab"></i>
+            <div class="stk">
+              <div class="py-s1">
+                <div class="prow"><i class="cc"></i><span>···· 4242</span></div>
+                <div class="prow"><span>Total</span><b>$240.00</b></div>
+                <span class="btn-p pbtn">Pay $240.00<i class="tap"></i></span>
+              </div>
+              <div class="py-s2"><i class="spin"></i><span>Processing</span></div>
+              <div class="py-s3"><i class="okc">✓</i><b>Paid $240.00</b><span>Receipt sent</span></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="py-side">
+          <div class="mk win py-card in" style="--d:2">
+            <div class="mk-bar"><i></i><i></i><i></i><span><span class="nl">payments — pay_8f2k</span><span class="ns">pay_8f2k</span></span></div>
+            <div class="py-amt"><b>$240.00</b><span class="stk"><span class="st wait">Pending</span><span class="st">Settled</span></span></div>
+            <div class="tl">
+              <div class="tl-r" style="--d:0"><i></i><div><b>Authorised</b><small>Issuer approved</small></div><em>✓</em></div>
+              <div class="tl-r" style="--d:1"><i></i><div><b>Screened</b><small>Risk and sanctions</small></div><em>✓</em></div>
+              <div class="tl-r" style="--d:2"><i></i><div><b>Settled</b><small>Ledger updated</small></div><em>✓</em></div>
+            </div>
+          </div>
+          <div class="hint py-h"><b>webhook</b> <span>payment.settled</span></div>
+        </div>
+      </div>
+    </div>
+
+    {/* 4 · Digital Assets */}
+    <div class="hd-scene" data-cat="Digital Assets" role="img" aria-label="Digital assets: a wallet app shows balances on Bitcoin, Ethereum, Solana and TRON. A withdrawal of 0.25 ETH to a screened address gets its second approval in the treasury console behind it, going from 1 of 3 to 2 of 3, and then fills its network confirmations.">
+      <div class="sc">
+        <div class="crop da-crop">
+          <div class="mk win da-w in" style="--d:1">
+            <div class="mk-bar"><i></i><i></i><i></i><span>treasury — approvals</span></div>
+            <div class="da-wb">
+              <div class="rail"><i></i><i class="on"></i><i></i><i></i></div>
+              <div class="da-main">
+                <div class="da-hd2"><b>Withdrawal</b><code>0.25 ETH</code><span class="chip">2 of 3</span></div>
+                <div class="apr"><span class="av"><b>P</b></span><span class="sk-l"><i></i><i></i></span><span class="st">Approved</span></div>
+                <div class="apr fl"><span class="av"><b>S</b></span><span class="sk-l"><i></i><i></i></span><span class="stk act"><span class="st">Approved</span><span class="btn-p">Approve</span><span class="cur da-cur"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1v12.5l3.3-3.1 2.1 4.6 2.2-1-2.1-4.5h4.5z"/></svg><i></i></span></span></div>
+                <div class="apr nn"><span class="av"><b>W</b></span><span class="sk-l"><i></i><i></i></span><span class="st mut">Not needed</span></div>
+                <div class="scrrow"><span>✓</span><span><span class="nl">Address screened</span><span class="ns">Screened</span></span><em>clean</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ph ios da-ph in" style="--d:0"><div class="ph-s">
+          <div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><u></u></span></div>
+          <div class="da-hd"><b>Wallet</b><span class="av"><b>DK</b></span></div>
+          <div class="bal">
+            <div class="coin"><i style="--c:var(--mk-warn)"><span>B</span></i><div><b>BTC</b><small>Bitcoin</small></div><code>0.42</code></div>
+            <div class="coin"><i style="--c:var(--mk-acc)"><span>E</span></i><div><b>ETH</b><small>Ethereum</small></div><code>3.20</code></div>
+            <div class="coin"><i style="--c:var(--mk-acc2)"><span>S</span></i><div><b>SOL</b><small>Solana</small></div><code>48.5</code></div>
+            <div class="coin c4"><i style="--c:var(--mk-ok)"><span>T</span></i><div><b>TRX</b><small>TRON</small></div><code>1,250</code></div>
+          </div>
+          <div class="sheet da-sheet"><i class="grab"></i>
+            <div class="da-t"><b>Withdraw</b><code>0.25 ETH</code></div>
+            <div class="da-scr"><span>✓</span><span>Address screened</span></div>
+            <div class="da-ap"><span class="dots"><i>✓</i><i class="n2">✓</i><i class="e">✓</i></span><span class="stk"><span class="cnt c1x">1/3</span><span class="cnt c2x">2/3</span></span><span class="xl">approvals</span></div>
+            <div class="da-cf"><span class="bar"><i></i></span><span class="stk"><span class="cf0">0/12</span><span class="cf1">12/12</span></span></div>
+          </div>
+        </div></div>
+        <div class="hint da-h in" style="--d:3"><i class="lv"></i><span><span class="nw"><b>networks</b> · </span>BTC · ETH · SOL · TRON · BSC</span></div>
+      </div>
+    </div>
+
+    {/* 5 · Mobile Apps */}
+    <div class="hd-scene" data-cat="Mobile Apps" role="img" aria-label="Mobile apps: an iPhone and an Android phone mid-onboarding. One scans an ID and ticks off ID check, selfie and Face ID; the other matches a selfie and turns on biometric login. Both talk to one API, and a push notification arrives to say the account is ready.">
+      <div class="sc">
+        <svg class="mo-bus" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="l" d="M27.4 79V91.5H65.4V85"/><path class="s" d="M29.2 82V92.5H67.2V86"/><path class="p" d="M26 75.8V92H74V81.8"/></svg>
+        <div class="ph ios mo-a in" style="--d:0"><div class="ph-s">
+          <div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><u></u></span></div>
+          <div class="push"><i></i><div><b><span class="xl">You’re verified</span><span class="xs">Verified</span></b><span class="pt"><span class="nl">Your account is ready</span><span class="ns">Account ready</span></span></div></div>
+          <div class="ob">
+            <b class="ob-t"><span class="xl">Verify your ID</span><span class="xs">Verify ID</span></b><span class="ob-p">Three quick steps</span>
+            <div class="idc"><i></i><span class="sk-l"><i></i><i></i><i></i></span><span class="scan"></span></div>
+            <div class="ob-l">
+              <span class="chk" style="--d:0"><i><span>✓</span></i>ID check</span>
+              <span class="chk" style="--d:1"><i><span>✓</span></i>Selfie</span>
+              <span class="chk" style="--d:2"><i><span>✓</span></i>Face ID</span>
+            </div>
+            <span class="btn-p ob-go">Continue</span>
+          </div>
+        </div></div>
+        <div class="ph and mo-b in" style="--d:1"><div class="ph-s">
+          <div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><u></u></span></div>
+          <div class="ob">
+            <b class="ob-t">Take a selfie</b><span class="ob-p">Hold still</span>
+            <div class="face"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="46"/><circle class="fc" cx="50" cy="42" r="15"/><path class="fc" d="M22 82c4-14 15-21 28-21s24 7 28 21c-8 7-18 10-28 10s-20-3-28-10z"/><circle class="arc" cx="50" cy="50" r="46" pathLength="100"/></svg></div>
+            <span class="st match">Selfie matched</span>
+            <div class="tgl"><span><span class="nl">Biometric login</span><span class="ns">Biometrics</span></span><i class="tg"></i></div>
+          </div>
+          <div class="ph-nav"><i></i><i></i><i></i></div>
+        </div></div>
+        <div class="mo-hw"><div class="hint mo-h in" style="--d:3"><i class="lv"></i><span><b>api</b> · <span class="nl">iOS and Android, one contract</span><span class="ns">iOS · Android</span></span></div></div>
+      </div>
+    </div>
+
+    {/* 6 · Web Apps */}
+    <div class="hd-scene" data-cat="Web Apps" role="img" aria-label="Web apps: a console with a sidebar, role chips and an approvals table, where a cursor approves a pending request and a confirmation appears, while a deploy moves from commit to preview to production.">
+      <div class="sc">
+        <div class="mk win wa-w in" style="--d:0">
+          <div class="mk-bar"><i></i><i></i><i></i><span>console — approvals</span></div>
+          <div class="wa-b">
+            <div class="wa-side">
+              <span class="on"><i></i>Approvals<span class="stk"><span class="n3">3</span><span class="n2">2</span></span></span>
+              <span><i></i>Payments</span><span><i></i>Customers</span><span><i></i>Reports</span><span><i></i>Settings</span>
+            </div>
+            <div class="wa-main">
+              <div class="wa-hd"><b>Approvals</b><span class="roles"><span>Admin</span><span class="on">Reviewer</span><span>Viewer</span></span></div>
+              <p class="lab wa-th"><span>Request</span><span>Status</span></p>
+              <div class="wa-r fl"><span class="av"><b>AK</b></span><span class="sk-l"><i></i><i></i></span><span class="stk act"><span class="st">Approved</span><span class="btn-p">Approve</span><span class="cur wa-cur"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1v12.5l3.3-3.1 2.1 4.6 2.2-1-2.1-4.5h4.5z"/></svg><i></i></span></span></div>
+              <div class="wa-r"><span class="av"><b>MR</b></span><span class="sk-l"><i></i><i></i></span><span class="stk act"><span class="st wait">Pending</span></span></div>
+              <div class="wa-r"><span class="av"><b>JT</b></span><span class="sk-l"><i></i><i></i></span><span class="stk act"><span class="st">Approved</span></span></div>
+              <div class="wa-r r4"><span class="av"><b>SN</b></span><span class="sk-l"><i></i><i></i></span><span class="stk act"><span class="st wait">Pending</span></span></div>
+              <div class="wa-toast"><i><span>✓</span></i>Approved<em>· <span class="nl">added to the audit log</span><span class="ns">logged</span></em></div>
+            </div>
+          </div>
+        </div>
+        <div class="hint wa-h mid in" style="--d:3"><b>deploy</b><span class="dp" style="--d:0"><i></i>commit</span>→<span class="dp" style="--d:1"><i></i>preview</span>→<span class="dp" style="--d:2"><i></i>production</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.hd-stage{container:hd/size;--ease:cubic-bezier(.2,.7,.2,1);--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* ---------- The scene canvas ---------- */
+.sc{position:absolute;inset:0;border-radius:16px;border:1px solid var(--line);background:radial-gradient(70% 55% at 20% 0%,rgba(124,140,255,.14),transparent 70%),radial-gradient(55% 45% at 100% 100%,rgba(61,214,198,.06),transparent 70%),var(--surf2);font-size:clamp(9px,2.2cqi,12px);line-height:1.35;color:var(--mk-ink)}
+.sc::before{content:"";position:absolute;inset:0;border-radius:inherit;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:18px 18px;-webkit-mask-image:radial-gradient(75% 70% at 50% 40%,#000,transparent);mask-image:radial-gradient(75% 70% at 50% 40%,#000,transparent);pointer-events:none}
+.crop{position:absolute;inset:0;overflow:hidden;border-radius:15px}
+.nl,.xl{display:inline}.ns,.xs,.po{display:none}
+
+/* Entrance: frames rise in, ordered by --d */
+.is-run .in{animation:ps-scin .7s var(--ease) both;animation-delay:calc(var(--d,0) * 130ms + 80ms)}
+@keyframes ps-scin{from{opacity:0;transform:translateY(.9em)}}
+@keyframes ps-pop{from{opacity:0;transform:scale(.8)}}
+@keyframes ps-fin{from{opacity:0}}
+@keyframes ps-hold{0%,88%{opacity:1}100%{opacity:0}}
+@keyframes ps-mid{0%{opacity:0}12%,88%{opacity:1}100%{opacity:0}}
+@keyframes ps-slup{from{opacity:0;transform:translateY(.8em)}}
+@keyframes ps-sheetup{from{transform:translateY(110%)}}
+@keyframes ps-press{0%,78%{transform:none}84%{transform:scale(.92)}92%,100%{transform:none}}
+@keyframes ps-lit{0%{border-color:var(--mk-line)}22%{border-color:color-mix(in srgb,var(--mk-acc) 75%,transparent)}100%{border-color:var(--mk-line)}}
+@keyframes ps-spin{to{transform:rotate(1turn)}}
+@keyframes ps-flowh{to{background-position:6px 0}}
+@keyframes ps-lvp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mk-acc2) 55%,transparent)}100%{box-shadow:0 0 0 .55em transparent}}
+@keyframes ps-dotw{from{background:var(--mk-line2);box-shadow:none}}
+@keyframes ps-chkw{from{background:var(--mk-line);color:transparent}}
+
+/* ---------- Devices ---------- */
+/* Window: the site's .mk mockup, scaled in em */
+.win{position:absolute;display:flex;flex-direction:column;font-size:1em;line-height:1.35;border-color:rgba(255,255,255,.1);box-shadow:0 28px 60px -26px rgba(0,0,0,.95),0 1px 0 rgba(255,255,255,.05) inset}
+.win>.mk-bar{flex:none;height:2.5em;padding:0 .95em;gap:.45em}
+.win>.mk-bar i{flex:none;width:.7em;height:.7em}
+.win>.mk-bar span{margin-left:.55em;font-size:max(9px,.86em)}
+/* Phone: --h is its height in % of the stage; the width follows a 9:19 screen */
+.ph{position:absolute;z-index:2;height:calc(var(--h) * 1cqb);width:calc(var(--h) * 1cqb * 9 / 19);padding:.42em;border-radius:2.3em;background:linear-gradient(160deg,#272A31,#141619);border:1px solid rgba(255,255,255,.16);box-shadow:0 30px 60px -22px rgba(0,0,0,.95),inset 0 0 0 1px rgba(0,0,0,.6)}
+.ph-s{position:relative;height:100%;border-radius:1.9em;background:var(--mk-bg);overflow:hidden;display:flex;flex-direction:column;padding:0 .85em 1em}
+.ph.ios .ph-s::before{content:"";position:absolute;z-index:5;top:.55em;left:50%;width:30%;height:1.1em;margin-left:-15%;border-radius:1em;background:#000}
+.ph.ios .ph-s::after{content:"";position:absolute;bottom:.38em;left:50%;width:34%;height:.24em;margin-left:-17%;border-radius:1em;background:rgba(255,255,255,.38)}
+.ph.and{border-radius:1.6em}
+.ph.and .ph-s{border-radius:1.2em;padding-bottom:.3em}
+.ph.and .ph-s::before{content:"";position:absolute;z-index:5;top:.7em;left:50%;width:.75em;height:.75em;margin-left:-.375em;border-radius:50%;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.sb{flex:none;display:flex;align-items:center;justify-content:space-between;height:2.2em;padding:0 .45em;font-size:max(9px,.76em)}
+.sb b{font-weight:600}
+.sig{display:flex;align-items:flex-end;gap:2px}
+.sig i{width:2px;border-radius:1px;background:var(--mk-ink)}
+.sig i:nth-child(1){height:4px}.sig i:nth-child(2){height:6px}.sig i:nth-child(3){height:8px}
+.sig u{width:15px;height:7px;margin-left:4px;border-radius:2px;border:1px solid rgba(230,232,235,.55);background:linear-gradient(90deg,var(--mk-ink) 70%,transparent 70%) content-box;padding:1px}
+.ph.and .sb{padding:0 .3em}
+.ph-nav{flex:none;display:flex;justify-content:center;align-items:center;gap:2.2em;height:1.7em;margin-top:auto}
+.ph-nav i{width:.62em;height:.62em;border:1.5px solid var(--mk-mut);opacity:.75}
+.ph-nav i:nth-child(1){border:0;background:var(--mk-mut);clip-path:polygon(100% 0,100% 100%,0 50%)}
+.ph-nav i:nth-child(2){border-radius:50%}
+.ph-nav i:nth-child(3){border-radius:2px}
+/* Bottom sheet inside a phone */
+.sheet{flex:none;margin:auto -.85em -1em;padding:.5em .85em 1.4em;border-radius:1.3em 1.3em 0 0;background:#181A1F;border-top:1px solid var(--mk-line2);box-shadow:0 -14px 26px -14px rgba(0,0,0,.9)}
+.grab{display:block;width:2.6em;height:.24em;border-radius:1em;background:var(--mk-line2);margin:0 auto .7em}
+
+/* Cursor (tip at its left/top) and touch */
+.cur{position:absolute;z-index:6;width:1.35em;height:1.35em;margin:-.085em 0 0 -.13em;transform-origin:.13em .085em;pointer-events:none}
+.cur svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 3px rgba(0,0,0,.65))}
+.cur path{fill:#F4F5F7;stroke:#0A0B0D;stroke-width:1.1;stroke-linejoin:round}
+.cur i{position:absolute;left:-.72em;top:-.77em;width:1.7em;height:1.7em;border-radius:50%;border:1.5px solid var(--mk-acc);opacity:0}
+@keyframes ps-curgo{0%{opacity:0;transform:translate(var(--fx),var(--fy))}12%{opacity:1;transform:translate(var(--fx),var(--fy))}70%{transform:none}80%{transform:scale(.84)}90%,100%{opacity:1;transform:none}}
+@keyframes ps-curclk{0%,78%{opacity:0;transform:scale(.3)}82%{opacity:.95;transform:scale(.6)}100%{opacity:0;transform:scale(1.5)}}
+.tap{position:absolute;left:50%;top:50%;width:2.4em;height:2.4em;margin:-1.2em 0 0 -1.2em;border-radius:50%;background:rgba(255,255,255,.28);box-shadow:0 0 0 1px rgba(255,255,255,.4);opacity:0;pointer-events:none}
+@keyframes ps-tap{0%{opacity:0;transform:scale(.5)}25%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}
+
+/* System hint: a mono chip on a flowing connector */
+.hint{position:absolute;z-index:3;display:flex;align-items:center;gap:.55em;width:max-content;padding:.42em .85em;border-radius:2em;border:1px solid color-mix(in srgb,var(--mk-acc2) 42%,transparent);background:#0C0E11;color:var(--mk-mut);font-family:var(--mono);font-size:max(9px,.84em);line-height:1.3;white-space:nowrap;box-shadow:0 10px 22px -12px #000}
+.hint b{font-weight:500;color:var(--mk-acc2)}
+.hint::before{content:"";position:absolute;bottom:100%;left:var(--cx,50%);width:1px;height:var(--cl,2em);background:repeating-linear-gradient(to bottom,var(--mk-acc2) 0 3px,transparent 3px 6px);background-size:1px 6px;opacity:.85}
+.is-run .hint::before{animation:mkflow 1s linear infinite}
+.lv{width:.5em;height:.5em;border-radius:50%;background:var(--mk-acc2);flex:none}
+.is-run .lv{animation:ps-lvp 2s ease-out 1.2s infinite}
+.mid{left:0;right:0;margin:0 auto}
+
+/* ---------- Shared UI parts ---------- */
+.lab{margin:0;font-family:var(--mono);font-size:max(9px,.78em);color:var(--mk-mut);letter-spacing:.02em;text-transform:lowercase}
+.st{display:inline-block;font-size:max(9px,.8em);padding:.2em .65em;border-radius:.45em;white-space:nowrap;line-height:1.35;background:color-mix(in srgb,var(--mk-ok) 14%,transparent);color:var(--mk-ok)}
+.st.wait{background:color-mix(in srgb,var(--mk-warn) 14%,transparent);color:var(--mk-warn)}
+.st.mut{background:var(--mk-hover);color:var(--mk-mut)}
+.chip{font-size:max(9px,.78em);padding:.15em .6em;border-radius:2em;border:1px solid var(--mk-line2);color:var(--mk-mut);white-space:nowrap}
+.stk{display:grid}
+.stk>*{grid-area:1/1}
+.av{width:2em;height:2em;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid var(--mk-line2);background:var(--mk-surf);color:var(--mk-ink)}
+.av b,.av span{font-size:max(9px,.76em);font-weight:500}
+.sk-l{display:grid;gap:.4em;min-width:0}
+.sk-l i{display:block;height:.42em;border-radius:3px;background:var(--mk-line2)}
+.sk-l i+i{width:62%;background:var(--mk-line)}
+.sk-l i+i+i{width:40%}
+.btn-p{position:relative;display:inline-block;padding:.35em .9em;border-radius:.45em;background:var(--mk-acc);color:var(--mk-on);font-weight:600;font-size:max(9px,.84em);white-space:nowrap;text-align:center}
+
+/* ---------- 1 · Platforms: one admin console, a product switcher, the same shared services ---------- */
+.pl-w{left:4%;top:5%;width:92%;height:76%}
+.pl-top{flex:none;display:flex;align-items:center;gap:1em;padding:.85em 1em .75em}
+.pl-av{margin-left:auto}
+.sw{--tw:8.4em;--st:calc(var(--tw) + .25em);position:relative;display:grid;grid-template-columns:repeat(3,var(--tw));gap:.25em;padding:.25em;border:1px solid var(--mk-line);border-radius:.7em;background:var(--mk-surf)}
+.sw-pill{position:absolute;top:.25em;bottom:.25em;left:.25em;width:var(--tw);border-radius:.5em;background:#24272D;border:1px solid var(--mk-line2);transform:translateX(calc(2 * var(--st)))}
+.sw-t{position:relative;text-align:center;padding:.42em .2em;font-size:max(9px,.88em);color:var(--mk-mut);white-space:nowrap}
+.sw .t3{color:var(--mk-ink)}
+.pl-cur{left:calc(.25em + 2 * var(--st) + var(--tw) * .56);top:1.55em}
+.pl-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 13.5em;gap:1.5em;padding:0 1em 1em}
+.pl-main{position:relative;display:grid;min-width:0;min-height:0;overflow:hidden;padding:.9em;border:1px solid var(--mk-line);border-radius:.7em;background:var(--mk-surf)}
+.pv{grid-area:1/1;display:flex;flex-direction:column;gap:.9em;min-width:0}
+.pv-h{display:flex;align-items:center;gap:.7em;min-width:0}
+.ic{width:2.2em;height:2.2em;border-radius:.6em;flex:none;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 75%,transparent),color-mix(in srgb,var(--c) 18%,transparent))}
+.pv-h b{display:block;font-size:1.04em}
+.pv-h small{display:block;color:var(--mk-mut);font-size:max(9px,.82em);white-space:nowrap}
+.c1{display:grid;grid-template-columns:8em minmax(0,1fr);gap:.9em;align-items:start}
+.cardg{position:relative;aspect-ratio:1.6;border-radius:.6em;background:linear-gradient(135deg,#7C8CFF,#3E4AA0 55%,#20253F);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.cardg::before{content:"";position:absolute;left:12%;top:22%;width:18%;height:20%;border-radius:.2em;background:rgba(255,255,255,.35)}
+.cardg::after{content:"";position:absolute;left:12%;right:30%;bottom:16%;height:.4em;border-radius:3px;background:rgba(255,255,255,.4)}
+.li{display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:.6em;align-items:center;padding:.3em 0}
+.li>i{width:1.7em;height:1.7em;border-radius:50%;background:var(--mk-line)}
+.trow{display:grid;grid-template-columns:1.4em minmax(0,1fr) 3.2em 1.8em;gap:.7em;align-items:center;padding:.5em 0;border-bottom:1px solid var(--mk-line)}
+.trow>i{height:.45em;border-radius:3px;background:var(--mk-line2)}
+.trow>i:first-child{height:1.4em;border-radius:.35em;background:var(--mk-line)}
+.trow>u{height:.9em;border-radius:1em;background:color-mix(in srgb,var(--mk-ok) 30%,transparent)}
+.trow>u.wn{background:color-mix(in srgb,var(--mk-warn) 30%,transparent)}
+.krow{display:grid;grid-template-columns:1.5em minmax(0,1fr) 2.1em;gap:.7em;align-items:center;padding:.5em .6em;border:1px solid var(--mk-line);border-radius:.55em;background:var(--mk-card)}
+.krow>i{height:1.5em;border-radius:.35em;background:color-mix(in srgb,var(--mk-acc2) 25%,transparent)}
+.krow>span{height:.5em;border-radius:3px;background:repeating-linear-gradient(90deg,var(--mk-line2) 0 .5em,transparent .5em .75em)}
+.tg{position:relative;height:1.15em;border-radius:1em;background:var(--mk-ok)}
+.tg::after{content:"";position:absolute;right:.15em;top:.15em;width:.85em;height:.85em;border-radius:50%;background:#fff}
+.tg.off{background:var(--mk-line2)}
+.tg.off::after{right:auto;left:.15em;background:var(--mk-mut)}
+.pl-sh{position:relative;display:flex;flex-direction:column;gap:.4em;min-width:0}
+.pl-sh::before{content:"";position:absolute;right:100%;top:50%;width:1.5em;height:1px;background:repeating-linear-gradient(to right,var(--mk-acc2) 0 3px,transparent 3px 6px);background-size:6px 1px}
+.is-run .pl-sh::before{animation:ps-flowh 1s linear infinite}
+.pl-sh .lab{display:flex;justify-content:space-between;gap:.5em;margin-bottom:.2em;white-space:nowrap}
+.svc{display:flex;align-items:center;gap:.6em;padding:.5em .7em;border:1px solid var(--mk-line);border-radius:.6em;background:var(--mk-card);white-space:nowrap;font-size:max(9px,.92em)}
+.svc>i{width:.55em;height:.55em;border-radius:50%;background:var(--mk-acc2);flex:none}
+.svc em{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:max(9px,.84em);color:var(--mk-acc2)}
+.pl-h{top:86.5%;right:calc(4% + 1em);--cl:5.5cqb}
+.pl-h::before{left:auto;right:6.5em}
+.pv.v1,.pv.v2{opacity:0}
+/* The demo: click Business app, then Partner portal. The shared panel lights up on each switch. */
+.is-run .sw-pill{animation:ps-plpill 3.8s var(--ease) .5s both}
+@keyframes ps-plpill{0%,31%{transform:translateX(0)}37%,65%{transform:translateX(var(--st))}71%,100%{transform:translateX(calc(2 * var(--st)))}}
+.is-run .sw .t1{animation:ps-plt1 3.8s linear .5s both}
+.is-run .sw .t2{animation:ps-plt2 3.8s linear .5s both}
+.is-run .sw .t3{animation:ps-plt3 3.8s linear .5s both}
+@keyframes ps-plt1{0%,31%{color:var(--mk-ink)}35%,100%{color:var(--mk-mut)}}
+@keyframes ps-plt2{0%,31%{color:var(--mk-mut)}35%,65%{color:var(--mk-ink)}69%,100%{color:var(--mk-mut)}}
+@keyframes ps-plt3{0%,65%{color:var(--mk-mut)}69%,100%{color:var(--mk-ink)}}
+.is-run .pl-cur{animation:ps-plcur 3.8s ease-in-out .5s both}
+@keyframes ps-plcur{0%{opacity:0;transform:translate(calc(-1.55 * var(--st)),5.5em)}8%{opacity:1;transform:translate(calc(-1.55 * var(--st)),5.5em)}27%{transform:translate(calc(-1 * var(--st)),0)}30%{transform:translate(calc(-1 * var(--st)),0) scale(.84)}33%{transform:translate(calc(-1 * var(--st)),0)}60%{transform:none}63%{transform:scale(.84)}66%,100%{opacity:1;transform:none}}
+.is-run .pl-cur i{animation:ps-plclk 3.8s linear .5s both}
+@keyframes ps-plclk{0%,29%{opacity:0;transform:scale(.3)}31%{opacity:.95;transform:scale(.6)}40%{opacity:0;transform:scale(1.5)}62%{opacity:0;transform:scale(.3)}64%{opacity:.95;transform:scale(.6)}73%,100%{opacity:0;transform:scale(1.5)}}
+.is-run .pv.v1{animation:ps-plv1 3.8s linear .5s both}
+.is-run .pv.v2{animation:ps-plv2 3.8s var(--ease) .5s both}
+.is-run .pv.v3{animation:ps-plv3 3.8s var(--ease) .5s both}
+@keyframes ps-plv1{0%,31%{opacity:1}34%,100%{opacity:0}}
+@keyframes ps-plv2{0%,32%{opacity:0;transform:translateY(.5em)}38%,64%{opacity:1;transform:none}67%,100%{opacity:0;transform:none}}
+@keyframes ps-plv3{0%,66%{opacity:0;transform:translateY(.5em)}72%,100%{opacity:1;transform:none}}
+.is-run .svc{animation:ps-plsvc 3.8s linear both;animation-delay:calc(.5s + var(--d) * 70ms)}
+@keyframes ps-plsvc{0%,32%{border-color:var(--mk-line)}36%{border-color:color-mix(in srgb,var(--mk-acc2) 70%,transparent)}46%,66%{border-color:var(--mk-line)}70%{border-color:color-mix(in srgb,var(--mk-acc2) 70%,transparent)}80%,100%{border-color:var(--mk-line)}}
+
+/* ---------- 2 · APIs: a developer console. Send a request, the response and a webhook land. ---------- */
+.ap-w{left:4%;top:5%;width:92%;height:75%}
+.ap-b{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr)}
+.ap-req{display:flex;flex-direction:column;gap:.65em;min-width:0;padding:1em;border-right:1px solid var(--mk-line)}
+.ap-res{display:flex;flex-direction:column;gap:.6em;min-width:0;padding:1em;background:#0B0C0F}
+.ap-url{display:flex;align-items:center;gap:.5em;padding:.3em .3em .3em .35em;border:1px solid var(--mk-line2);border-radius:.6em;background:var(--mk-card)}
+.meth{font-family:var(--mono);font-size:max(9px,.78em);font-weight:500;padding:.2em .5em;border-radius:.35em;background:color-mix(in srgb,var(--mk-acc) 18%,transparent);color:var(--mk-acc)}
+.ap-url code{font-family:var(--mono);font-size:max(9px,.84em);white-space:nowrap}
+.ap-send{margin-left:auto}
+.kv{display:flex;justify-content:space-between;gap:1em;padding:0 .2em;font-size:max(9px,.82em);color:var(--mk-mut);white-space:nowrap}
+.kv code{font-family:var(--mono);color:var(--mk-ink)}
+.cd{border:1px solid var(--mk-line);border-radius:.6em;background:var(--mk-surf);overflow:hidden}
+.cd-tabs{display:flex;gap:.2em;padding:.35em .45em;border-bottom:1px solid var(--mk-line);font-family:var(--mono);font-size:max(9px,.76em);color:var(--mk-mut)}
+.cd-tabs span{padding:.1em .5em;border-radius:.35em}
+.cd-tabs .on{background:var(--mk-hover);color:var(--mk-ink)}
+.cl{display:grid;padding:.55em .75em;font-family:var(--mono);font-size:max(9px,.8em);line-height:1.6;white-space:pre}
+.cl .k{color:var(--mk-acc)}.cl .s{color:var(--mk-acc2)}.cl .n{color:#C9CCD3}.cl .m{color:var(--mk-mut)}
+.ap-res .lab{display:flex;align-items:center;gap:.6em}
+.ap-st{margin-left:auto;font-family:var(--mono);text-transform:none;padding:.15em .55em;border-radius:.4em;background:color-mix(in srgb,var(--mk-ok) 14%,transparent);color:var(--mk-ok)}
+.json{position:relative;border:1px solid var(--mk-line);border-radius:.6em;background:var(--mk-surf)}
+.json .jw{position:absolute;inset:.8em .75em;display:grid;align-content:start;gap:.7em;opacity:0}
+.json .jw i{display:block;height:.45em;border-radius:3px;background:var(--mk-line2)}
+.json .jw i:nth-child(2){width:70%}.json .jw i:nth-child(3){width:45%}
+.hook{display:flex;align-items:center;gap:.6em;padding:.45em .6em;border:1px solid var(--mk-line);border-radius:.55em;background:var(--mk-card);font-family:var(--mono);font-size:max(9px,.78em);white-space:nowrap}
+.hook>i{width:.55em;height:.55em;border-radius:50%;background:var(--mk-ok);flex:none}
+.hook em{margin-left:auto;font-style:normal;color:var(--mk-ok)}
+.hook.h2{border-color:color-mix(in srgb,var(--mk-acc2) 45%,transparent)}
+.ap-h{top:86%;--cl:6cqb}
+.ap-cur{left:58%;top:62%;--fx:-9em;--fy:5em}
+.is-run .ap-cur{animation:ps-curgo 1.5s ease-in-out .35s both}
+.is-run .ap-cur i{animation:ps-curclk 1.5s linear .35s both}
+.is-run .ap-send{animation:ps-press 1.5s linear .35s both}
+.is-run .json .jw{animation:ps-mid .75s linear 1.55s both}
+.is-run .json .cl>span{animation:ps-slup .4s var(--ease) both;animation-delay:calc(2.2s + var(--i) * 70ms)}
+.is-run .ap-st{animation:ps-pop .35s var(--ease) 2.25s both}
+.is-run .hook.h1{animation:ps-slup .45s var(--ease) 2.75s both}
+.is-run .hook.h2{animation:ps-slup .45s var(--ease) 3.35s both,ps-lit 1.4s ease-out 3.4s both}
+
+/* ---------- 3 · Payments: a phone checkout, beside the payment's timeline ---------- */
+.py-ph{--h:90;left:9%;top:5%}
+.py-shop{display:flex;flex-direction:column;gap:.8em;padding-top:.5em}
+.py-t{display:flex;align-items:center;justify-content:space-between}
+.py-t b{font-size:1.1em}
+.py-item{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:.75em;align-items:center}
+.py-sum{display:grid;gap:.6em;padding-top:.75em;border-top:1px solid var(--mk-line)}
+.py-sum span{display:flex;justify-content:space-between;gap:1em}
+.py-sum i{height:.42em;width:38%;border-radius:3px;background:var(--mk-line)}
+.py-sum i+i{width:22%;background:var(--mk-line2)}
+.tile{aspect-ratio:1;border-radius:.6em;background:linear-gradient(135deg,color-mix(in srgb,var(--mk-acc) 60%,#1A1C22),#1A1C22)}
+.py-sheet .stk{align-items:center}
+.py-s1{display:grid;gap:.5em}
+.prow{display:flex;align-items:center;gap:.6em;padding:.5em .6em;border:1px solid var(--mk-line);border-radius:.55em;background:var(--mk-card);font-size:max(9px,.86em);white-space:nowrap}
+.prow b{margin-left:auto}
+.prow span{color:var(--mk-mut)}
+.cc{width:1.8em;height:1.2em;border-radius:.25em;flex:none;background:linear-gradient(135deg,var(--mk-acc),#3B4699)}
+.pbtn{display:block;margin-top:.15em;padding:.7em .4em;font-size:max(9px,.9em)}
+.py-s2,.py-s3{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45em;text-align:center}
+.py-s2{opacity:0;color:var(--mk-mut);font-size:max(9px,.88em)}
+.spin{width:1.9em;height:1.9em;border-radius:50%;border:2px solid var(--mk-line2);border-top-color:var(--mk-acc)}
+.okc{width:2.3em;height:2.3em;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;background:color-mix(in srgb,var(--mk-ok) 18%,transparent);color:var(--mk-ok)}
+.py-s3 b{font-size:1.06em}
+.py-s3 span{color:var(--mk-mut);font-size:max(9px,.82em)}
+.py-side{position:absolute;left:51%;top:13%;width:43%;display:flex;flex-direction:column;align-items:center;gap:6cqb}
+.py-side::before{content:"";position:absolute;right:100%;top:5.6em;width:7.9cqi;height:1px;background:repeating-linear-gradient(to right,var(--mk-acc) 0 3px,transparent 3px 6px);background-size:6px 1px}
+.is-run .py-side::before{animation:ps-flowh 1s linear infinite}
+.py-card{position:relative;width:100%}
+.py-amt{display:flex;align-items:center;flex-wrap:wrap;gap:.3em .6em;padding:.8em 1em .3em}
+.py-amt b{font-size:1.15em;margin-right:auto}
+.py-amt .stk{justify-items:end}
+.tl{position:relative;display:grid;padding:.3em 1em .8em}
+.tl::before,.tl::after{content:"";position:absolute;left:calc(1em + .45em - 1px);top:1.5em;bottom:2.2em;width:2px;background:var(--mk-line2)}
+.tl::after{background:var(--mk-ok);transform-origin:top}
+.tl-r{position:relative;display:grid;grid-template-columns:.9em minmax(0,1fr) auto;gap:.75em;align-items:center;padding:.45em 0}
+.tl-r>i{position:relative;z-index:1;width:.9em;height:.9em;border-radius:50%;background:var(--mk-ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--mk-ok) 18%,transparent)}
+.tl-r b{display:block;font-size:max(9px,.95em)}
+.tl-r small{display:block;color:var(--mk-mut);font-size:max(9px,.8em);white-space:nowrap}
+.tl-r em{font-style:normal;color:var(--mk-ok);font-size:max(9px,.9em)}
+.py-h{position:relative}
+.py-h{--cl:6cqb}
+.is-run .py-sheet{animation:ps-sheetup .6s var(--ease) .45s both}
+.is-run .py-s1 .tap{animation:ps-tap .6s ease-out 1.25s both}
+.is-run .py-s1 .pbtn{animation:ps-press .5s linear 1.05s both}
+.py-s1{opacity:0}
+.is-run .py-s1{animation:ps-hold 1.65s linear both}
+.is-run .py-s2{animation:ps-mid 1s linear 1.6s both}
+.is-run .spin{animation:ps-spin .8s linear infinite}
+.is-run .py-s3{animation:ps-pop .45s var(--ease) 2.55s both}
+.is-run .tl-r>i{animation:ps-dotw .3s ease both;animation-delay:calc(1.9s + var(--d) * 560ms)}
+.is-run .tl-r em{animation:ps-pop .35s var(--ease) both;animation-delay:calc(1.9s + var(--d) * 560ms)}
+.is-run .tl::after{animation:ps-tlfill 1.2s linear 1.95s both}
+@keyframes ps-tlfill{from{transform:scaleY(0)}}
+.py-amt .st.wait{opacity:0}
+.is-run .py-amt .st.wait{animation:ps-hold 3.05s linear both}
+.is-run .py-amt .st:not(.wait){animation:ps-pop .35s var(--ease) 3.05s both}
+.is-run .py-h{animation:ps-scin .6s var(--ease) 3.3s both}
+
+/* ---------- 4 · Digital Assets: a wallet app in front of the treasury console ---------- */
+.da-ph{--h:88;left:10%;top:6%;z-index:3}
+.da-w{left:37%;top:11%;width:70%;height:58%;-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent 99%);mask-image:linear-gradient(90deg,#000 80%,transparent 99%)}
+.da-wb{flex:1;min-height:0;display:grid;grid-template-columns:3.4em minmax(0,1fr)}
+.rail{display:flex;flex-direction:column;align-items:center;gap:.8em;padding-top:1em;border-right:1px solid var(--mk-line);background:var(--mk-surf)}
+.rail i{width:1.3em;height:1.3em;border-radius:.35em;background:var(--mk-line)}
+.rail i.on{background:color-mix(in srgb,var(--mk-acc) 45%,transparent)}
+.da-main{display:flex;flex-direction:column;gap:.5em;min-width:0;max-width:22em;padding:1em 1.1em}
+.da-hd2{display:flex;align-items:center;gap:.6em;margin-bottom:.15em;white-space:nowrap}
+.da-hd2 code{font-family:var(--mono);font-size:max(9px,.84em);color:var(--mk-mut)}
+.da-hd2 .chip{margin-left:auto}
+.apr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7em;align-items:center;padding:.42em .6em;border:1px solid var(--mk-line);border-radius:.6em;background:var(--mk-card)}
+.act{position:relative;justify-items:end;align-items:center}
+.scrrow{display:flex;align-items:center;gap:.55em;padding:.42em .6em;border:1px dashed color-mix(in srgb,var(--mk-acc2) 50%,transparent);border-radius:.6em;color:var(--mk-acc2);font-size:max(9px,.84em);white-space:nowrap}
+.scrrow em{margin-left:auto;font-style:normal;color:var(--mk-mut)}
+.da-hd{display:flex;align-items:center;justify-content:space-between;padding:.35em 0 .55em}
+.da-hd b{font-size:1.15em}
+.bal{display:grid}
+.coin{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.6em;align-items:center;padding:.42em 0;border-bottom:1px solid var(--mk-line)}
+.coin>i{width:2em;height:2em;border-radius:50%;display:grid;place-items:center;font-style:normal;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.coin>i span{font-size:max(9px,.8em);font-weight:600}
+.coin b{display:block;font-size:max(9px,.95em)}
+.coin small{display:block;color:var(--mk-mut);font-size:max(9px,.76em);white-space:nowrap}
+.coin code{font-family:var(--mono);font-size:max(9px,.82em)}
+.da-t{display:flex;justify-content:space-between;align-items:baseline;gap:.5em;white-space:nowrap}
+.da-t code{font-family:var(--mono);font-size:max(9px,.86em)}
+.da-scr{display:flex;align-items:center;gap:.45em;margin-top:.4em;font-size:max(9px,.8em);color:var(--mk-acc2);white-space:nowrap}
+.da-ap{display:flex;align-items:center;gap:.55em;margin-top:.6em;font-size:max(9px,.82em);color:var(--mk-mut);white-space:nowrap}
+.dots{display:flex}
+.dots i{width:1.6em;height:1.6em;margin-right:-.3em;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:max(9px,.8em);background:var(--mk-card);border:1px solid color-mix(in srgb,var(--mk-ok) 60%,transparent);color:var(--mk-ok)}
+.dots i.e{border-color:var(--mk-line2);color:transparent}
+.dots+.stk{margin-left:.35em}
+.cnt{font-family:var(--mono);color:var(--mk-ink);font-weight:500}
+.da-cf{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.6em;margin-top:.65em;font-size:max(9px,.78em);color:var(--mk-mut)}
+.da-cf .bar{height:.32em;border-radius:1em;background:var(--mk-line2);overflow:hidden}
+.da-cf .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mk-acc),var(--mk-acc2));transform-origin:left}
+.da-cf .stk{justify-items:end;font-family:var(--mono)}
+.da-h{left:44%;top:80%;--cl:11cqb}
+.da-h::before{left:3em}
+.da-cur{left:55%;top:60%;--fx:-6em;--fy:4.5em}
+.is-run .da-sheet{animation:ps-sheetup .6s var(--ease) .6s both}
+.is-run .da-cur{animation:ps-curgo 1.4s ease-in-out .7s both}
+.is-run .da-cur i{animation:ps-curclk 1.4s linear .7s both}
+.da-w .act .btn-p,.da-ph .c1x,.da-cf .cf0{opacity:0}
+.is-run .da-w .act .btn-p{animation:ps-hold 1.95s linear both}
+.is-run .da-w .act .st{animation:ps-pop .35s var(--ease) 1.95s both}
+.is-run .da-w .apr.fl{animation:ps-lit 1.4s ease-out 1.85s both}
+.is-run .da-ph .c1x{animation:ps-hold 2.2s linear both}
+.is-run .da-ph .c2x{animation:ps-pop .35s var(--ease) 2.2s both}
+.is-run .dots i.n2{animation:ps-chkw .3s ease 2.2s both}
+.is-run .da-cf .bar i{animation:ps-cffill 1.5s cubic-bezier(.3,.6,.3,1) 2.5s both}
+@keyframes ps-cffill{from{transform:scaleX(0)}}
+.is-run .da-cf .cf0{animation:ps-hold 4s linear both}
+.is-run .da-cf .cf1{animation:ps-pop .3s var(--ease) 4s both}
+
+/* ---------- 5 · Mobile Apps: two phones mid-onboarding, one API ---------- */
+.mo-a{--h:76;left:13%;top:3%}
+.mo-b{--h:76;left:51%;top:9%}
+.mo-bus{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.mo-bus path{fill:none;stroke:var(--mk-acc2);stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke;opacity:.75}
+.mo-bus .p,.mo-bus .s{display:none}
+.is-run .mo-bus path{animation:ps-dash 1s linear infinite}
+@keyframes ps-dash{to{stroke-dashoffset:-6}}
+.mo-hw{position:absolute;left:0;width:92.8%;top:88%;display:flex;justify-content:center}
+.mo-h{position:relative}
+.mo-h::before{display:none}
+.ob{display:flex;flex-direction:column;gap:.55em;min-height:0;flex:1}
+.ob>*{flex-shrink:0}
+.mo-a .ob{padding-top:4.1em}
+.ph.ios .ph-s{padding-bottom:1.35em}
+.ph.ios .sheet{margin-bottom:-1.35em}
+.mo-b .ob{padding-top:.9em}
+.ob-t{font-size:1.06em;font-weight:600;white-space:nowrap}
+.ob-p{margin-top:-.4em;color:var(--mk-mut);font-size:max(9px,.8em);white-space:nowrap}
+.idc{position:relative;display:grid;grid-template-columns:2.6em minmax(0,1fr);gap:.7em;align-items:center;padding:.75em;border-radius:.6em;border:1px solid color-mix(in srgb,var(--mk-ok) 55%,transparent);background:linear-gradient(135deg,#1C1F26,#15171B);overflow:hidden}
+.idc>i{aspect-ratio:.8;border-radius:.35em;background:var(--mk-line2)}
+.scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--mk-acc2),transparent);opacity:0}
+.chk{display:flex;align-items:center;gap:.55em;padding:.42em .55em;border-radius:.5em;background:var(--mk-card);border:1px solid var(--mk-line);font-size:max(9px,.86em);white-space:nowrap}
+.chk>i{width:1.4em;height:1.4em;border-radius:50%;flex:none;display:grid;place-items:center;font-style:normal;background:color-mix(in srgb,var(--mk-ok) 20%,transparent);color:var(--mk-ok)}
+.chk>i span{font-size:max(9px,.75em)}
+.ob-l{display:grid;gap:.35em}
+.ob-go{display:block;margin-top:auto;padding:.6em .4em}
+.is-run .ob-go{animation:ps-fin .4s ease 3s both}
+.face{position:relative;align-self:center;width:62%;aspect-ratio:1;margin:.2em 0}
+.face svg{display:block;width:100%;height:100%}
+.face .trk{fill:none;stroke:var(--mk-line2);stroke-width:3}
+.face .arc{fill:none;stroke:var(--mk-ok);stroke-width:4;stroke-linecap:round;stroke-dasharray:100;transform:rotate(-90deg);transform-origin:50% 50%}
+.face .fc{fill:var(--mk-line2)}
+.match{align-self:center}
+.tgl{display:flex;align-items:center;justify-content:space-between;gap:.5em;margin-top:auto;padding:.45em .55em;border:1px solid var(--mk-line);border-radius:.55em;background:var(--mk-card);font-size:max(9px,.84em);white-space:nowrap}
+.tgl .tg{width:2.1em;flex:none}
+.push{position:absolute;z-index:4;left:.45em;right:.45em;top:2.1em;display:flex;align-items:center;gap:.5em;padding:.5em .55em;border-radius:.9em;background:#24272D;border:1px solid var(--mk-line2);font-size:max(9px,.8em);line-height:1.25;box-shadow:0 10px 24px -10px #000}
+.push>i{width:1.9em;height:1.9em;border-radius:.5em;flex:none;background:linear-gradient(135deg,#8C9BFF,#3DD6C6)}
+.push div{min-width:0}
+.push b,.push .pt{display:block;white-space:nowrap}
+.push .pt{color:var(--mk-mut)}
+.is-run .scan{animation:ps-scan 1.1s ease-in-out .55s both}
+@keyframes ps-scan{0%{opacity:0;transform:translateY(0)}12%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translateY(5em)}}
+.is-run .idc{animation:ps-idok .3s ease 1.55s both}
+@keyframes ps-idok{from{border-color:var(--mk-line2)}}
+.is-run .mo-a .chk>i{animation:ps-chkw .3s ease both;animation-delay:calc(1.55s + var(--d) * 600ms)}
+.is-run .face .arc{animation:ps-ring 1.3s cubic-bezier(.4,.1,.3,1) .7s both}
+@keyframes ps-ring{from{stroke-dashoffset:100}}
+.is-run .match{animation:ps-pop .35s var(--ease) 2.05s both}
+.is-run .mo-b .tg{animation:ps-dotw .3s ease 2.7s both}
+.is-run .mo-b .tg::after{animation:ps-knob .3s var(--ease) 2.7s both}
+@keyframes ps-knob{from{transform:translateX(-.95em);background:var(--mk-mut)}}
+.is-run .push{animation:ps-pushin .6s var(--ease) 3.2s both}
+@keyframes ps-pushin{from{opacity:0;transform:translateY(-130%)}}
+
+/* ---------- 6 · Web Apps: a console approves a request; the deploy goes out ---------- */
+.wa-w{left:4%;top:5%;width:92%;height:75%}
+.wa-b{flex:1;min-height:0;display:grid;grid-template-columns:8.8em minmax(0,1fr)}
+.wa-side{display:flex;flex-direction:column;gap:.2em;padding:.9em .6em;border-right:1px solid var(--mk-line);background:var(--mk-surf)}
+.wa-side>span{display:flex;align-items:center;gap:.55em;padding:.4em .55em;border-radius:.45em;color:var(--mk-mut);white-space:nowrap;font-size:max(9px,.88em)}
+.wa-side>span>i{width:.8em;height:.8em;border-radius:.2em;flex:none;background:var(--mk-line2)}
+.wa-side>span.on{background:var(--mk-hover);color:var(--mk-ink)}
+.wa-side>span.on>i{background:var(--mk-acc)}
+.wa-side .stk{margin-left:auto;font-family:var(--mono);color:var(--mk-acc)}
+.wa-main{display:flex;flex-direction:column;gap:.5em;min-width:0;padding:.9em 1em 1em}
+.wa-hd{display:flex;align-items:center;gap:.6em;margin-bottom:.25em;white-space:nowrap}
+.wa-hd b{font-size:1.05em}
+.roles{margin-left:auto;display:flex;gap:.3em}
+.roles span{font-size:max(9px,.78em);padding:.2em .6em;border-radius:2em;border:1px solid var(--mk-line2);color:var(--mk-mut)}
+.roles .on{border-color:color-mix(in srgb,var(--mk-acc) 60%,transparent);color:var(--mk-acc);background:color-mix(in srgb,var(--mk-acc) 10%,transparent)}
+.wa-th{display:flex;justify-content:space-between;padding:0 .7em}
+.wa-r{display:grid;grid-template-columns:auto minmax(0,1fr) 6.2em;gap:.75em;align-items:center;padding:.48em .6em;border:1px solid var(--mk-line);border-radius:.6em;background:var(--mk-card)}
+.wa-toast{margin-top:auto;align-self:flex-end;display:flex;align-items:center;gap:.55em;padding:.5em .8em;border-radius:.6em;background:#1F2227;border:1px solid var(--mk-line2);font-size:max(9px,.82em);white-space:nowrap;box-shadow:0 10px 24px -12px #000}
+.wa-toast>i{width:1.4em;height:1.4em;border-radius:50%;flex:none;display:grid;place-items:center;font-style:normal;background:color-mix(in srgb,var(--mk-ok) 20%,transparent);color:var(--mk-ok)}
+.wa-toast>i span{font-size:max(9px,.75em)}
+.wa-toast em{font-style:normal;color:var(--mk-mut)}
+.wa-h{top:86%;--cl:6cqb}
+.dp{display:inline-flex;align-items:center;gap:.4em;color:var(--mk-ink)}
+.dp i{width:.5em;height:.5em;border-radius:50%;background:var(--mk-ok)}
+.wa-cur{left:62%;top:58%;--fx:-10em;--fy:3.5em}
+.is-run .wa-cur{animation:ps-curgo 1.4s ease-in-out .3s both}
+.is-run .wa-cur i{animation:ps-curclk 1.4s linear .3s both}
+.wa-r .act .btn-p,.wa-side .n3{opacity:0}
+.is-run .wa-r .act .btn-p{animation:ps-press 1.4s linear .3s both,ps-hold 1.75s linear both}
+.is-run .wa-r .act .st{animation:ps-pop .35s var(--ease) 1.75s both}
+.is-run .wa-r.fl{animation:ps-lit 1.4s ease-out 1.7s both}
+.is-run .wa-side .n3{animation:ps-hold 1.9s linear both}
+.is-run .wa-side .n2{animation:ps-pop .3s var(--ease) 1.9s both}
+.is-run .wa-toast{animation:ps-slup .45s var(--ease) 2.05s both}
+.is-run .dp i{animation:ps-dotw .3s ease both;animation-delay:calc(2.4s + var(--d) * 450ms)}
+
+@container hd (max-width:480px){.nw{display:none}}
+/* Very short landscape stages (667×375): drop a few secondary parts */
+@container hd (orientation:landscape) and (max-height:262px){
+  .py-sum,.coin:nth-child(3),.krow:nth-child(2),.trow:nth-child(n+3),.li:nth-child(n+3){display:none}
+  .pl-top{padding:.6em 1em .55em}
+}
+
+/* ---------- Narrow landscape (landscape phones): fewer parts, short labels ---------- */
+@container hd (orientation:landscape) and (max-width:409px){
+  .nl,.xl{display:none}.ns,.xs{display:inline}
+  .sw{--tw:6.4em}
+  .pl-av{display:none}
+  .pl-body{grid-template-columns:minmax(0,1fr) 10.5em;gap:1.2em}
+  .pl-sh::before{width:1.2em}
+  .svc em{display:none}
+  .pl-h::before{right:4em}
+  .kv,.cd-tabs,.hook.h1,.ap-res .lab.wh{display:none}
+  .ap-b{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+  .ap-url{flex-wrap:wrap}
+  .ap-req,.ap-res{padding:.8em}
+  .py-ph{left:7%}
+  .py-side{left:48%;width:47%;top:11%}
+  .py-side::before{width:6.9cqi}
+  .tl-r small{display:none}
+  .da-ph{left:7%}
+  .da-w{left:40%;width:57%;-webkit-mask-image:none;mask-image:none}
+  .da-main{padding:.8em .9em}
+  .da-hd2 code,.coin.c4,.apr.nn,.da-scr,.wa-th,.wa-r.r4,.krow:nth-child(3),.pv-h small,.ob-go{display:none}
+  .da-w{top:7%;height:64%}
+  .da-h{--cl:9cqb}
+  .da-h{left:auto;right:3%}
+  .da-h::before{left:50%}
+  .mo-a{--h:80;left:14%;top:2%}
+  .mo-b{--h:80;left:52%;top:6%}
+  .mo-bus .l{display:none}.mo-bus .s{display:inline}
+  .mo-hw{width:96.4%;top:89%}
+  .ph-s{padding:0 .45em 1em}
+  .sheet{margin:auto -.45em -1em;padding:.5em .45em 1.4em}
+  .mo-a .ob{padding-top:3.9em}
+  .ob-p,.push>i{display:none}
+  .push{left:.3em;right:.3em}
+  .wa-b{grid-template-columns:minmax(0,1fr)}
+  .wa-side{display:none}
+}
+
+/* ---------- Portrait (phones): one device or a stacked window ---------- */
+@container hd (orientation:portrait){
+  .sc{font-size:clamp(9px,3.3cqi,12px)}
+  .nl{display:none}.ns,.po{display:inline}
+  /* Platforms */
+  .pl-w{top:3%;height:81%}
+  .sw{--tw:7.4em}
+  .pl-av{display:none}
+  .pl-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;gap:1.2em}
+  .pl-sh{display:grid;grid-template-columns:1fr 1fr}
+  .pl-sh .lab{grid-column:1/-1}
+  .pl-sh::before{right:auto;left:50%;top:auto;bottom:100%;width:1px;height:1.2em;background:repeating-linear-gradient(to bottom,var(--mk-acc2) 0 3px,transparent 3px 6px);background-size:1px 6px}
+  .is-run .pl-sh::before{animation:mkflow 1s linear infinite}
+  .svc em{display:none}
+  .li:nth-child(3),.trow:nth-child(4),.krow:nth-child(3){display:none}
+  .pl-h{top:89%;left:0;right:0;margin:0 auto;--cl:5cqb}
+  .pl-h::before{left:50%;right:auto}
+  /* APIs */
+  .ap-w{top:3%;height:84%}
+  .cl{line-height:1.5;padding:.45em .7em}
+  .ap-res{gap:.5em}
+  .ap-b{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+  .ap-req{border-right:0;border-bottom:1px solid var(--mk-line);padding:.8em 1em}
+  .ap-res{padding:.8em 1em}
+  .ap-req>.lab,.kv,.cd-tabs,.hook.h1,.ap-res .lab.wh{display:none}
+  .ap-h{top:91%;--cl:4cqb}
+  /* Payments */
+  .py-ph{--h:84;left:4%;top:6%}
+  .py-side{left:57%;width:39%;top:11%;gap:5cqb}
+  .py-h{--cl:5cqb}
+  .py-side::before{width:5.6cqi;top:7em}
+  .py-card>.mk-bar span{margin-left:.3em}
+  .tl-r small{display:none}
+  .py-h{flex-direction:column;gap:.15em;border-radius:.9em;padding:.45em .8em}
+  /* Digital assets */
+  .da-crop{display:none}
+  .da-ph{--h:82;left:calc(50% - 82cqb * 9 / 38);top:3%}
+  .da-h{left:0;right:0;margin:0 auto;top:89%;--cl:4cqb}
+  .da-h::before{left:50%}
+  /* Mobile apps */
+  .mo-a{--h:73;left:4%;top:2%}
+  .mo-b{--h:73;left:auto;right:4%;top:8%}
+  .mo-bus .l{display:none}.mo-bus .p{display:inline}
+  .mo-hw{width:100%;top:87.5%}
+  /* Web apps */
+  .wa-w{top:3%;height:82%}
+  .wa-b{grid-template-columns:minmax(0,1fr)}
+  .wa-side{display:none}
+  .wa-h{top:90%;--cl:5cqb}
+}
+
+/* Reduced motion: every scene's base style is its finished picture */
+@media (prefers-reduced-motion:reduce){
+  .sc *,.sc *::before,.sc *::after{animation:none!important}
+}
+</style>

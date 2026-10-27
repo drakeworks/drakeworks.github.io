@@ -1,0 +1,45 @@
+---
+// The platform diagram (products on one shared core, above the networks they connect to) at one
+// of its three phases. The flagship case renders a still copy in each chapter, and one live copy
+// with every box present (the rest hidden) for home.js to rebuild as the chapters scroll past.
+import { PHASES, PRODUCTS } from '../scripts/platform-phases';
+
+interface Props {
+	phase: 1 | 2 | 3;
+	live?: boolean;
+}
+
+const { phase, live = false } = Astro.props;
+const P = PHASES[phase - 1];
+// Long labels, with short ones for narrow diagrams (see the @container rules in home.css).
+const BOXES = [
+	{ k: 'gw', long: 'Payment Gateway', short: 'Gateway' },
+	{ k: 'wal', long: 'Consumer Wallet', short: 'Wallet' },
+	{ k: 'tre', long: 'Treasury' },
+	{ k: 'con', long: 'Admin console', short: 'Console' },
+	{ k: 'tron', long: 'TRON' },
+	{ k: 'eth', long: 'Ethereum', short: 'ETH' },
+	{ k: 'bsc', long: 'BNB Smart Chain', short: 'BSC' },
+	{ k: 'sol', long: 'Solana', short: 'SOL' },
+	{ k: 'btc', long: 'Bitcoin', short: 'BTC' }
+];
+const shown = (k: string) => P.on.includes(k);
+const boxes = live ? BOXES : BOXES.filter((b) => shown(b.k));
+const top = boxes.filter((b) => PRODUCTS.includes(b.k));
+const bottom = boxes.filter((b) => !PRODUCTS.includes(b.k));
+const products = P.on.filter((k) => PRODUCTS.includes(k)).length;
+---
+<div class="mk fl-dia">
+	<div class="mk-bar" aria-hidden="true"><i></i><i></i><i></i><span class="st-title">platform — {P.count} products, one core</span></div>
+	<div class="mk-arch" role="img" data-phase={phase} aria-label={`Platform diagram, phase ${phase}: ${P.say}`}>
+		<div class="mk-row prod">
+			{top.map((b) => <span class="mk-node up" data-n={live ? b.k : undefined} hidden={!shown(b.k)}>{b.short ? <Fragment><span class="nl">{b.long}</span><span class="ns">{b.short}</span></Fragment> : b.long}</span>)}
+		</div>
+		<div class="mk-core"><b>Shared core</b><span>Custody · transaction screening · ledger · approvals and permissions</span><i class="mk-pulse"></i></div>
+		<div class="mk-row nets">
+			{bottom.map((b) => <span class="mk-node dn" data-n={live ? b.k : undefined} hidden={!shown(b.k)}>{b.short ? <Fragment><span class="nl">{b.long}</span><span class="ns">{b.short}</span></Fragment> : b.long}</span>)}
+		</div>
+		<div class="mk-stat"><span><b>{products}</b> products</span><span><b>1</b> shared core</span></div>
+		{live && <div class="st-fx" aria-hidden="true"></div>}
+	</div>
+</div>

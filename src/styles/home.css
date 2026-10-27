@@ -1,7 +1,7 @@
 /* ---------- Design tokens ---------- */
 :root{
   --bg:#0A0B0D;--surf:#111216;--surf2:#17191E;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F4F5F7;--ink2:#C9CCD3;--mut:#8A8F98;--acc:#8C9BFF;--acc2:#3DD6C6;--focus:#8C9BFF;color-scheme:dark;
-  --mk-bg:#0E0F12;--mk-surf:#121317;--mk-card:#16181C;--mk-line:rgba(255,255,255,.08);--mk-line2:rgba(255,255,255,.14);--mk-ink:#E6E8EB;--mk-mut:#7B8089;--mk-acc:#7C8CFF;--mk-acc2:#3DD6C6;--mk-ok:#4CC38A;--mk-warn:#F5A524;--mk-hover:rgba(255,255,255,.06);
+  --mk-bg:#0E0F12;--mk-surf:#121317;--mk-card:#16181C;--mk-line:rgba(255,255,255,.08);--mk-line2:rgba(255,255,255,.14);--mk-ink:#E6E8EB;--mk-mut:#7B8089;--mk-acc:#7C8CFF;--mk-on:#0A0B0D;--mk-acc2:#3DD6C6;--mk-ok:#4CC38A;--mk-warn:#F5A524;--mk-hover:rgba(255,255,255,.06);
   --art-ink:#E6E8EB;--art-mut:#7B8089;--art-acc:#8C9BFF;--art-soft:#2A2F45;--art-bg:#111216;--art-line:#2A2D33;
   --ck-bg:#14151A;--ck-ink:#F4F5F7;--ck-mut:#8A8F98;--ck-line:rgba(255,255,255,.1);--ck-hi:rgba(255,255,255,.07);--toast-bg:#F4F5F7;--toast-ink:#0A0B0D;
 }
@@ -19,24 +19,11 @@ table{border-collapse:collapse;width:100%}
 :focus-visible{outline:2px solid var(--focus,currentColor);outline-offset:3px}
 [tabindex="-1"]:focus{outline:none}
 .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.skip{position:absolute;left:8px;top:-80px;z-index:200;padding:10px 14px;background:var(--focus,#000);color:#fff;font:600 14px system-ui,sans-serif;text-decoration:none}
+.skip{position:absolute;left:8px;top:-80px;z-index:200;padding:10px 14px;background:var(--focus,#000);color:var(--bg);font:600 14px system-ui,sans-serif;text-decoration:none}
 .skip:focus{top:8px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;transition:opacity .2s,transform .2s;z-index:999;width:max-content;max-width:min(92vw,440px);padding:12px 16px;border-radius:8px;background:var(--toast-bg,#1d1d1f);color:var(--toast-ink,#fff);font:500 14px/1.45 system-ui,-apple-system,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.25);pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .art{margin:0}
-.art svg{width:100%;height:auto;display:block}
-.art text{font-family:inherit}
-.a-ink{fill:var(--art-ink,#222)}
-.a-mut{fill:var(--art-mut,#777)}
-.a-acc{fill:var(--art-acc,#2255dd)}
-.a-soft{fill:var(--art-soft,#ddd)}
-.a-bg{fill:var(--art-bg,#fff)}
-.a-line{fill:var(--art-line,#ccc)}
-.s-line{stroke:var(--art-line,#ccc);fill:none}
-.s-acc{stroke:var(--art-acc,#2255dd);fill:none}
-.s-mut{stroke:var(--art-mut,#888);fill:none}
-.s-ink{stroke:var(--art-ink,#222);fill:none}
-.s-soft{stroke:var(--art-soft,#ccc);fill:none}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,"SF Pro Text",system-ui,-apple-system,"Segoe UI",sans-serif;font-feature-settings:"cv11","ss03";-webkit-font-smoothing:antialiased}
 /* ---------- Layout and headline gradient ---------- */
 .w{max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
@@ -46,7 +33,6 @@ body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,"SF Pro Text"
 .nin{display:flex;align-items:center;gap:28px;height:62px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:-.01em}
 .logo{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;background:linear-gradient(135deg,#8C9BFF,#3DD6C6);color:#0A0B0D}
-.sample{font-size:11px;font-weight:500;color:var(--mut);border:1px solid var(--line2);border-radius:6px;padding:1px 6px}
 .links{display:flex;gap:4px}
 .links a{color:var(--mut);text-decoration:none;font-size:14.5px;padding:8px 10px;border-radius:7px}
 .links a:hover,.links a[aria-current]{color:var(--ink)}
@@ -64,42 +50,24 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .menu-btn{display:none;height:34px;padding:0 12px;border:1px solid var(--line2);border-radius:8px;font-size:13.5px}
 /* ---------- 1. Hero ---------- */
 .hero{padding-top:96px;padding-bottom:40px}
-.status{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);padding:5px 12px 5px 10px;border:1px solid var(--line2);border-radius:20px;background:rgba(255,255,255,.03);margin-bottom:28px}
-.status i{width:7px;height:7px;border-radius:50%;background:#4CC38A;box-shadow:0 0 0 3px rgba(76,195,138,.18)}
 .hero h1{font-size:clamp(38px,5.7vw,72px);line-height:1.04;letter-spacing:-.045em;font-weight:600;margin-bottom:24px}
 .hero h1 .ln{display:inline-block}
 .lede{font-size:clamp(17px,1.5vw,19px);color:var(--mut);max-width:36em;line-height:1.55}
 .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
 .ctas.c{justify-content:center}
 @media (prefers-reduced-motion:no-preference){
-  .hero .status,.hero .ln,.hero .lede,.hero .ctas,.stage .tilt{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .hero .ln,.hero .lede,.hero .ctas{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
   .hero .ln:nth-child(2){animation-delay:.08s}
   .hero .lede{animation-delay:.16s}
   .hero .ctas{animation-delay:.24s}
-  .stage .tilt{animation-delay:.34s}
 }
 @keyframes rise{from{opacity:0;transform:translateY(16px);filter:blur(6px)}}
-/* ---------- 2. Product visual (tilts flat as you scroll) ---------- */
-.stage{position:relative;padding-top:40px;padding-bottom:24px;perspective:1600px}
-.glow{position:absolute;left:50%;top:10%;width:min(1000px,90vw);height:420px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(124,140,255,.30),rgba(61,214,198,.10) 55%,transparent);filter:blur(30px);pointer-events:none}
-.tilt{position:relative;transform-origin:50% 0;transform:rotateX(var(--rx,0deg)) scale(var(--sc,1));will-change:transform;border-radius:14px;box-shadow:0 40px 120px -20px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06)}
-.tilt .mk{border-color:rgba(255,255,255,.12);background:linear-gradient(180deg,#101116,#0C0D10)}
-.tilt::after{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 18%)}
-.cap{font-size:13px;color:var(--mut);text-align:center;margin-top:18px}
-/* ---------- 3. Companies ---------- */
-.logos{display:flex;align-items:center;gap:32px;padding-top:48px;padding-bottom:48px;border-bottom:1px solid var(--line);flex-wrap:wrap;justify-content:center}
-.logos p{font-size:13.5px;color:var(--mut)}
-.logos ul{display:flex;gap:48px;flex-wrap:wrap;justify-content:center;align-items:center;color:#9CA1AA}
-.l1{font-weight:700;letter-spacing:-.02em;font-size:21px}
-.l2{font-weight:300;font-size:22px;letter-spacing:.06em}
-.l3{font-weight:800;font-size:20px;letter-spacing:-.04em;font-style:italic}
-.l4{font-weight:600;font-size:15px;letter-spacing:.28em}
 /* ---------- Section headings ---------- */
 .sec{padding-top:112px;padding-bottom:16px}
 .sh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:40px}
-.sh h2{font-size:clamp(32px,4vw,52px);letter-spacing:-.04em;line-height:1.05;font-weight:600}
+.sh h2,.car-head h2{font-size:clamp(32px,4vw,52px);letter-spacing:-.04em;line-height:1.05;font-weight:600}
 .sh p{color:var(--mut);font-size:17px;max-width:30em}
-/* ---------- 4. Selected work ---------- */
+/* ---------- 4. What I’ve built ---------- */
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .card{position:relative;display:flex;flex-direction:column;border-radius:16px;background:var(--surf);border:1px solid var(--line);text-decoration:none;overflow:hidden;transition:border-color .2s,transform .2s}
 .card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(140,155,255,.55),transparent 45%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .25s;pointer-events:none;z-index:2}
@@ -112,7 +80,8 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .ct h3{font-size:21px;line-height:1.25;letter-spacing:-.02em;font-weight:600;margin:8px 0 12px}
 .res{color:var(--mut);font-size:14.5px}
 .res b{color:var(--ink);font-weight:600;margin-right:4px}
-/* ---------- 5. How I work ---------- */
+.res span{white-space:nowrap}   /* a label never wraps away from its number */
+/* ---------- 5. How I build ---------- */
 .feat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .feat.two{grid-template-columns:repeat(3,minmax(0,1fr))}
 .feat li{background:var(--bg);padding:28px 24px}
@@ -127,16 +96,35 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 /* ---------- 7. Testimonial ---------- */
 .quote{padding-top:112px;text-align:center}
 .quote blockquote{font-size:clamp(24px,2.8vw,36px);line-height:1.25;letter-spacing:-.025em;font-weight:500;max-width:24em;margin:0 auto;color:var(--ink)}
-.quote figcaption{display:inline-flex;align-items:center;gap:12px;margin-top:28px;text-align:left;font-size:14px;color:var(--mut)}
-.quote figcaption b{display:block;color:var(--ink);font-weight:600}
-.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;background:linear-gradient(135deg,#2A2F45,#1B3B3A);border:1px solid var(--line2)}
-/* ---------- 8. Career ---------- */
-.log li{display:grid;grid-template-columns:150px minmax(0,260px) minmax(0,1fr);gap:24px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
-.log time{font:500 13px "Geist Mono",ui-monospace,monospace;color:var(--mut)}
-.log b{display:block;font-weight:600}
-.log span{color:var(--mut);font-size:14.5px}
-.log p{color:var(--mut);font-size:15px}
-/* ---------- 9. Contact ---------- */
+/* ---------- 2. Career: heading and intro pinned on the left (CI03), timeline rail (C02) on the right ---------- */
+.career{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:64px;align-items:start}
+.car-head{position:sticky;top:96px}
+.car-head p{max-width:22em;margin-top:16px;color:var(--ink2);font-size:clamp(18px,1.6vw,20px);line-height:1.55;text-wrap:pretty}
+.car-head p strong{color:var(--ink);font-weight:600;font-style:italic}
+/* The rail sits in the middle of the 56px gap (130 + 28 = 158px); each li draws the segment down to the next dot */
+.log{max-width:920px}
+.log li{position:relative;display:grid;grid-template-columns:130px minmax(0,1fr);column-gap:56px;padding-bottom:34px}
+.log li:last-child{padding-bottom:0}
+.log time{font:500 13px/25px "Geist Mono",ui-monospace,monospace;color:var(--mut);text-align:right}
+.log li.on time{color:var(--acc2)}
+.log li::before{content:"";position:absolute;left:157px;top:13px;bottom:-13px;width:2px;background:var(--line2)}
+.log li:last-child::before{display:none}
+.log li.pd::before{background:var(--acc)}
+.log li.pd-end::before{background:linear-gradient(180deg,var(--acc),var(--line2))}
+.log li::after{content:"";position:absolute;left:151px;top:6px;width:14px;height:14px;border:2px solid #5B606A;border-radius:50%;background:var(--bg)}
+.log li.pd::after{border-color:var(--acc);background:#262b4d}
+.log li.on::after{border-color:var(--acc2);background:var(--acc2)}
+.log b{display:block;font-size:18px;line-height:25px;font-weight:600;letter-spacing:-.015em}
+.log span{display:block;color:var(--ink2);font-size:15px}
+.log p{margin-top:8px;max-width:40em;color:var(--mut);font-size:15px}
+@media (prefers-reduced-motion:no-preference){.log li.on::after{animation:logpulse 2.4s ease-out infinite}}
+@keyframes logpulse{0%{box-shadow:0 0 0 0 rgba(61,214,198,.5)}70%,100%{box-shadow:0 0 0 7px rgba(61,214,198,0)}}
+/* High-contrast mode repaints backgrounds as Canvas, which would erase the rail; draw it in system colors instead */
+@media (forced-colors:active){
+  .log li::before,.log li.pd::before,.log li.pd-end::before{forced-color-adjust:none;background:CanvasText}
+  .log li.on::after{forced-color-adjust:none;border-color:Highlight;background:Highlight}
+}
+/* ---------- 8. Contact ---------- */
 .cta{position:relative;text-align:center;padding:140px 0 120px;margin-top:96px;border-top:1px solid var(--line);overflow:hidden}
 .glow2{position:absolute;pointer-events:none;left:50%;bottom:-260px;width:900px;height:520px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(124,140,255,.28),transparent);filter:blur(20px)}
 .cta h2{position:relative;font-size:clamp(40px,6vw,76px);letter-spacing:-.05em;font-weight:600;line-height:1}
@@ -156,9 +144,8 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .kpis li{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:20px}
 .kpis b{display:block;font-size:30px;font-weight:600;letter-spacing:-.04em}
-.kpis span{display:block;color:var(--ink2);font-size:14px;margin-top:4px}
+.kpis li>span{display:block;color:var(--ink2);font-size:14px;margin-top:4px}
 .kpis em{display:block;font-style:normal;color:var(--acc);font-size:12px;margin-top:8px}
-.fine{font-size:12.5px;color:var(--mut);margin-top:10px}
 .cgrid{display:grid;grid-template-columns:200px minmax(0,720px);gap:72px;padding-top:56px}
 .toc{position:sticky;top:90px;align-self:start;display:flex;flex-direction:column;gap:2px;font-size:13.5px}
 .toc p{color:var(--mut);font-size:12px;margin-bottom:8px}
@@ -167,6 +154,7 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .toc a.on{color:var(--ink);border-left-color:var(--acc)}
 .cs-sec{padding-bottom:48px;scroll-margin-top:84px}
 .cs-sec h2{font-size:24px;letter-spacing:-.025em;font-weight:600;margin-bottom:14px}
+.cs-sec h3{margin:28px 0 10px;font-size:18px;font-weight:600;letter-spacing:-.015em}
 .cs-sec p{color:var(--ink2);margin-bottom:14px;font-size:16.5px;line-height:1.7}
 .cs-list li{position:relative;padding:8px 0 8px 22px;color:var(--ink2);border-bottom:1px solid var(--line)}
 .cs-list li::before{content:"";position:absolute;left:2px;top:17px;width:6px;height:6px;border-radius:2px;background:var(--acc)}
@@ -209,12 +197,6 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .pn a:last-child{text-align:right}
 .pn a:hover{border-color:var(--line2)}
 .pn span{display:block;font-size:12.5px;color:var(--mut);font-weight:400;margin-bottom:4px}
-/* ---------- About ---------- */
-.qgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.qgrid figure{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--surf)}
-.qgrid blockquote{font-size:16px;line-height:1.5;color:var(--ink2)}
-.qgrid figcaption{margin-top:16px;font-size:13px;color:var(--mut)}
-.qgrid b{display:block;color:var(--ink)}
 /* ---------- Product mockups (recreated app screens) ---------- */
 .mk{font-family:inherit;color:var(--mk-ink);background:var(--mk-bg);border:1px solid var(--mk-line);border-radius:12px;overflow:hidden;font-size:12px;line-height:1.4;text-align:left;container-type:inline-size;box-shadow:0 1px 0 rgba(255,255,255,.04) inset}
 .mk *{box-sizing:border-box}
@@ -298,6 +280,7 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .mk-arow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--mk-line);border-radius:9px;background:var(--mk-card);margin-bottom:7px}
 .mk-arow b{display:block;font-size:12px}
 .mk-arow span{font-size:10.5px;color:var(--mk-mut)}
+.mk-arow .mk-btn{color:var(--mk-on)}   /* the row's muted grey would otherwise reach the button text */
 .mk-arow i{font-style:normal;margin-left:6px;color:var(--mk-ok)}
 .mk-arow i.warn{color:var(--mk-warn)}
 @keyframes mkblink{50%{opacity:0}}
@@ -345,13 +328,14 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 /* ---------- Responsive ---------- */
 @media (max-width:980px){
   .sh,.cgrid{grid-template-columns:minmax(0,1fr);gap:16px}
+  .career{grid-template-columns:minmax(0,1fr);gap:28px}
+  .car-head{position:static}
+  .car-head p{max-width:34em}
   .toc{display:none}
   .cards{grid-template-columns:minmax(0,1fr)}
   .feat,.feat.two{grid-template-columns:1fr 1fr}
   .nums ul{grid-template-columns:1fr 1fr;row-gap:32px}
-  .log li{grid-template-columns:130px 1fr}
-  .log p{grid-column:2}
-  .qgrid,.cs-decs{grid-template-columns:1fr}
+  .cs-decs{grid-template-columns:1fr}
 }
 @media (max-width:760px){
   .links{display:none;position:absolute;left:0;right:0;top:62px;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 16px 16px}
@@ -370,12 +354,12 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 }
 @media (max-width:520px){
   .feat,.feat.two{grid-template-columns:1fr}
-  .log li{grid-template-columns:1fr;gap:4px}
-  .log p{grid-column:1}
+  .log li{grid-template-columns:minmax(0,1fr);padding-left:30px;padding-bottom:28px}
+  .log time{text-align:left;line-height:20px}
+  .log li::before{left:6px;top:10px;bottom:-10px}
+  .log li::after{left:0;top:3px}
   .sec{padding-top:80px}
-  .logos ul{gap:24px}
   .fin{flex-direction:column}
-  .sample{display:none}
 }
 /* ---------- Case pages: "Ask about this case" ---------- */
 .askc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;margin:8px 0 24px;padding:24px;border-radius:16px;border:1px solid var(--line);background:radial-gradient(520px 200px at 0 0,rgba(124,140,255,.12),transparent),var(--surf)}
@@ -568,48 +552,98 @@ body.ij-lock{position:fixed;left:0;right:0;overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
-/* ---------- Draft additions (v2) ---------- */
+/* ---------- v2 additions ---------- */
 .hero h1 .dim{background:linear-gradient(180deg,rgba(255,255,255,.62) 20%,rgba(255,255,255,.34));-webkit-background-clip:text;background-clip:text;color:transparent}
 .ask{margin-top:26px;font-size:clamp(17px,1.5vw,19px);font-weight:600;color:var(--ink);letter-spacing:-.01em}
 .ask+.ctas{margin-top:14px}
-/* Hero: the napkin layout (variant 04) */
-.napkin{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"head sketch" "story sketch" "intro sketch";grid-template-rows:auto auto 1fr;column-gap:56px;align-items:start;padding-bottom:64px}
-.nk-head{grid-area:head;container-type:inline-size}
-.napkin h1{font-size:clamp(22px,3.2vw,46px);font-size:clamp(20px,7.6cqi,54px);line-height:1.1;letter-spacing:-.045em;margin-bottom:24px}
-.napkin h1 .ln{display:block;white-space:nowrap}
-.nk-story{grid-area:story;font-size:clamp(20px,2.1vw,25px);line-height:1.4;font-weight:500;letter-spacing:-.015em;color:var(--ink);max-width:24em;text-wrap:pretty}
-.nk-sketch{grid-area:sketch;align-self:end;margin:0;padding:22px;border:1px solid var(--line);border-radius:18px;background:#0E0F12}
-.nk-sketch svg{display:block;width:100%;height:auto}
-.nk-sketch figcaption{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--mut)}
-.nk-intro{grid-area:intro;align-self:stretch;display:flex;flex-direction:column;align-items:flex-start;padding-top:40px}
-.nk-hi{display:inline-block;font-family:Caveat,"Segoe Print","Bradley Hand",cursive;font-size:clamp(32px,3vw,38px);font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;transform:rotate(-2deg);transform-origin:left center;margin:auto 0}
-.nk-role{margin-top:6px;font-size:16.5px;line-height:1.6;color:var(--ink2);max-width:34em;text-wrap:pretty}
-.napkin .ask{margin-top:32px}
+/* Hero: the headline and introduction beside the rotating diagram (HeroDiagram.astro). Desktop: copy
+   on the left, the diagram on the right. Phones and tablets (≤980px): the headline, then the
+   diagram, then the introduction. */
+.hr{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"head fig" "intro fig";grid-template-rows:auto auto;align-content:center;column-gap:56px;min-height:min(760px,calc(100svh - 62px));padding-bottom:64px}
+.hr-head{grid-area:head;align-self:end;container-type:inline-size}
+.hr h1{font-size:clamp(22px,3.2vw,46px);font-size:clamp(20px,7.6cqi,54px);line-height:1.1;letter-spacing:-.045em;margin-bottom:0}
+.hr h1 .ln{display:block;white-space:nowrap}
+.hr-intro{grid-area:intro;align-self:start;display:flex;flex-direction:column;align-items:flex-start;padding-top:48px}
+.hr-hi{display:inline-block;font-family:Caveat,"Segoe Print","Bradley Hand",cursive;font-size:clamp(32px,3vw,38px);font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;transform:rotate(-2deg);transform-origin:left center}
+.hr-role{margin-top:32px;font-size:clamp(26px,2.6vw,34px);font-weight:600;line-height:1.15;letter-spacing:-.03em;color:var(--ink)}
+.hr-sub{margin-top:10px;font-size:clamp(18px,1.55vw,20px);line-height:1.5;color:var(--ink2)}
+.hr-sub+.ctas{margin-top:22px}
+.hr-fig{grid-area:fig;align-self:center;margin:0;min-width:0}
 @media (prefers-reduced-motion:no-preference){
-  .napkin .nk-story,.napkin .nk-sketch,.napkin .nk-hi,.napkin .nk-role,.napkin .ask{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-  .napkin .nk-story{animation-delay:.16s}.napkin .nk-hi,.napkin .nk-role{animation-delay:.2s}.napkin .ask{animation-delay:.22s}.napkin .nk-sketch{animation-delay:.3s}
+  .hr .hr-hi,.hr .hr-role,.hr .hr-sub,.hr-fig{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .hr .hr-hi{animation-delay:.2s}.hr .hr-role{animation-delay:.22s}.hr .hr-sub{animation-delay:.24s}.hr .ctas{animation-delay:.26s}.hr-fig{animation-delay:.3s}
 }
 @media (max-width:980px){
-  .napkin{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "story" "sketch" "intro";grid-template-rows:none}
-  .nk-sketch{margin-top:28px;max-width:560px}
-  .nk-intro{display:block;align-self:auto;padding-top:0;margin-top:40px;text-align:center}
-  .nk-hi{margin:0 0 10px;transform-origin:center}
-  .napkin .ask{margin-top:24px}
-  .napkin .ctas{justify-content:center}
+  .hr{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "fig" "intro";grid-template-rows:none;min-height:0;padding-top:72px}
+  .hr-fig{margin-top:32px;width:100%;max-width:560px;justify-self:center}
+  .hr-intro{display:block;align-self:auto;padding-top:0;margin-top:40px;text-align:center}
+  .hr-hi{margin:0 0 10px;transform-origin:center}
+  .hr-role{margin-top:24px}
+  .hr .ctas{justify-content:center}
 }
-@media (max-width:480px){
-  .nk-sketch{padding:14px;border-radius:14px}
-  .nk-role{font-size:16px}
+@media (max-width:480px){.hr{padding-top:56px}}
+/* Landscape phones and short windows: keep the whole figure, controls included, on screen
+   (1.25 is the stage's desktop ratio, width over height). */
+@media (max-width:980px) and (max-height:520px){.hr-fig{max-width:min(560px,calc((100svh - 120px) * 1.25))}}
+@media (min-width:981px) and (max-height:700px){.hr{padding-top:56px;padding-bottom:40px}.hr-fig{max-width:calc((100svh - 160px) * 1.25);justify-self:end;width:100%}}
+/* The diagram's stage: the scenes stack in one box with a fixed ratio, so rotating never shifts the page */
+.hd{position:relative;container:hdc / inline-size}
+.hd-stage{position:relative;aspect-ratio:5/4;width:100%}
+@media (max-width:480px){.hd-stage{aspect-ratio:4/5}}
+.hd-scene{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .45s cubic-bezier(.2,.7,.2,1),visibility 0s linear .45s}
+.hd-scene.is-on{opacity:1;visibility:visible;transition:opacity .45s cubic-bezier(.2,.7,.2,1) .12s,visibility 0s}
+.hd:not(.is-ready) .hd-scene:first-child{opacity:1;visibility:visible}   /* no script: the first scene, finished */
+/* Holding (hover, focus) stops only the progress bar. Pausing freezes every animation. */
+.hd.is-wait .hd-bar i{animation-play-state:paused!important}
+.hd.is-paused *,.hd.is-paused *::before,.hd.is-paused *::after{animation-play-state:paused!important}
+/* Its controls (built by hero-rotator.js): one tab per area, a progress bar over its label. Tabs share
+   the row in proportion to their labels, so none needs a second line. When the figure is under 460px
+   wide, only the active label shows, above six equal bars. */
+.hd-ctl{display:flex;align-items:flex-start;gap:12px;margin-top:16px}
+.hd-tabs{flex:1;min-width:0;display:flex;gap:6px}
+.hd-tab{position:relative;display:flex;flex-direction:column;justify-content:flex-start;flex:1 1 auto;min-width:0;padding:8px 0 4px;text-align:left;color:var(--mut);font-size:12px;line-height:1.3;letter-spacing:-.005em;white-space:nowrap;border-radius:4px}
+.hd-tab:hover{color:var(--ink2)}
+.hd-tab[aria-current="true"]{color:var(--ink)}
+.hd-bar{display:block;height:2px;border-radius:2px;background:var(--line2);overflow:hidden}
+.hd-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));transform-origin:left center;transform:scaleX(0)}
+.hd-tab.is-done .hd-bar i{transform:scaleX(1);opacity:.45}
+.hd-tab[aria-current="true"] .hd-bar i{transform:scaleX(1)}
+.hd.is-auto .hd-tab[aria-current="true"] .hd-bar i{animation:hdprog var(--hd-int,6500ms) linear both}
+@keyframes hdprog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hd-lab{display:block;margin-top:7px;white-space:nowrap}
+.hd-play{flex:none;width:30px;height:30px;margin-top:-1px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:8px;color:var(--mut)}
+.hd-play:hover{color:var(--ink);border-color:rgba(255,255,255,.24)}
+.hd-play svg{width:11px;height:11px;fill:currentColor}
+.hd-play .i-play,.hd.is-held .hd-play .i-pause{display:none}
+.hd.is-held .hd-play .i-play{display:block}
+.hd-now{display:none}
+@media (max-width:980px){.hd-tab{font-size:11.5px}}
+@container hdc (max-width:460px){
+  .hd-ctl{flex-wrap:wrap;gap:8px 10px;align-items:center}
+  .hd-now{display:block;flex:1;min-width:0;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hd-now em{font-style:normal;color:var(--mut);font:500 11px "Geist Mono",ui-monospace,monospace;margin-right:8px}
+  .hd-tabs{order:3;flex:0 0 100%;gap:5px}
+  .hd-tab{flex:1 1 0;padding:12px 0}
+  .hd-lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
+@media (forced-colors:active){
+  .hd-bar{border:1px solid CanvasText}
+  .hd-tab[aria-current="true"] .hd-bar i{background:Highlight}
 }
 .tok{display:inline;padding:0 5px;border-radius:5px;background:rgba(245,165,36,.12);color:#F5A524;font-size:.92em;font-weight:500;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.dnote{color:#C9A15A}
-.status.loc i,.ij-status.loc i{background:var(--acc);box-shadow:0 0 0 3px rgba(140,155,255,.18)}
+.ij-status.loc i{background:var(--acc);box-shadow:0 0 0 3px rgba(140,155,255,.18)}
 /* Third case card: full width but slimmer (text left, diagram right), so it reads as third */
 .card.slim{grid-column:1/-1;flex-direction:row}
 .card.slim .ct{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 32px}
 .card.slim .cv{order:2;flex:0 0 54%;height:280px;border-bottom:0;border-left:1px solid var(--line);-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}
 .card.slim .cv .mk{left:50%;transform:translateX(-50%);width:calc(100% - 40px);min-width:0}
-.nums .fine{margin-top:20px}
+/* Flagship card: full width and taller, text beside two of the case's screens, overlapping */
+.card.flag{grid-column:1/-1;flex-direction:row}
+.card.flag .ct{flex:0 0 40%;display:flex;flex-direction:column;justify-content:center;padding:32px}
+.card.flag .ct h3{font-size:clamp(23px,2.2vw,28px)}
+.card.flag .cv{order:2;flex:1;height:360px;border-bottom:0;border-left:1px solid var(--line);-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}
+.card.flag .cv .mk{width:400px;min-width:0}
+.card.flag .cv .mk+.mk{left:42%;top:104px}
 .sh p strong{color:var(--ink);font-weight:600}
 .next-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;padding:36px;border:1px solid var(--line);border-radius:16px;background:radial-gradient(600px 220px at 0 0,rgba(124,140,255,.12),transparent),var(--surf)}
 .next-cta h2{font-size:clamp(26px,3vw,36px);letter-spacing:-.035em;line-height:1.1;font-weight:600}
@@ -632,45 +666,61 @@ body.ij-lock{position:fixed;left:0;right:0;overflow:hidden}
 .cf-status{font-size:14px;color:var(--ink2);min-height:1.4em}
 @media (max-width:980px){.card.slim{flex-direction:column}.card.slim .ct{padding:22px 24px 24px}.card.slim .cv{order:0;flex:none;height:280px;border-left:0;border-bottom:1px solid var(--line)}.card.slim .cv .mk{left:28px;transform:none;width:calc(100% + 40px);min-width:520px}}
 @media (max-width:760px){.card.slim .cv{height:220px}.card.slim .cv .mk{left:18px}}
+@media (max-width:980px){.card.flag{flex-direction:column}.card.flag .ct{padding:22px 24px 24px}.card.flag .cv{order:0;flex:none;height:300px;border-left:0;border-bottom:1px solid var(--line)}}
+@media (max-width:760px){.card.flag .cv{height:240px}.card.flag .cv .mk{width:340px;left:18px;top:18px}.card.flag .cv .mk+.mk{left:42%;top:76px}}
+/* Previous/next with a single link: "Next" keeps to the right-hand column, "Previous" reads from the left */
+.pn .nx{grid-column:2}
+.pn a.pv{text-align:left}
+@media (max-width:760px){.pn .nx{grid-column:auto}}
 /* Diagrams: connector stubs always match the row gap */
 .mk-arch{gap:var(--gap,18px)}
 .mk-node.up::after,.mk-node.dn::before{height:var(--gap,18px)}
 .mk-node .ns{display:none}
-/* Platform band (B10): the diagram, with the caption pinned as a handwritten note */
-.band{padding-top:8px}
-.band-frame{position:relative;max-width:900px;margin:96px auto 0}
-.band .mk{box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
-.band .mk-arch{--gap:26px;padding:36px 24px}
-.band .mk-node{font-size:12.5px;padding:8px 13px}
-.band .mk-core{width:min(100%,540px);padding:18px}
-.band-note{position:absolute;right:-40px;top:-96px;width:220px;margin:0;padding:16px 18px 18px;background:#F5E9A8;color:#2B2617;border-radius:3px;box-shadow:0 14px 30px -10px rgba(0,0,0,.7);transform:rotate(3deg);font-family:Caveat,"Segoe Print","Bradley Hand",cursive;font-size:23px;line-height:1.15}
-/* "Where I’ve built" ticker (B05). Items carry their own spacing so the two halves loop seamlessly. */
-.tick{position:relative;display:flex;align-items:center;gap:20px;margin-top:56px;padding-top:16px;padding-bottom:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.tick-lab{flex:none;padding-right:20px;border-right:1px solid var(--line);color:var(--mut);font-size:13.5px}
-.tick-wrap{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.tick-in{display:flex;width:max-content;white-space:nowrap;color:var(--ink2);font-size:18px;font-weight:500;letter-spacing:-.01em;animation:marq 32s linear infinite}
-.tick-in li{flex:none;padding-right:44px}
-.tick:hover .tick-in,.tick:focus-within .tick-in,.tick.is-paused .tick-in{animation-play-state:paused}
-@keyframes marq{to{transform:translateX(-50%)}}
-.tick-btn{position:absolute;right:-6px;bottom:0;width:24px;height:24px;display:grid;place-items:center;color:var(--mut);opacity:.4;transition:opacity .15s}
-.tick-btn:hover,.tick-btn:focus-visible{opacity:.9}
-.tick-btn svg{width:7px;height:7px;fill:currentColor}
-.tick-btn .i-play,.tick.is-paused .tick-btn .i-pause{display:none}
-.tick.is-paused .tick-btn .i-play{display:block}
-@media (prefers-reduced-motion:reduce){
-  .tick-in{animation:none;width:auto;flex-wrap:wrap;white-space:normal;gap:8px 0}
-  .tick-wrap{-webkit-mask-image:none;mask-image:none}
-  .tick-in .dup,.tick-btn{display:none}
+/* Flagship case: three chapters, one per phase of the platform diagram. By default (narrow or short
+   screens, or no JavaScript) each chapter shows its own still diagram, in one reading column. On wide,
+   tall screens home.js adds .is-live, and the live diagram is pinned beside the chapters instead,
+   rebuilt for each one, with lights for payments (E07). */
+.fl-nav{display:flex;flex-wrap:wrap;gap:8px;padding-top:24px}
+.fl-nav a{flex:1 1 200px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surf);text-decoration:none;font-weight:600;letter-spacing:-.01em}
+.fl-nav a:hover{border-color:var(--line2)}
+.fl-nav span{display:block;margin-bottom:2px;font:500 12px/1.4 "Geist Mono",ui-monospace,monospace;color:var(--acc)}
+.fl-story{padding-top:64px}
+.st-grid{display:grid;grid-template-columns:minmax(0,1fr)}
+.st-steps{max-width:720px;padding-bottom:8vh}
+.fl-ch{padding-bottom:64px}
+.fl-ch+.fl-ch{padding-top:48px;border-top:1px solid var(--line)}
+.st-ph{font:500 12.5px/1.4 "Geist Mono",ui-monospace,monospace;color:var(--acc);letter-spacing:.02em}
+.fl-ch h2{margin:6px 0 12px;font-size:clamp(28px,3vw,36px);line-height:1.1;letter-spacing:-.035em}
+.fl-ch h3{margin:32px 0 12px;font-size:18px;font-weight:600;letter-spacing:-.015em}
+.fl-ch .st-txt{margin-bottom:28px;color:var(--ink);font-size:19px;line-height:1.5;text-wrap:pretty}
+.fl-ch .cs-decs{grid-template-columns:minmax(0,1fr)}
+.fl-ch .cs-art,.fl-ch .cs-pull{margin:28px 0}
+.fl-ch .cs-trade{padding-bottom:4px;border-bottom:0}
+.fl-ch .cs-list{margin-bottom:24px}
+.fl-ch .fl-lesson{margin:32px 0 0;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:radial-gradient(420px 160px at 0 0,rgba(61,214,198,.08),transparent),var(--surf);color:var(--ink)}
+.fl-lesson b{display:block;margin-bottom:4px;font:500 12px/1.4 "Geist Mono",ui-monospace,monospace;color:var(--acc2)}
+/* The diagram: a still copy in each chapter, or the live one in the pin */
+.fl-still{margin:0 0 28px}
+.fl-dia .mk-arch{--gap:26px;padding:32px 20px}
+.fl-dia .mk-node{font-size:12.5px;padding:8px 13px}
+.fl-dia .mk-core{width:min(100%,460px);padding:16px}
+.st-pin{display:none}
+.st-pin .mk{box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+@media (min-width:1101px) and (min-height:561px){
+  .fl-story.is-live .st-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
+  .fl-story.is-live .st-steps{max-width:none}
+  .fl-story.is-live .st-pin{display:block;position:sticky;top:max(84px,calc(50vh - 190px));align-self:start}
+  .fl-story.is-live .fl-still{display:none}
 }
-@media (max-width:860px){
-  .band-frame{margin-top:24px}
-  .band-note{position:relative;right:auto;top:auto;width:auto;max-width:300px;margin:-14px 0 0 auto;display:block}
-}
-@media (max-width:640px){
-  .tick{flex-wrap:wrap;gap:12px}
-  .tick-lab{flex-basis:100%;border-right:0;padding-right:0}
-  .tick-wrap{flex-basis:100%}
-}
+.story .mk-arch{position:relative}
+.story .mk-stat b{display:inline-block}
+.story .mk-core{transition:box-shadow 1.2s}
+.story .mk-arch[data-phase="2"] .mk-core{box-shadow:0 0 34px -10px rgba(124,140,255,.5)}
+.story .mk-arch[data-phase="3"] .mk-core{box-shadow:0 0 54px -8px rgba(124,140,255,.65)}
+/* Effects layer: copies of leaving boxes and the payment lights */
+.st-fx{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.st-ghost{position:absolute;margin:0}
+.st-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:#DDE1FF;box-shadow:0 0 8px 2px rgba(140,155,255,.75)}
 /* Narrow diagrams (stage, case figures): every node stays on one row with its own animated
    connector; labels switch to their short forms. */
 @container (max-width:519px){
