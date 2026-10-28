@@ -9,7 +9,7 @@ import { CASE_OPTIONS } from "./case-options";
 import { PHASES as PHASE_BOXES, PRODUCTS } from "./platform-phases";
 
 const PX = {
-  name: "Drake", first: "Drake", initials: "DK",
+  name: "Drake", first: "Drake", initials: "DW",
   email: "",        // no published address: contact goes through the form (DEC-13)
   resumeUrl: "",    // résumé button off for now
   linkedinUrl: "https://www.linkedin.com/in/drakekutz"

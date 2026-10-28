@@ -90,7 +90,7 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .feat h3{font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
 .feat p{font-size:14.5px;color:var(--mut)}
 /* ---------- 6. Numbers ---------- */
-.nums{padding-top:104px}
+.nums{padding-top:72px}
 .nums ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;border-top:1px solid var(--line);padding-top:32px}
 .nums b{display:block;font-size:clamp(40px,4.6vw,60px);font-weight:600;letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#fff,rgba(255,255,255,.55));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
 .nums b span{display:inline;margin:0;font:inherit;color:inherit;font-variant-numeric:tabular-nums}
@@ -175,6 +175,23 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 .cs-pill.k-guardrail{color:#F5A524;border-color:rgba(245,165,36,.4)}
 .cs-art{margin-top:20px;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:22px}
 .cs-art figcaption{font-size:12.5px;color:var(--mut);margin-top:12px}
+/* Orchestration before/after diagram (case 2) */
+.cs-orc{margin:4px 0 22px;container-type:inline-size}
+.orc{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.orc-p{min-width:0;width:100%;max-width:340px;justify-self:center}
+.cs-sec .orc-p p{margin:0 0 12px;font-size:13px;line-height:1.4;color:var(--mut)}
+.orc-p p b{display:block;color:var(--ink);font-size:14px;font-weight:600}
+.orc-on p b{color:var(--acc)}
+.orc svg{display:block;width:100%;height:auto;overflow:visible}
+.orc rect{fill:var(--surf2);stroke:var(--line2)}
+.orc text{fill:var(--ink2);font-size:12px;font-family:inherit;text-anchor:middle;dominant-baseline:central}
+.orc-ln line{stroke:var(--line2);stroke-width:1.2}
+.orc-on .orc-ln line{stroke:var(--acc);stroke-dasharray:3 3}
+.orc .orc-core rect{fill:color-mix(in srgb,var(--acc) 18%,var(--surf2));stroke:color-mix(in srgb,var(--acc) 60%,transparent)}
+.orc .orc-core text{fill:var(--ink);font-size:13px;font-weight:600}
+.orc .orc-gw rect{stroke:color-mix(in srgb,var(--acc2) 60%,transparent)}
+.orc .orc-gw text{fill:var(--acc2);font-size:10px}
+@container (max-width:520px){.orc{grid-template-columns:1fr;gap:24px}}
 .cs-opts{display:grid;gap:10px}
 .cs-opt{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--surf)}
 .cs-opt b{display:block;font-weight:600;margin:6px 0 4px}
@@ -207,6 +224,9 @@ kbd{font:500 11px/1 "Geist Mono",ui-monospace,monospace;padding:3px 5px;border-r
 /* ---------- Product mockups (recreated app screens) ---------- */
 .mk{font-family:inherit;color:var(--mk-ink);background:var(--mk-bg);border:1px solid var(--mk-line);border-radius:12px;overflow:hidden;font-size:12px;line-height:1.4;text-align:left;container-type:inline-size;box-shadow:0 1px 0 rgba(255,255,255,.04) inset}
 .mk *{box-sizing:border-box}
+.mk{position:relative}
+.cs-art .mk::after{content:"Mock-up";position:absolute;right:8px;bottom:5px;font-size:8px;letter-spacing:.04em;color:var(--mk-mut);opacity:.4;pointer-events:none}
+.cv:has(.mk)::after{content:"Mock-up";position:absolute;right:10px;top:8px;font-size:8px;letter-spacing:.04em;color:var(--mut);opacity:.4;pointer-events:none;z-index:3}
 .mk b{font-weight:600}
 .mk-bar{display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-bottom:1px solid var(--mk-line);background:var(--mk-surf)}
 .mk-bar i{width:9px;height:9px;border-radius:50%;background:var(--mk-line2,var(--mk-line))}
@@ -566,7 +586,7 @@ body.ij-lock{position:fixed;left:0;right:0;overflow:hidden}
 /* Hero: the headline and introduction beside the rotating diagram (HeroDiagram.astro). Desktop: copy
    on the left, the diagram on the right. Phones and tablets (≤980px): the headline, then the
    diagram, then the introduction. */
-.hr{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"head fig" "intro fig";grid-template-rows:auto auto;align-content:center;column-gap:56px;min-height:min(760px,calc(100svh - 62px));padding-bottom:64px}
+.hr{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"head fig" "intro fig";grid-template-rows:auto auto;align-content:center;column-gap:56px;min-height:min(600px,calc(100svh - 62px));padding-bottom:24px}
 .hr-head{grid-area:head;align-self:end;container-type:inline-size}
 .hr h1{font-size:clamp(22px,3.2vw,46px);font-size:clamp(20px,7.6cqi,54px);line-height:1.1;letter-spacing:-.045em;margin-bottom:0}
 .hr h1 .ln{display:block;white-space:nowrap}
@@ -581,9 +601,9 @@ body.ij-lock{position:fixed;left:0;right:0;overflow:hidden}
   .hr .hr-hi{animation-delay:.2s}.hr .hr-role{animation-delay:.22s}.hr .hr-sub{animation-delay:.24s}.hr .ctas{animation-delay:.26s}.hr-fig{animation-delay:.3s}
 }
 @media (max-width:980px){
-  .hr{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "fig" "intro";grid-template-rows:none;min-height:0;padding-top:72px}
-  .hr-fig{margin-top:32px;width:100%;max-width:560px;justify-self:center}
-  .hr-intro{display:block;align-self:auto;padding-top:0;margin-top:40px;text-align:center}
+  .hr{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "intro" "fig";grid-template-rows:none;min-height:0;padding-top:72px}
+  .hr-fig{margin-top:40px;width:100%;max-width:560px;justify-self:center}
+  .hr-intro{display:block;align-self:auto;padding-top:0;margin-top:28px;text-align:center}
   .hr-hi{margin:0 0 10px;transform-origin:center}
   .hr-role{margin-top:24px}
   .hr .ctas{justify-content:center}
@@ -819,6 +839,8 @@ body.ij-lock{position:fixed;left:0;right:0;overflow:hidden}
 .abt-big{display:block;font-size:clamp(34px,3.4vw,46px);line-height:1;letter-spacing:-.05em;font-weight:600;margin:12px 0 4px;background:linear-gradient(180deg,#fff,rgba(140,155,255,.62));-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
 .abt-big .abt-ct{font-variant-numeric:tabular-nums}
 .abt-unit{color:var(--ink2);font-size:14.5px;line-height:1.4}
+.abt-comp .abt-big,.abt-data .abt-big,.abt-sales .abt-big{font-size:clamp(24px,2.2vw,30px);letter-spacing:-.04em;margin:10px 0 2px}
+.abt-comp h3,.abt-data h3,.abt-sales h3{font-size:clamp(20px,1.8vw,24px)}
 /* Placement on desktop: ownership on top; compliance and data beside a tall users tile; engineering wide; then sales and a wide priorities tile */
 .abt-own{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,2fr);gap:12px 40px;align-items:center;padding:30px;background:radial-gradient(560px 300px at 0 0,rgba(140,155,255,.16),transparent),radial-gradient(520px 280px at 100% 100%,rgba(61,214,198,.08),transparent),var(--surf)}
 .abt-comp{grid-column:1;grid-row:2}
@@ -829,7 +851,7 @@ body.ij-lock{position:fixed;left:0;right:0;overflow:hidden}
 .abt-pri{grid-column:2/span 2;grid-row:4}
 /* Ownership: the claim, and the napkin strip Sketch → Pitch → Hire → Live */
 .abt-intro{display:flex;flex-direction:column;align-self:stretch;min-width:0}
-.abt-own .abt-big{font-size:clamp(60px,6.4vw,92px);letter-spacing:-.06em;margin:16px 0 8px}
+.abt-own .abt-big{font-size:clamp(40px,4.2vw,58px);letter-spacing:-.06em;margin:16px 0 8px}
 .abt-own h3{font-size:clamp(22px,2.1vw,28px);max-width:13em;text-wrap:balance}
 .abt-own .abt-unit{max-width:20em}
 .abt-strip{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr) 34px minmax(0,1fr) 34px minmax(0,1fr);gap:0 8px;align-items:start;padding:24px 20px 22px;margin:0;border:1px dashed rgba(255,255,255,.14);border-radius:16px;background:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.2px) 0 0/16px 16px,var(--mk-bg);list-style:none}

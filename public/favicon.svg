@@ -1,14 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="8 2 88 88">
-    <circle class="d" cx="28" cy="62" r="16" />
-    <path class="d" d="M44 14V78" />
-    <path class="w" d="M54 48L62 76L72 52L82 76L92 48" />
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100">
+    <circle class="r" cx="50" cy="50" r="46" stroke-width="7" />
+    <g stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="translate(18.8 22.4) scale(0.6)">
+        <circle class="d" cx="28" cy="62" r="16" />
+        <path class="d" d="M44 14V78" />
+        <path class="w" d="M54 48L62 76L72 52L82 76L92 48" />
+    </g>
     <style>
-        * { stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
         .d { stroke: #0A0B0D; }
-        .w { stroke: #4F5FE0; }
+        .w, .r { stroke: #4F5FE0; }
         @media (prefers-color-scheme: dark) {
             .d { stroke: #F4F5F7; }
-            .w { stroke: #8C9BFF; }
+            .w, .r { stroke: #8C9BFF; }
         }
     </style>
 </svg>
