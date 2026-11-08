@@ -53,8 +53,9 @@ jobs:
         run: |
           # Fixed strings, one -e each. grep exits 0 on a match, 1 on none and 2 on an error
           # (such as a missing dist/); only 1 passes.
+          # dist/demos/ (unlisted interview demos, see CLAUDE.md) is skipped: demos use made-up brand names on purpose.
           status=0
-          grep -rnoIF \
+          grep -rnoIF --exclude-dir=demos \
             -e 'TODO(' -e 'EXPERT-CHECK' -e 'DATE-LOCK' -e 'panel instruction' \
             -e 'Jordan Hale' -e 'hale.example' -e 'Kestrel' -e 'Tessel' -e 'Railpay' -e 'Ordinal' -e 'northpoint' \
             -e 'Sample persona' -e 'fictional' -e 'Illustrative' -e 'Prototype:' \

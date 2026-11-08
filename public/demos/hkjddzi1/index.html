@@ -1,0 +1,1718 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kestrel wallet onboarding</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Kestrel sign-up prototype: every investor gets a self-custody wallet at sign-up with no extra screens. Face ID creates a passkey that locks a backup of the wallet, so it can be restored on any device and every network. Cloud backup and a recovery phrase stay available. iOS and Android.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<!--QAFONTS-->
+<style>
+/* ======================================================================
+   STUDIO PAGE: a short claim, the demo as the centrepiece, then the case
+   ====================================================================== */
+:root{
+  --s-bg:#F7F5F0;--s-panel:#FFFFFF;--s-ink:#1D1B18;--s-ink2:#57524A;--s-ink3:#8A8378;--s-line:#E3DED4;--s-line2:#EDE9E1;
+  --s-teal:#0E6B65;--s-teal-bg:#E2EFED;--s-grey-bg:#EFECE6;--s-band:#EEEAE2;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  /* Kestrel product tokens (unchanged from v1) */
+  --accent:#0E6B65;--accent-soft:#9CC8C3;--ink:#1B1B1B;--text:#4A4A4A;--sub:#5E5E5E;--muted:#8E8E8E;--hint:#C2C2C2;--line:#D3D3D3;
+  --ok:#22B35E;--ok-deep:#1E8E4E;--err:#E5484D;
+  --font:"Figtree","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-bg:#151412;--s-panel:#1D1B18;--s-ink:#EFEAE2;--s-ink2:#B8B0A4;--s-ink3:#8B8479;--s-line:#332F29;--s-line2:#28251F;--s-teal:#5FB8AE;--s-teal-bg:#16302D;--s-grey-bg:#25221E;--s-band:#0F0E0C;color-scheme:dark}}
+:root[data-theme="dark"]{--s-bg:#151412;--s-panel:#1D1B18;--s-ink:#EFEAE2;--s-ink2:#B8B0A4;--s-ink3:#8B8479;--s-line:#332F29;--s-line2:#28251F;--s-teal:#5FB8AE;--s-teal-bg:#16302D;--s-grey-bg:#25221E;--s-band:#0F0E0C;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--s-bg);color:var(--s-ink);font:500 15px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+button{font:inherit;background:none;border:0;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+input{font:inherit;border:0;outline:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--s-teal);outline-offset:2px}
+input:focus-visible{outline:none}
+/* header */
+.top{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--s-bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--s-line2)}
+.top-in{max-width:1440px;margin:0 auto;display:flex;align-items:center;gap:10px;height:52px;padding:0 28px}
+.top-in .mk{width:22px;height:22px;color:var(--s-teal);display:flex}
+.top-in .mk svg{width:22px;height:22px}
+.top-in b{font-weight:800;font-size:15px;letter-spacing:-.01em}
+.top-in .ttl{color:var(--s-ink3);font-size:13px;font-weight:600;padding-left:10px;border-left:1px solid var(--s-line)}
+.top-in nav{margin-left:auto;display:flex;gap:18px;font-size:13px;font-weight:700;color:var(--s-ink2)}
+.top-in nav a{text-decoration:none;color:inherit}
+.top-in nav a:hover{color:var(--s-ink)}
+.thm{border:1px solid var(--s-line);background:var(--s-panel);border-radius:999px;height:32px;padding:0 13px;font-size:12.5px;font-weight:700}
+/* claim */
+.hero{max-width:1100px;margin:0 auto;padding:30px 28px 24px;text-align:center}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--s-teal)}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3vw,42px);line-height:1.1;letter-spacing:-.02em;max-width:26ch;margin:10px auto 0}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:960px;margin:22px auto 0;text-align:left}
+.stats>div{display:flex;gap:14px;align-items:flex-start;padding:4px 22px}
+.stats>div+div{border-left:1px solid var(--s-line)}
+.stats dt{font-family:var(--serif);font-size:42px;line-height:.9;color:var(--s-teal);font-weight:500}
+.stats dd{font-size:13.5px;line-height:1.45;color:var(--s-ink2)}
+.stats dd b{color:var(--s-ink);font-weight:700}
+/* demo stage */
+.demozone{background:var(--s-band);border-top:1px solid var(--s-line2);border-bottom:1px solid var(--s-line2);scroll-margin-top:52px}
+.demo-in{max-width:1440px;margin:0 auto;padding:18px 28px 26px}
+.bar{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.pill{display:flex;gap:3px;padding:3px;border-radius:999px;background:var(--s-panel);border:1px solid var(--s-line)}
+.pill button{display:flex;align-items:center;gap:7px;height:34px;padding:0 15px;border-radius:999px;font-size:13.5px;font-weight:700;color:var(--s-ink2);white-space:nowrap}
+.pill button svg{width:14px;height:14px}
+.pill [aria-selected="true"],.pill [aria-pressed="true"]{background:var(--s-ink);color:var(--s-bg)}
+.pill .def{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:999px;background:var(--s-teal-bg);color:var(--s-teal)}
+.pill [aria-pressed="true"] .def{background:color-mix(in srgb,var(--s-bg) 22%,transparent);color:inherit}
+.bar .lbl{font-size:12.5px;font-weight:700;color:var(--s-ink3)}
+.stage3{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:36px;align-items:center}
+.center{display:flex;align-items:center;gap:16px}
+.arrow{width:46px;height:46px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;background:var(--s-panel);border:1px solid var(--s-line);color:var(--s-ink);transition:transform .15s,opacity .15s}
+.arrow:hover:not(:disabled){transform:scale(1.06)}
+.arrow:disabled{opacity:.35;cursor:default}
+.pcol{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pwrap{position:relative;width:calc(384px * var(--s,1));height:calc(804px * var(--s,1))}
+.pwrap>.phone{position:absolute;left:0;top:0;transform:scale(var(--s,1));transform-origin:0 0}
+.ctl{display:flex;gap:16px;justify-content:center;font-size:13px;font-weight:700;color:var(--s-ink3)}
+.ctl button:hover{color:var(--s-ink)}
+.mnav{display:none}
+/* story */
+.story{justify-self:end;width:100%;max-width:410px}
+.kick{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:700;color:var(--s-ink3)}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.tag.new{background:var(--s-teal-bg);color:var(--s-teal)}
+.tag.same{background:var(--s-grey-bg);color:var(--s-ink2)}
+.story h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.3vw,34px);line-height:1.12;letter-spacing:-.015em;margin:12px 0 12px}
+.story .st{font-size:16px;line-height:1.65;color:var(--s-ink2)}
+.story details{margin-top:18px;border-top:1px solid var(--s-line);padding-top:12px}
+.story summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--s-teal)}
+.story summary::-webkit-details-marker{display:none}
+.story summary svg{width:14px;height:14px;transition:transform .2s}
+.story details[open] summary svg{transform:rotate(90deg)}
+.story details p{margin-top:8px;font-size:14.5px;line-height:1.6;color:var(--s-ink2)}
+.story .from{display:block;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--s-teal)}
+/* stepper */
+.stepper{justify-self:start;width:100%;max-width:300px}
+.stepper h3{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--s-ink3)}
+.stepper .lane{font-family:var(--serif);font-size:22px;font-weight:500;margin:4px 0 12px;letter-spacing:-.01em}
+.stepper ol{list-style:none;position:relative}
+.stepper>ol::before{content:"";position:absolute;left:12px;top:14px;bottom:14px;width:1.5px;background:var(--s-line)}
+.srow,.grp{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:36px;padding:4px 8px 4px 0;text-align:left;font-size:14px;font-weight:600;color:var(--s-ink2);border-radius:10px}
+.srow .n,.grp .n{width:25px;height:25px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;background:var(--s-bg);box-shadow:inset 0 0 0 1.5px var(--s-line);color:var(--s-ink3)}
+.srow.new .n{box-shadow:inset 0 0 0 1.5px var(--s-teal);color:var(--s-teal);background:var(--s-panel)}
+.srow.new{color:var(--s-ink)}
+.srow:hover .t,.grp:hover .t{text-decoration:underline;text-underline-offset:3px}
+.srow[aria-current="step"] .n{background:var(--s-teal);color:#fff;box-shadow:0 0 0 4px color-mix(in srgb,var(--s-teal) 22%,transparent)}
+.srow.same[aria-current="step"] .n{background:var(--s-ink2);box-shadow:0 0 0 4px color-mix(in srgb,var(--s-ink2) 18%,transparent)}
+.srow[aria-current="step"] .t{color:var(--s-ink);font-weight:800}
+.srow .nw{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--s-teal)}
+.grp small{display:block;font-size:12px;font-weight:600;color:var(--s-ink3)}
+.grp .n svg{width:12px;height:12px;transition:transform .2s}
+.grp[aria-expanded="true"] .n svg{transform:rotate(90deg)}
+.stepper ol ol{margin:2px 0 4px}
+.stepper ol ol .srow{font-size:13.5px}
+.legend{display:flex;gap:14px;margin-top:14px;font-size:12px;font-weight:600;color:var(--s-ink3)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.legend .lg-s{box-shadow:inset 0 0 0 1.5px var(--s-ink3)}
+.legend .lg-n{box-shadow:inset 0 0 0 1.5px var(--s-teal)}
+/* the case */
+.case{max-width:1100px;margin:0 auto;padding:64px 28px 40px}
+.case section{scroll-margin-top:70px}
+.case section+section{margin-top:64px}
+.case .eyebrow{margin-bottom:10px}
+.case h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,2.8vw,38px);line-height:1.12;letter-spacing:-.015em;max-width:26ch}
+.case .lead{margin-top:14px;font-size:17px;line-height:1.65;color:var(--s-ink2);max-width:70ch}
+.reco{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
+.why{list-style:none;display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.why li{display:grid;grid-template-columns:32px 1fr;gap:12px;font-size:15px;line-height:1.55;color:var(--s-ink2)}
+.why li b{display:block;color:var(--s-ink);font-size:15.5px;margin-bottom:2px}
+.why .wn{width:28px;height:28px;border-radius:50%;background:var(--s-teal-bg);color:var(--s-teal);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+.cmp{margin-top:26px;overflow-x:auto;border:1px solid var(--s-line);border-radius:18px;background:var(--s-panel)}
+.cmp table{width:100%;min-width:760px;border-collapse:collapse;font-size:14px;line-height:1.5}
+.cmp th,.cmp td{padding:14px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--s-line2)}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td{border-bottom:0}
+.cmp thead th{font-size:15px;font-weight:800;color:var(--s-ink);border-bottom:1px solid var(--s-line)}
+.cmp thead th small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--s-teal);margin-bottom:2px}
+.cmp thead th.def{background:var(--s-teal-bg)}
+.cmp tbody th{width:190px;font-size:12.5px;font-weight:700;color:var(--s-ink3)}
+.cmp td{color:var(--s-ink2)}
+.cmp td.def{background:color-mix(in srgb,var(--s-teal-bg) 45%,transparent);color:var(--s-ink)}
+.cmp .try{display:inline-flex;margin-top:6px;font-size:12.5px;font-weight:700;color:var(--s-teal)}
+.cmp .try:hover{text-decoration:underline;text-underline-offset:3px}
+.fine{margin-top:10px;font-size:12.5px;color:var(--s-ink3)}
+.metrics{margin-top:26px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.metric{padding:18px;border-radius:16px;background:var(--s-panel);border:1px solid var(--s-line)}
+.metric .dir{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--s-teal)}
+.metric b{display:block;margin-top:10px;font-size:15.5px;line-height:1.3;color:var(--s-ink)}
+.metric p{margin-top:6px;font-size:13.5px;line-height:1.5;color:var(--s-ink2)}
+.risks{margin-top:26px;border-top:1px solid var(--s-line)}
+.risks>div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px;padding:18px 0;border-bottom:1px solid var(--s-line2)}
+.risks b{font-size:16px;color:var(--s-ink)}
+.risks p{font-size:15px;line-height:1.6;color:var(--s-ink2)}
+.risks p::before{content:"Mitigation";display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--s-teal);margin-bottom:2px}
+.flow{margin-top:20px;border:1px solid var(--s-line);border-radius:18px;background:var(--s-panel)}
+.flow>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;font-weight:700;font-size:15px}
+.flow>summary::-webkit-details-marker{display:none}
+.flow>summary svg{width:16px;height:16px;transition:transform .2s;color:var(--s-ink3)}
+.flow[open]>summary svg{transform:rotate(90deg)}
+.map{padding:4px 22px 20px;overflow-x:auto;scrollbar-width:thin}
+.mrow{display:flex;align-items:center;gap:6px;min-width:max-content}
+.mrow+.mrow{margin-top:8px}
+.mlab{width:168px;flex:none;display:flex;flex-direction:column;line-height:1.25;padding-right:8px}
+.mlab b{font-size:13px;font-weight:800}
+.mlab small{font-size:11.5px;color:var(--s-ink3);font-weight:600}
+.mrow.on .mlab b{color:var(--s-teal)}
+.mlanes{margin-left:168px;padding-left:18px;border-left:2px solid var(--s-line2);margin-top:8px}
+.mlanes .mrow{margin-left:-186px}
+.node{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.node.same{background:var(--s-grey-bg);color:var(--s-ink2);box-shadow:inset 0 0 0 1px var(--s-line)}
+.node.new{background:var(--s-teal-bg);color:var(--s-teal);box-shadow:inset 0 0 0 1.5px var(--s-teal)}
+.node[aria-current="step"]{background:var(--s-teal);color:#fff;box-shadow:none}
+.node.same[aria-current="step"]{background:var(--s-ink2);color:var(--s-bg)}
+.arr{color:var(--s-ink3);font-size:12px;flex:none}
+.fork{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--s-teal);margin:4px 0 0 168px;padding-left:18px}
+.foot{max-width:1100px;margin:0 auto;padding:0 28px 56px;font-size:12.5px;color:var(--s-ink3)}
+/* provenance badges: observed baseline / proposed change / simulated system prompt */
+:root{--s-sys:#4655C8;--s-sys-bg:#ECEEFB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-sys:#9EA9FF;--s-sys-bg:#1F2342}}
+:root[data-theme="dark"]{--s-sys:#9EA9FF;--s-sys-bg:#1F2342}
+.tag.sys{background:var(--s-sys-bg);color:var(--s-sys)}
+.srow.sys{color:var(--s-ink)}
+.srow.sys .n{border-radius:7px;box-shadow:inset 0 0 0 1.5px var(--s-sys);color:var(--s-sys);background:var(--s-panel)}
+.srow.sys .nw{color:var(--s-sys)}
+.srow.sys[aria-current="step"] .n{background:var(--s-sys);color:#fff;box-shadow:0 0 0 4px color-mix(in srgb,var(--s-sys) 22%,transparent)}
+.node.sys{border-radius:8px;background:var(--s-sys-bg);color:var(--s-sys);box-shadow:inset 0 0 0 1.5px var(--s-sys)}
+.node.sys[aria-current="step"]{background:var(--s-sys);color:#fff;box-shadow:none}
+.legend .lg-y{border-radius:2px;box-shadow:inset 0 0 0 1.5px var(--s-sys)}
+.map .legend{margin:0 0 14px}
+/* hero additions */
+.hsub{margin:14px auto 0;max-width:62ch;font-size:16.5px;line-height:1.6;color:var(--s-ink2)}
+.cta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.hbtn{display:inline-flex;align-items:center;height:42px;padding:0 20px;border-radius:999px;border:1px solid var(--s-line);background:var(--s-panel);font-size:14.5px;font-weight:700;color:var(--s-ink);text-decoration:none}
+.hbtn.pri{background:var(--s-teal);border-color:var(--s-teal);color:#fff}
+.stats dt.w{font-size:26px;line-height:1.1}
+.prov{margin:22px auto 0;max-width:76ch;font-size:12.5px;line-height:1.5;color:var(--s-ink3)}
+/* guided route */
+.tourbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;width:max-content;max-width:100%;margin:0 auto 14px;padding:6px 6px 6px 16px;border-radius:999px;background:var(--s-panel);border:1.5px solid var(--s-teal)}
+.tourbar[hidden]{display:none}
+.tourbar .tl{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--s-teal)}
+.tourbar ol{list-style:none;display:flex;gap:2px;flex-wrap:wrap}
+.tourbar ol button{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border-radius:999px;font-size:13px;font-weight:700;color:var(--s-ink2)}
+.tourbar ol button span{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;box-shadow:inset 0 0 0 1.5px var(--s-line)}
+.tourbar ol [aria-current="step"]{background:var(--s-teal-bg);color:var(--s-teal)}
+.tourbar ol [aria-current="step"] span{background:var(--s-teal);color:#fff;box-shadow:none}
+.tourbar .tnext{height:32px;padding:0 14px;border-radius:999px;background:var(--s-teal);color:#fff;font-size:13px;font-weight:700}
+.tourbar .tx{width:32px;height:32px;border-radius:50%;font-size:18px;color:var(--s-ink3)}
+.st2{margin-top:12px;font-size:14.5px!important;padding-left:12px;border-left:3px solid var(--s-teal)}
+/* the case additions */
+.startpt{margin:0 0 20px;max-width:72ch;padding-left:14px;border-left:3px solid var(--s-teal);font-size:15.5px;line-height:1.6;color:var(--s-ink2)}
+.dep{margin-top:16px;padding:12px 14px;border-radius:12px;border:1px dashed var(--s-line);background:var(--s-panel);font-size:14px;line-height:1.55;color:var(--s-ink2)}
+.dep b{color:var(--s-ink)}
+.callout{margin-top:30px;padding:20px 24px;border-radius:16px;background:var(--s-teal-bg);border-left:4px solid var(--s-teal);scroll-margin-top:90px}
+.callout b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--s-teal);margin-bottom:6px}
+.callout p{font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--s-ink);max-width:68ch}
+.callout.flash{animation:cflash 1.6s ease-out}
+@keyframes cflash{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--s-teal) 45%,transparent)}100%{box-shadow:0 0 0 18px transparent}}
+.audit{margin-top:26px}
+.audit h3{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--s-ink3);margin-bottom:10px}
+.audit table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.5;background:var(--s-panel);border:1px solid var(--s-line);border-radius:14px;overflow:hidden}
+.audit th,.audit td{padding:12px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--s-line2)}
+.audit tbody tr:last-child th,.audit tbody tr:last-child td{border-bottom:0}
+.audit thead th{font-size:12.5px;color:var(--s-ink3);font-weight:700}
+.audit tbody th{font-weight:700;color:var(--s-ink);width:150px}
+.audit td{color:var(--s-ink2)}
+.audit td b{color:var(--s-teal)}
+.mgroups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:26px;align-items:start}
+.mgroup{padding:18px 20px;border-radius:16px;background:var(--s-panel);border:1px solid var(--s-line)}
+.mgroup.pri{border-color:var(--s-teal);box-shadow:inset 0 3px 0 var(--s-teal)}
+.mgroup h3{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--s-teal);margin-bottom:10px}
+.mgroup ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.mgroup b{display:block;font-size:15px;color:var(--s-ink);line-height:1.3}
+.mgroup span{display:block;margin-top:3px;font-size:13.5px;line-height:1.5;color:var(--s-ink2)}
+@media (max-width:860px){.mgroups{grid-template-columns:1fr}.callout p{font-size:17.5px}.audit{overflow-x:auto}.audit table{min-width:560px}}
+/* phone: proposed wallet step layout with the access link */
+.btn-quiet.hw{height:30px;margin-top:8px;font-size:14.5px}
+[data-s="wallet"] .fp{margin-top:66px}
+@media (max-width:1180px){
+  .stage3{grid-template-columns:auto minmax(0,300px);grid-template-areas:"phone steps" "story story";gap:28px 36px;justify-content:center}
+  .center{grid-area:phone}.stepper{grid-area:steps;align-self:center}.story{grid-area:story;justify-self:center;max-width:720px}
+  .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:860px){.reco{grid-template-columns:1fr;gap:28px}.metrics{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr;gap:12px;max-width:520px}.stats>div+div{border-left:0}.top-in nav{display:none}.thm{margin-left:auto}}
+@media (max-width:760px){
+  .top-in,.hero,.demo-in,.case,.foot{padding-left:16px;padding-right:16px}.top-in .ttl{display:none}
+  .stage3{grid-template-columns:minmax(0,1fr);grid-template-areas:"phone" "story" "steps";gap:22px}
+  .arrow{display:none}.mnav{display:flex;gap:10px}.mnav button{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--s-line);background:var(--s-panel);font-size:13.5px;font-weight:700}
+  .mnav button:disabled{opacity:.4}
+  .stepper{max-width:none}.stepper>ol{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.stepper>ol::before{display:none}.stepper ol ol{display:flex;gap:6px;margin:0}
+  .srow,.grp{flex:none;width:auto;white-space:nowrap;padding:4px 12px 4px 4px;background:var(--s-panel);border:1px solid var(--s-line);border-radius:999px}
+  .srow .nw,.grp small{display:none}
+  .risks>div{grid-template-columns:1fr;gap:6px}.metrics{grid-template-columns:1fr}
+  .mlab{width:120px}.mlanes{margin-left:120px;padding-left:12px}.mlanes .mrow{margin-left:-132px}.fork{margin-left:120px;padding-left:12px;white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important}}
+
+/* ======================================================================
+   KESTREL PHONE (v1 styles, scoped to .phone; section ids became data-s)
+   ====================================================================== */
+.phone{width:384px;height:804px;padding:12px;border-radius:46px;position:relative;text-align:left;color:var(--ink);font-family:var(--font);
+  background:linear-gradient(145deg,#2a2d2f,#0e0f10 40%,#1c1e20);
+  box-shadow:0 0 0 1.5px #3a3d40 inset,0 30px 60px -20px rgba(0,0,0,.45),0 10px 20px -10px rgba(0,0,0,.4)}
+.phone::before,.phone::after{content:"";position:absolute;right:-3px;width:3px;border-radius:0 2px 2px 0;background:#2b2e31}
+.phone::before{top:150px;height:56px}
+.phone::after{top:226px;height:92px}
+.screen{width:360px;height:780px;border-radius:34px;overflow:hidden;background:#fff;position:relative;isolation:isolate}
+.statusbar{position:absolute;top:0;left:0;right:0;height:26px;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 22px;font-size:12.5px;font-weight:600;color:#1a1a1a;background:#fff;pointer-events:none}
+.statusbar .cam{position:absolute;left:50%;top:7px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#0d0d0d;box-shadow:0 0 0 1.5px #1f1f1f}
+.statusbar .sys{display:flex;gap:5px;align-items:center}
+.gesture{position:absolute;bottom:0;left:0;right:0;height:18px;z-index:40;background:#fff;display:flex;justify-content:center;align-items:center;pointer-events:none}
+.gesture i{width:108px;height:4px;border-radius:2px;background:#1a1a1a;opacity:.85}
+.viewport{position:absolute;top:26px;bottom:18px;left:0;right:0;overflow:hidden}
+/* iOS build: iPhone frame, Dynamic Island, iOS status bar and home indicator */
+.phone.ios{border-radius:56px;padding:11px;background:linear-gradient(145deg,#3a3c3f,#16171a 40%,#2a2c2f)}
+.phone.ios::before{left:-3px;right:auto;top:170px;height:60px;border-radius:2px 0 0 2px}
+.phone.ios::after{top:200px;height:88px}
+.phone.ios .screen{width:362px;height:782px;border-radius:46px}
+.phone.ios .statusbar{height:46px;padding:0 26px 0 34px;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.phone.ios .statusbar .cam{top:11px;width:104px;height:30px;margin-left:-52px;border-radius:16px;background:#000;box-shadow:none}
+.phone.ios .statusbar .sys{gap:6px}
+.phone.ios .viewport{top:46px;bottom:22px}
+.phone.ios .gesture{height:22px}
+.phone.ios .gesture i{width:126px;height:5px;border-radius:3px;opacity:1;margin-top:2px}
+/* screens */
+.scr{position:absolute;inset:0;background:#fff;display:none;flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+.scr.active{display:flex}
+.pad{padding:0 19px}
+.hdr{position:relative;height:59px;flex:none}
+.logo{position:absolute;left:50%;top:17px;width:26px;height:26px;margin-left:-13px;color:var(--accent)}
+.back{position:absolute;left:12px;top:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#5a5a5a;border-radius:50%}
+.back:active{background:#f1f1f1}
+.title{font-size:30px;line-height:36px;font-weight:700;color:var(--ink);text-align:center;letter-spacing:-.025em}
+.title.light{font-weight:400;color:#111;letter-spacing:-.005em}
+.sub{font-size:15.5px;line-height:22.7px;color:var(--sub);text-align:center}
+.fill{flex:1 1 auto;min-height:12px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;height:37px;border-radius:10px;font-size:16.5px;font-weight:600;letter-spacing:-.005em}
+.btn-primary{background:var(--accent);color:#fff;transition:background-color .2s}
+.btn-primary:disabled{background:var(--accent-soft);cursor:default}
+.btn-primary:not(:disabled):active{filter:brightness(.92)}
+.btn-outline{border:1px solid var(--line);color:#3e3e3e;font-weight:500;height:37px}
+.btn-outline:active{background:#f6f6f6}
+.btn.busy{color:transparent;position:relative}
+.btn.busy::after{content:"";position:absolute;width:16px;height:16px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.link{color:var(--accent);font-weight:inherit}
+.link-strong{color:var(--accent);font-weight:700}
+.field{position:relative}
+.label{font-size:14px;line-height:18px;font-weight:700;color:var(--text);letter-spacing:-.005em}
+.uline{position:relative;display:flex;align-items:flex-start;padding-top:8px;height:53px;border-bottom:1px solid var(--line);transition:border-color .15s}
+.uline.focus{border-bottom-color:var(--accent)}
+.uline input{flex:1;height:28px;font-size:16.5px;color:var(--text);letter-spacing:.005em;min-width:0}
+.uline input[type=password]{font-size:20px;letter-spacing:.12em}
+.uline input[type=password]::placeholder{font-size:16px;letter-spacing:.18em}
+.uline input::placeholder{color:var(--hint)}
+[data-s="welcome"] .title{margin-top:45px}
+.btn-email{position:relative;margin-top:43px;height:46px;border:1px solid var(--line);border-radius:8px;font-size:18px;font-weight:600;color:#4a4a4a;justify-content:center}
+.btn-email svg{position:absolute;left:14px;top:50%;margin-top:-10px}
+.already{text-align:center;font-size:15.5px;color:#4d4d4d;margin-top:24px;line-height:22px}
+.already .dot{margin:0 4px 0 8px}
+.already .link-strong{font-size:16px}
+.legal{text-align:center;font-size:12.6px;line-height:17px;color:#4d4d4d;padding-bottom:12px;white-space:nowrap}
+.legal u{text-underline-offset:2px;text-decoration-thickness:1px;cursor:pointer}
+.legal .link{cursor:pointer}
+[data-s="country"] .label{margin-top:29px}
+.select{display:flex;align-items:flex-start;gap:6px;height:53px;border-bottom:1px solid var(--line);width:100%;text-align:left;padding-top:5px}
+.select .name{flex:1;font-size:16.5px;line-height:24px;color:#555;letter-spacing:.01em}
+.select > svg{margin-top:-1px;margin-right:2px}
+.flag{width:19px;height:19px;border-radius:50%;overflow:hidden;flex:none;display:inline-block;box-shadow:0 0 0 .5px rgba(0,0,0,.08)}
+.flag svg{width:100%;height:100%;display:block}
+.select .flag{margin:2px 7px 0 0}
+.footer{padding:12px 19px 19px;flex:none;background:#fff}
+[data-s="account"] .f-email{margin-top:28px}
+[data-s="account"] .f-pass{margin-top:29px}
+.showbtn{font-size:15.5px;color:var(--muted);padding:2px 0 8px 12px;margin-top:2px}
+.cf{margin-top:40px;width:281px;height:61px;border:1px solid #DCDCDC;border-radius:2px;background:#F7F7F7;display:flex;align-items:center;padding-left:8px;gap:8px;user-select:none}
+.cf-box{width:23px;height:23px;border:2px solid #4a4a4a;border-radius:3px;background:#fff;flex:none}
+.cf-box:hover{border-color:var(--ok-deep)}
+.cf-spin,.cf-ok{display:none;width:28px;height:28px;flex:none}
+.cf-spin svg{animation:spin 1.1s linear infinite;display:block}
+.cf-text{font-size:14.5px;color:#111;letter-spacing:.005em}
+.cf[data-state="verifying"] .cf-box,.cf[data-state="success"] .cf-box{display:none}
+.cf[data-state="verifying"] .cf-spin{display:block}
+.cf[data-state="success"] .cf-ok{display:block}
+.req-h{font-size:15.5px;color:#666;margin-top:6px;line-height:20px}
+.req{list-style:none;margin-top:5px}
+.req li{display:flex;align-items:center;height:26.5px;font-size:15.5px;color:#555;transition:color .15s}
+.req .ic{width:22px;flex:none;display:flex;justify-content:flex-start;padding-left:5px}
+.req .ic svg{margin-left:-4px}
+.req .ic::before{content:"";width:4px;height:4px;border-radius:50%;background:#222}
+.req .ic svg{display:none}
+.req li.met{color:var(--ok)}
+.req li.met .ic::before{display:none}
+.req li.met .ic svg{display:block}
+.already2{text-align:center;font-size:16px;color:#4d4d4d;margin-top:14px;padding-right:8px}
+.legal2{text-align:center;font-size:12.6px;line-height:17px;color:#4d4d4d;margin-top:52px}
+[data-s="code"] .title{margin-top:15px}
+.sentto{font-size:15.5px;line-height:22.7px;color:#666;margin-top:12px;overflow-wrap:anywhere}
+[data-s="code"] .field{margin-top:31px}
+.codecheck{width:24px;height:24px;color:var(--ok);opacity:0;transform:scale(.6);transition:opacity .2s,transform .2s;margin-bottom:6px;margin-right:2px}
+.codecheck.on{opacity:1;transform:none}
+[data-s="code"] .uline input{letter-spacing:.04em}
+[data-s="code"] .footer{position:absolute;left:0;right:0;bottom:0;transition:bottom .22s ease}
+[data-s="code"].kb-open .footer{bottom:var(--kbh,195px);border-top:1px solid #EBEBEB;padding-top:28px;padding-bottom:16px}
+.kb{position:absolute;left:0;right:0;bottom:-230px;height:195px;background:#1D1F25;padding:2px 2px 3px;display:grid;grid-template-columns:67fr 67fr 67fr 42fr 42fr 45fr;grid-auto-rows:1fr;gap:4.6px;transition:bottom .22s ease;z-index:20}
+.kb.open{bottom:0}
+.kb button{background:#383A42;border-radius:6px;color:#F2F2F2;font-size:19px;font-weight:400;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.kb button:active{background:#4B4E58}
+.kb .bare{background:none;box-shadow:none}
+.kb .bare:active{background:#2c2e35}
+.kb .enter{flex-direction:column;gap:3px}
+/* iOS number pad */
+.phone.ios [data-s="code"]{--kbh:216px}
+.kb.ios{height:216px;background:#D1D4DA;grid-template-columns:repeat(3,1fr);gap:6px;padding:6px 6px 8px}
+.kb.ios button{background:#fff;color:#000;border-radius:5px;flex-direction:column;gap:0;font:400 25px/1 -apple-system,"SF Pro Text",system-ui,sans-serif;box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.kb.ios button small{font-size:9.5px;font-weight:600;letter-spacing:.14em;margin-top:2px}
+.kb.ios button:active{background:#B9BCC3}
+.kb.ios .bare{background:none;box-shadow:none}
+[data-s="pin"] .sub{margin-top:9px;min-height:46px;transition:opacity .15s}
+[data-s="pin"].repeat .sub{margin-top:32px}
+.pindots{display:flex;justify-content:center;gap:24.6px;margin-top:148px}
+[data-s="pin"].repeat .pindots{margin-top:141px}
+.pindots i{width:11px;height:11px;border-radius:50%;background:#CACACA;transition:background-color .12s,transform .12s}
+.pindots i.on{background:var(--accent);transform:scale(1.05)}
+.pindots.shake{animation:shake .42s}
+.pinerr{text-align:center;color:var(--err);font-size:14px;height:20px;margin-top:22px;font-weight:500}
+.keypad{display:grid;grid-template-columns:repeat(3,105px);justify-content:center;grid-auto-rows:60px;margin-top:auto;padding-bottom:38px}
+.keypad button{font-size:31px;font-weight:400;color:#1a1a1a;display:flex;align-items:center;justify-content:center;border-radius:50%;width:60px;height:60px;justify-self:center}
+.keypad button:active{background:#F0F0F0}
+.keypad .blank{visibility:hidden}
+[data-s="bio"] .sub{margin-top:20px}
+.fp{display:flex;justify-content:center;margin-top:158px;color:#9A9A9A}
+[data-s="bio"] .footer .btn-outline{margin-top:23px}
+.avatar-lg{width:168px;height:168px;border-radius:50%;border:1px solid var(--accent);margin:29px auto 0;overflow:hidden;display:block;position:relative;background:#EEEEEE}
+.avatar-lg svg{width:100%;height:100%;display:block}
+.avatar-lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+[data-s="photo"] .title{margin-top:30px}
+[data-s="photo"] .sub{margin-top:12px}
+.home-top{display:flex;align-items:center;height:59px;padding:0 19px;flex:none}
+.avatar-sm{width:28px;height:28px;border-radius:50%;overflow:hidden;background:#EEE;flex:none;position:relative}
+.avatar-sm svg,.avatar-sm img{width:100%;height:100%;display:block;object-fit:cover}
+.home-top h1{font-size:29px;font-weight:800;color:var(--ink);letter-spacing:-.04em;margin-left:20px}
+.home-sec{display:flex;align-items:center;justify-content:space-between;padding:0 19px;margin-top:2px;flex:none}
+.home-sec h2{font-size:21.5px;font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.seg{display:flex;border:1px solid #DDD;border-radius:8px;overflow:hidden;height:28px}
+.seg span{width:35px;display:flex;align-items:center;justify-content:center}
+.seg span:first-child{background:#EEEEEE}
+.feed{flex:1;overflow-y:auto;padding:22px 19px 70px;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.card{border:1px solid #DCDCDC;border-radius:14px;overflow:hidden;margin-bottom:31px;background:#fff}
+.card .art{position:relative;height:194px;background:#ddd}
+.card .art svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.badge{position:absolute;left:12px;top:12px;height:27px;padding:0 9px 0 11px;background:#fff;border-radius:8px;display:flex;align-items:center;gap:7px;color:var(--accent);font-size:14px;font-weight:600}
+.badge::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.star{position:absolute;right:12px;top:11px}
+.tile{position:absolute;left:19px;bottom:-26px;width:49px;height:48px;border-radius:9px;border:2.5px solid #fff;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.card .body{padding:33px 19px 18px}
+.card h3{font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.card p{font-size:15px;line-height:18.2px;color:#6A6A6A;margin-top:8px}
+.card .meta{font-size:11.5px;color:#B3B3B3;margin-top:17px}
+/* tab bar, matched to the production wallet screenshot */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:46px;background:#fff;border-top:1px solid #F2F2F2;box-shadow:0 -1px 2px rgba(0,0,0,.025);display:grid;grid-template-columns:repeat(4,90px);align-items:start;z-index:5}
+.tabbar button{height:42px;display:flex;justify-content:center;padding-top:8px;color:#000}
+.tabbar button svg{width:20px;height:20px;display:block}
+.tabbar button[aria-current="page"]{color:#0048FE}
+/* overlays */
+.toast{visibility:hidden;position:absolute;left:11px;right:11px;top:39px;z-index:50;background:#fff;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.14),0 1px 3px rgba(0,0,0,.06);padding:14px 18px 14px 19px;display:flex;gap:10px;align-items:flex-start;transform:translateY(-170%);transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s .32s;cursor:pointer}
+.phone.ios .toast{top:54px}
+.toast.show{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+.toast svg{flex:none;margin-top:1px;margin-left:-1px}
+.toast p{color:var(--err);font-weight:700;font-size:14.2px;line-height:19px;letter-spacing:-.005em}
+.toast.good p{color:var(--ok-deep)}
+.toast .t-ok{display:none}.toast.good .t-ok{display:block}.toast.good .t-err{display:none}
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.36);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:61;background:#fff;border-radius:18px 18px 0 0;transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-height:82%;display:flex;flex-direction:column;padding-bottom:18px}
+.sheet.show{transform:none}
+.sheet .grab{width:36px;height:4px;border-radius:2px;background:#D9D9D9;margin:9px auto 4px;flex:none}
+.sheet h4{font-size:18px;font-weight:700;color:var(--ink);padding:10px 19px 4px;flex:none}
+.sheet .sheet-body{padding:6px 19px 0;overflow-y:auto;flex:1;font-size:14.5px;line-height:21px;color:#555}
+.sheet .sheet-body p+p{margin-top:10px}
+.sheet .sheet-actions{padding:16px 19px 0;flex:none;display:flex;flex-direction:column;gap:10px}
+.search{display:flex;align-items:center;gap:8px;height:38px;border-radius:10px;background:#F3F3F3;padding:0 11px;margin:6px 19px 6px;flex:none}
+.search input{flex:1;font-size:15px;color:#333}
+.search input::placeholder{color:#9b9b9b}
+.clist{list-style:none;overflow-y:auto;flex:1;scrollbar-width:none}
+.clist::-webkit-scrollbar{display:none}
+.clist button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 19px;text-align:left;font-size:15.5px;color:#333}
+.clist button:active{background:#F5F5F5}
+.clist .flag{width:22px;height:22px}
+.clist .sel{margin-left:auto;color:var(--accent);visibility:hidden}
+.clist li.on .sel{visibility:visible}
+.clist .empty{padding:18px 19px;color:#888;font-size:14.5px}
+.bio-sheet{align-items:center;text-align:center}
+.bio-sheet h4{padding-top:16px}
+.bio-sheet .bio-msg{font-size:14.5px;color:#666;margin-top:4px;min-height:21px}
+.bio-sheet .bio-ic{margin:22px 0 18px;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);background:#EAF3F2;transition:background-color .2s,color .2s}
+.bio-sheet .bio-ic.pulse{animation:pulse 1.2s ease-in-out infinite}
+.bio-sheet .bio-ic.done{background:#E6F6EC;color:var(--ok-deep);animation:none}
+.bio-sheet .cancel{font-size:15px;font-weight:600;color:var(--accent);padding:8px 16px}
+
+/* ======================================================================
+   NEW: wallet creation screens (Kestrel visual language)
+   ====================================================================== */
+.btn-quiet{display:block;width:100%;height:37px;margin-top:14px;font-size:15.5px;font-weight:600;color:var(--accent);text-align:center}
+[data-s="wallet"] .sub{margin-top:14px}
+[data-s="wallet"] .fp{margin-top:118px}
+.halo{width:132px;height:132px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:#EAF3F2;color:var(--accent)}
+.okbadge{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:34px auto 0;background:#E6F6EC;color:var(--ok-deep)}
+[data-s="ready"] .title{margin-top:26px}
+[data-s="ready"] .sub{margin-top:12px}
+.rlist{list-style:none;margin:30px 0 0;border-top:1px solid #EBEBEB}
+.rlist li{display:flex;gap:12px;align-items:flex-start;padding:14px 2px;border-bottom:1px solid #EBEBEB}
+.rlist .ri{width:34px;height:34px;border-radius:50%;background:#F3F3F3;display:flex;align-items:center;justify-content:center;flex:none;color:#3e3e3e}
+.rlist b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.rlist small{display:block;font-size:14px;line-height:19px;color:#666;margin-top:2px}
+.ibadge{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:6px auto 0;background:#EAF3F2;color:var(--accent)}
+.ibadge+.title{margin-top:20px}
+.facts{list-style:none;margin-top:28px}
+.facts li{display:flex;gap:12px;align-items:flex-start;padding:11px 0;font-size:15px;line-height:21px;color:#4a4a4a}
+.facts svg{flex:none;margin-top:1px;color:var(--accent)}
+[data-s="cpw"] .title,[data-s="ph-warn"] .title,[data-s="ph-reveal"] .title,[data-s="ph-check"] .title,[data-s="cup"] .title{font-size:28px;line-height:34px}
+[data-s="cpw"] .sub{margin-top:10px}
+[data-s="cpw"] .f1{margin-top:20px}
+[data-s="cpw"] .f2{margin-top:18px}
+[data-s="cpw"] .req{margin-top:12px}
+.ack{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;margin-top:16px;font-size:14.5px;line-height:20px;color:#4a4a4a}
+.ack .bx{width:21px;height:21px;border:2px solid #4a4a4a;border-radius:3px;flex:none;display:flex;align-items:center;justify-content:center;color:transparent;margin-top:-1px}
+.ack[aria-checked="true"] .bx{background:var(--accent);border-color:var(--accent);color:#fff}
+.demo{display:block;margin:14px auto 0;font-size:14px;font-weight:600;color:var(--accent)}
+.steps{list-style:none;margin:56px 0 0;display:flex;flex-direction:column;gap:20px}
+.steps li{display:flex;gap:14px;align-items:center;font-size:16px;color:#9a9a9a}
+.steps li i{width:26px;height:26px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 2px #DADADA;display:flex;align-items:center;justify-content:center;color:#fff}
+.steps li.cur{color:var(--ink)}
+.steps li.cur i{box-shadow:none;border:2px solid var(--accent-soft);border-top-color:var(--accent);animation:spin .8s linear infinite}
+.steps li.done{color:var(--ink)}
+.steps li.done i{background:var(--ok);box-shadow:none}
+.wacks{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.wacks .ack{margin-top:0;padding:13px 14px;border:1px solid var(--line);border-radius:10px}
+.wacks .ack[aria-checked="true"]{border-color:var(--accent)}
+.words{position:relative;margin-top:22px}
+.words ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;transition:filter .25s}
+.words li{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;font-size:16px;font-weight:600;color:var(--ink)}
+.words li i{font-style:normal;width:16px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.words.hid ol{filter:blur(7px)}
+.reveal{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;color:var(--ink)}
+.reveal b{font-size:16px;font-weight:700;margin-top:6px}
+.reveal small{font-size:13.5px;color:#666}
+.note{margin-top:16px;font-size:13px;line-height:18px;color:#8a8a8a;text-align:center}
+.quiz{margin-top:24px;display:flex;flex-direction:column;gap:18px}
+.quiz b{display:block;font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px}
+.quiz .qo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.quiz .qo button{height:37px;border:1px solid var(--line);border-radius:10px;font-size:15.5px;font-weight:500;color:#3e3e3e}
+.quiz .qo [aria-checked="true"]{border-color:var(--accent);background:#EAF3F2;color:var(--accent);font-weight:600}
+.quiz .q.bad .qo{animation:shake .42s}
+.quiz .q.bad b{color:var(--err)}
+.qerr{min-height:20px;margin-top:14px;text-align:center;color:var(--err);font-size:14px;font-weight:500}
+/* option rows inside Kestrel sheets */
+.opts{display:flex;flex-direction:column;gap:10px;padding:14px 19px 0}
+.opt{display:flex;align-items:center;gap:12px;width:100%;padding:13px 12px;border:1px solid var(--line);border-radius:12px;text-align:left}
+.opt:active{background:#f6f6f6}
+.opt .oi{width:38px;height:38px;border-radius:50%;background:#EAF3F2;color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none}
+.opt span{flex:1;display:flex;flex-direction:column}
+.opt b{font-size:15.5px;font-weight:700;color:var(--ink)}
+.opt small{font-size:13.5px;color:#777;margin-top:1px}
+.sheet .hero-ic{width:56px;height:56px;border-radius:50%;background:#FFF4E5;color:#B26B00;display:flex;align-items:center;justify-content:center;margin:12px 19px 0}
+.sheet .quiet{height:37px;font-size:15.5px;font-weight:600;color:var(--accent)}
+/* iOS system sheets (system UI, not Kestrel) */
+.sheet.sys-ios{left:8px;right:8px;bottom:8px;border-radius:38px;background:#F2F2F7;padding:26px 22px 22px;align-items:center;text-align:center;font-family:-apple-system,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;color:#000}
+.sheet.sys-ios .grab{display:none}
+.sys-ios .x{position:absolute;right:16px;top:16px;width:30px;height:30px;border-radius:50%;background:#E3E3E8;color:#6b6b70;display:flex;align-items:center;justify-content:center}
+.sys-ios .pk{width:58px;height:58px;border-radius:50%;background:#007AFF;color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.sys-ios h5{font-size:19px;line-height:24px;font-weight:700;letter-spacing:-.01em;padding:0 14px}
+.sys-ios p{font-size:14.5px;line-height:20px;color:#3c3c43;margin-top:8px}
+.sys-ios .acct{display:flex;align-items:center;gap:12px;width:100%;margin-top:16px;padding:11px 14px;border-radius:13px;background:#fff;text-align:left}
+.sys-ios .acct svg{color:#007AFF;flex:none}
+.sys-ios .acct b{display:block;font-size:15px;font-weight:600}
+.sys-ios .acct small{display:block;font-size:12.5px;color:#6b6b70}
+.sys-ios .go{width:100%;height:50px;margin-top:18px;border-radius:14px;background:#007AFF;color:#fff;font-size:17px;font-weight:600}
+.sys-ios .alt{margin-top:12px;font-size:15px;color:#007AFF}
+.sys-ios .fi-in{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:16px;height:68px;color:#1a1a1a}
+.sys-ios .fi-in .g{display:flex;animation:fipulse 1s ease-in-out infinite}
+.sys-ios .fi-in small{font-size:13px;font-weight:600;color:#3c3c43}
+.sys-ios .fi-in.done .g{animation:none;color:#34C759}
+.sys-and .fp-in{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
+.sys-and .fp-in .bio-ic{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#D3E3FD;color:#0B57D0;cursor:pointer}
+.sys-and .fp-in .bio-ic.pulse{animation:pulse 1.2s ease-in-out infinite}
+.sys-and .fp-in.done .bio-ic{background:#C4EED0;color:#146C2E;animation:none}
+.sys-and .fp-in small{font-size:14px;color:#444746}
+/* Android system sheets (Credential Manager, Google account picker, Drive consent) */
+.sheet.sys-and{border-radius:28px 28px 0 0;background:#F3F6FC;padding:12px 24px 22px;font-family:"Roboto","Google Sans",system-ui,sans-serif;color:#1F1F1F}
+.sheet.sys-and .grab{background:#C4C7C5;width:32px}
+.sys-and .gm{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#444746}
+.sys-and h5{font-size:22px;line-height:28px;font-weight:400;margin-top:14px;color:#1F1F1F}
+.sys-and p{font-size:14px;line-height:20px;color:#444746;margin-top:10px}
+.sys-and .acctrow{display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 14px;border-radius:16px;background:#fff;width:100%;text-align:left}
+.sys-and .av{width:32px;height:32px;border-radius:50%;background:#7A5AF8;color:#fff;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;flex:none}
+.sys-and .acctrow b{display:block;font-size:14px;font-weight:500;color:#1F1F1F}
+.sys-and .acctrow small{display:block;font-size:12.5px;color:#444746}
+.sys-and .row2{display:flex;justify-content:flex-end;gap:8px;margin-top:22px}
+.sys-and .tb{height:40px;padding:0 16px;border-radius:20px;font-size:14px;font-weight:500;color:#0B57D0}
+.sys-and .fb{height:40px;padding:0 24px;border-radius:20px;font-size:14px;font-weight:500;background:#0B57D0;color:#fff}
+.sys-and .scope{display:flex;gap:12px;margin-top:14px;padding:12px 0;border-top:1px solid #DDE3EA;border-bottom:1px solid #DDE3EA;font-size:14px;line-height:20px;color:#1F1F1F}
+.sys-and .addacct{display:flex;align-items:center;gap:12px;padding:12px 14px;font-size:14px;color:#1F1F1F}
+/* iOS Face ID overlay */
+.faceid{position:absolute;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .2s}
+.faceid.show{opacity:1}
+.fi-box{width:152px;height:152px;border-radius:32px;background:rgba(232,232,236,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#1a1a1a;font:600 15px -apple-system,"SF Pro Text",system-ui,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+.fi-box .g{animation:fipulse 1s ease-in-out infinite}
+.fi-box.done .g{animation:none;color:#34C759}
+@keyframes fipulse{50%{transform:scale(.92);opacity:.6}}
+
+/* ======================================================================
+   WALLET TAB: matched pixel for pixel to the production screenshot
+   (1080 px wide capture = 3x this 360 px screen)
+   ====================================================================== */
+[data-s="wtab"]{overflow:hidden}
+[data-s="wtab"] .home-top h1{font-size:29.6px;letter-spacing:-.06em}
+.w-empty{margin-top:60.9px;height:20px;font-size:13.8px;line-height:20px;font-weight:400;color:#646464;text-align:center;letter-spacing:0}
+.w-div{height:1px;background:#F2F2F2;margin:60.1px 19px 0}
+.w-h2{margin:14.9px 19px 0;height:22px;font-size:17.5px;line-height:22px;font-weight:700;color:#1A1A1A;letter-spacing:-.006em}
+.w-list{list-style:none;margin:18.1px 19px 0}
+.w-row{position:relative;display:flex;align-items:flex-start;height:68px;border-bottom:1px solid #F3F3F3}
+.w-ic{position:relative;width:30px;height:30px;margin-top:18.4px;flex:none}
+.w-ic>svg{display:block;width:30px;height:30px}
+.w-bdg{position:absolute;left:16.9px;top:17.2px;width:15.4px;height:15.4px;border-radius:50%;display:block}
+.w-bdg svg{display:block;width:100%;height:100%}
+.w-bdg::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 .7px #DDDDDD}
+.w-tx{flex:1;min-width:0;margin-left:11.4px;padding-top:15.6px}
+.w-tx b{display:block;height:17px;font-size:13.8px;line-height:17px;font-weight:600;color:#1A1A1A;letter-spacing:-.02em;white-space:nowrap}
+.w-tx b em{font-style:normal;font-weight:400;color:#999;font-size:11.6px;letter-spacing:0}
+.w-tx small{display:block;margin-top:3.8px;height:15px;font-size:11.6px;line-height:15px;color:#999;font-weight:400}
+.w-add{position:absolute;right:0;top:14.7px;width:81.3px;height:37px;border:1px solid #CCCCCC;border-radius:10px;font-size:14.6px;font-weight:500;color:#4D4D4D}
+.w-more{height:68.7px;border-bottom-color:#F2F2F2}
+.w-more .w-plus{width:29.7px;height:29.7px;margin-top:19px;border:1px solid #CCCCCC;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;color:#1B1B1B}
+.w-more .w-tx{padding-top:15.7px;margin-left:11.6px}
+.w-more .w-tx b{font-weight:500;letter-spacing:0}
+.w-more .w-tx small{margin-top:2.3px;height:17px;font-size:13.8px;line-height:17px}
+.w-coins{position:absolute;right:19.7px;top:16px;height:14.7px;display:flex}
+.w-coins i{width:14.7px;height:14.7px;border-radius:50%;margin-left:-7.2px;display:block;box-shadow:0 0 0 .6px #fff}
+.w-coins i:first-child{margin-left:0}
+.w-coins svg{display:block;width:100%;height:100%}
+.w-chev{position:absolute;right:5.4px;top:20.3px;width:4.8px;height:8.4px}
+.w-hidden{display:block;margin:28.3px 19px 0;height:20px;font-size:13.8px;line-height:20px;font-weight:400;color:#1A1A1A;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3.9px;width:max-content}
+
+/* ======================================================================
+   v3 ADDITIONS
+   ====================================================================== */
+/* time-jump provenance */
+:root{--s-later:#9A5B00;--s-later-bg:#FBF0DE}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-later:#F2B865;--s-later-bg:#3A2C14}}
+:root[data-theme="dark"]{--s-later:#F2B865;--s-later-bg:#3A2C14}
+.tag.later{background:var(--s-later-bg);color:var(--s-later)}
+.srow.later{color:var(--s-ink)}
+.srow.later .n{box-shadow:inset 0 0 0 1.5px var(--s-later);color:var(--s-later);background:var(--s-panel)}
+.srow.later .nw{color:var(--s-later)}
+.srow.later[aria-current="step"] .n{background:var(--s-later);color:#fff;box-shadow:0 0 0 4px color-mix(in srgb,var(--s-later) 22%,transparent)}
+.node.later{background:var(--s-later-bg);color:var(--s-later);box-shadow:inset 0 0 0 1.5px var(--s-later);border-style:dashed}
+.node.later[aria-current="step"]{background:var(--s-later);color:#fff;box-shadow:none}
+.legend .lg-l{box-shadow:inset 0 0 0 1.5px var(--s-later)}
+.legend{flex-wrap:wrap}
+/* hero: Option A note */
+.anote{max-width:760px;margin:24px auto 0;padding:14px 18px;border-radius:14px;background:var(--s-panel);border:1px solid var(--s-line);text-align:left;font-size:14.5px;line-height:1.55;color:var(--s-ink2)}
+.anote b{color:var(--s-ink)}
+.anote a{color:var(--s-teal);font-weight:700;text-decoration:none;white-space:nowrap}
+.anote a:hover{text-decoration:underline;text-underline-offset:3px}
+/* How it works */
+.how{max-width:1100px;margin:0 auto;padding:64px 28px 0;scroll-margin-top:60px}
+.how h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,2.8vw,38px);line-height:1.12;letter-spacing:-.015em;max-width:30ch;margin-top:10px}
+.how .lead{margin-top:14px;font-size:17px;line-height:1.65;color:var(--s-ink2);max-width:70ch}
+.hdiag{margin-top:28px;display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr) 54px minmax(0,1fr) 54px minmax(0,1.25fr);align-items:center;padding:26px;border-radius:20px;background:var(--s-panel);border:1px solid var(--s-line)}
+.hnode{padding:16px;border-radius:16px;border:1.5px solid var(--s-line);background:var(--s-bg);text-align:center;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.hnode .hi{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--s-teal-bg);color:var(--s-teal)}
+.hnode .hi svg{width:22px;height:22px}
+.hnode b{font-size:15px;color:var(--s-ink);line-height:1.25}
+.hnode small{font-size:12.5px;line-height:1.4;color:var(--s-ink3)}
+.hnode.key{border-color:var(--s-teal)}
+.hnets{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:4px}
+.hnets span{padding:6px 4px;border-radius:8px;background:var(--s-panel);border:1px solid var(--s-line);font-size:12.5px;font-weight:700;color:var(--s-ink)}
+.harr{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--s-ink3);font-size:11px;font-weight:700;text-align:center;line-height:1.2}
+.harr i{font-style:normal;font-size:20px;color:var(--s-teal)}
+.hsteps{list-style:none;margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hsteps li{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:16px 18px;border-radius:16px;background:var(--s-panel);border:1px solid var(--s-line);font-size:14.5px;line-height:1.55;color:var(--s-ink2)}
+.hsteps li b{color:var(--s-ink)}
+.hsteps .wn{width:28px;height:28px;border-radius:50%;background:var(--s-teal-bg);color:var(--s-teal);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+.restore{margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 18px;border-radius:16px;border:1px dashed var(--s-line);background:var(--s-panel)}
+.restore .rl{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--s-teal);margin-right:6px}
+.restore span.rs{display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:999px;background:var(--s-bg);border:1px solid var(--s-line);font-size:13.5px;font-weight:700;color:var(--s-ink)}
+.restore span.rs.end{background:var(--s-teal);border-color:var(--s-teal);color:#fff}
+.restore i{font-style:normal;color:var(--s-ink3)}
+.how .fine{max-width:80ch}
+.howtour{margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 8px 8px 16px;border-radius:999px;border:1.5px solid var(--s-teal);background:var(--s-panel);width:max-content;max-width:100%}
+.howtour[hidden]{display:none}
+.howtour span{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--s-teal)}
+.howtour button{height:32px;padding:0 14px;border-radius:999px;background:var(--s-teal);color:#fff;font-size:13px;font-weight:700}
+.howtour button.ghost{background:none;color:var(--s-ink2)}
+@media (max-width:980px){.hdiag{grid-template-columns:1fr;gap:4px;padding:18px}.harr{flex-direction:row;gap:8px;padding:6px 0}.harr i{transform:rotate(90deg)}.hnode{min-height:0}.hsteps{grid-template-columns:1fr}}
+@media (max-width:760px){.how{padding-left:16px;padding-right:16px}}
+/* What we'd validate */
+.validate{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:10px;counter-reset:v}
+.validate li{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:16px 18px;border-radius:16px;background:var(--s-panel);border:1px solid var(--s-line);font-size:15px;line-height:1.55;color:var(--s-ink2)}
+.validate li.alt{border-style:dashed}
+.validate li b{color:var(--s-ink)}
+.validate .wn{width:28px;height:28px;border-radius:50%;background:var(--s-teal-bg);color:var(--s-teal);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+.validate .who{display:block;margin-top:4px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--s-ink3)}
+/* phone: protect step */
+[data-s="wallet"] .title{font-size:26.5px;line-height:33px}
+/* phone: notification banner */
+.nbanner{visibility:hidden;position:absolute;left:9px;right:9px;top:34px;z-index:52;display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:18px;background:rgba(246,246,248,.97);box-shadow:0 8px 28px rgba(0,0,0,.16);transform:translateY(-180%);transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;cursor:pointer}
+.phone.ios .nbanner{top:50px;border-radius:22px}
+.nbanner.show{visibility:visible;transform:none;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.nbanner .nb-ic{width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.nbanner .nb-ic svg{width:20px;height:20px}
+.nbanner .nb-tx{flex:1;min-width:0}
+.nbanner .nb-h{display:flex;justify-content:space-between;font-size:12.5px;color:#6b6b70;font-weight:600}
+.nbanner .nb-h b{color:#1a1a1a;font-weight:700}
+.nbanner p{font-size:14px;line-height:19px;color:#1a1a1a;margin-top:1px}
+/* phone: portfolio */
+[data-s="pf"]{overflow:hidden}
+.pf-sum{margin:6px 19px 0;padding:16px 16px 14px;border-radius:14px;background:#F4F8F7;border:1px solid #E1ECEA;flex:none}
+.pf-sum small{display:block;font-size:13px;color:#6A6A6A;font-weight:500}
+.pf-sum b{display:block;font-size:28px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin-top:2px}
+.pf-h{margin:22px 19px 4px;font-size:17.5px;font-weight:800;color:var(--ink);letter-spacing:-.02em;flex:none}
+.pf-list{list-style:none;margin:0 19px;flex:none}
+.pf-row{display:flex;align-items:center;gap:12px;width:100%;padding:14px 0;border-bottom:1px solid #F0F0F0;text-align:left}
+.pf-row:active{background:#FAFAFA}
+.pf-logo{width:40px;height:40px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pf-logo svg{width:100%;height:100%;display:block}
+.pf-tx{flex:1;min-width:0}
+.pf-tx b{display:block;font-size:15.5px;font-weight:700;color:var(--ink)}
+.pf-tx small{display:block;font-size:13px;color:#777;margin-top:1px}
+.pf-r{text-align:right}
+.pf-r b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:4px;height:21px;padding:0 8px;border-radius:999px;font-size:11.5px;font-weight:700;margin-top:3px}
+.chip.ok{background:#E6F6EC;color:var(--ok-deep)}
+.chip.neu{background:#F1F1F1;color:#5E5E5E}
+.pf-chev{color:#B5B5B5;flex:none}
+/* phone: asset detail */
+.as-top{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 19px;flex:none}
+.as-top .pf-logo{width:56px;height:56px;border-radius:14px}
+.as-top h1{font-size:26px;line-height:32px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin-top:12px}
+.as-top p{font-size:15px;color:#666;margin-top:2px}
+.as-top .chip{margin-top:10px;height:24px;font-size:12.5px;padding:0 10px}
+.as-h{margin:28px 19px 2px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8E8E8E;flex:none}
+.kv{list-style:none;margin:0 19px;flex:none}
+.kv li{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F0F0F0;font-size:14.5px;line-height:20px}
+.kv li span{color:#777;flex:none}
+.kv li b{font-weight:600;color:var(--ink);text-align:right}
+.kv li b small{display:block;font-weight:500;color:#777;font-size:13px}
+.as-more{display:block;margin:16px 19px 0;height:37px;font-size:15.5px;font-weight:700;color:var(--accent);text-align:left;flex:none}
+/* sheet: account details */
+.sheet .kv{margin:8px 19px 0}
+.sheet .kv li{font-size:14px}
+.copy{margin-left:8px;font-size:13px;font-weight:700;color:var(--accent)}
+.sheet .addm{margin:14px 19px 0;display:flex;align-items:center;gap:12px;width:calc(100% - 38px);padding:12px;border:1px solid var(--line);border-radius:12px;text-align:left}
+.sheet .addm .oi{width:36px;height:36px;border-radius:50%;background:#EAF3F2;color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none}
+.sheet .addm b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.sheet .addm small{display:block;font-size:13px;color:#777}
+.sheet .sfine{margin:12px 19px 0;font-size:12.5px;line-height:17px;color:#8a8a8a}
+.sheet .tryfi{margin:14px 19px 0}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+@keyframes pulse{50%{box-shadow:0 0 0 10px rgba(14,107,101,.08)}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in"><span class="mk" id="topLogo" aria-hidden="true"></span><b>Kestrel</b><span class="ttl">Wallet onboarding prototype</span><nav aria-label="Page"><a href="#demo">Demo</a><a href="#how">How it works</a><a href="#case">The case</a><a href="#options">Options</a><a href="#measure">Measures</a><a href="#validate">Validate</a></nav><button class="thm" id="thm" type="button">Auto</button></div></header>
+<main>
+  <section class="hero">
+    <p class="eyebrow">Independent onboarding exploration</p>
+    <h1>A wallet for every investor at sign-up, with no extra screens.</h1>
+    <p class="hsub">Wallet protection joins the existing Face ID step. One approval creates a passkey that can restore the wallet on any device, across every network Kestrel supports.</p>
+    <div class="cta"><button class="hbtn pri" data-explore>Explore the recommendation</button><a class="hbtn" href="#demo">Open the demo</a></div>
+    <dl class="stats">
+      <div><dt>+0</dt><dd><b>app screens.</b> The protection step replaces today’s “Enable biometrics”.</dd></div>
+      <div><dt>1</dt><dd><b>Face ID prompt.</b> It protects the wallet and can turn on Face ID login.</dd></div>
+      <div><dt class="w">Every network</dt><dd><b>One backup</b> covers EVM chains and other networks.</dd></div>
+    </dl>
+    <p class="anote"><b>Why not a passkey smart wallet, like Coinbase’s?</b> It’s the closest match to an invisible wallet, but it only works on EVM networks, and Kestrel delivers assets on other networks too. This design keeps the same passkey experience on Kestrel’s existing multi-chain wallet. <a href="#validate">What we’d validate →</a></p>
+    <p class="prov">Baseline screens recreated from a live investing app as observed on 6 Nov 2026; Kestrel is a presentation alias. New wallet flows and system interactions are illustrative.</p>
+  </section>
+
+  <section class="demozone" id="demo" aria-label="Interactive demo">
+    <div class="demo-in">
+      <div class="tourbar" id="tourbar" hidden></div>
+      <div class="bar">
+        <div class="pill" role="tablist" aria-label="Platform">
+          <button role="tab" id="tab-ios" data-plat="ios" aria-controls="stage" aria-selected="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="1" width="8" height="14" rx="2"/><path d="M6.5 2.6h3" stroke-linecap="round"/></svg>iOS</button>
+          <button role="tab" id="tab-android" data-plat="android" aria-controls="stage" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="1" width="8" height="14" rx="1.6"/><circle cx="8" cy="3" r=".7" fill="currentColor"/></svg>Android</button>
+        </div>
+        <span class="lbl">Path</span>
+        <div class="pill" id="paths" role="group" aria-label="Path to show"></div>
+      </div>
+      <div class="stage3" id="stage" role="tabpanel" aria-labelledby="tab-ios">
+        <article class="story" id="story" aria-live="polite"></article>
+        <div class="center">
+          <button class="arrow" data-step="-1" aria-label="Previous step"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+          <div class="pcol">
+            <div class="pwrap" id="pw-ios"></div><div class="pwrap" id="pw-android" hidden></div>
+            <div class="mnav"><button data-step="-1">← Previous</button><button data-step="1">Next →</button></div>
+            <div class="ctl"><button data-c="wallet">Go to the protect step</button><button data-c="restart">Restart sign-up</button></div>
+          </div>
+          <button class="arrow" data-step="1" aria-label="Next step"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4l6 6-6 6"/></svg></button>
+        </div>
+        <aside class="stepper" id="stepper" aria-label="Steps on this path"></aside>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="how" id="how" aria-labelledby="how-h">
+    <p class="eyebrow">How it works</p>
+    <h2 id="how-h">Face ID is the key to a safe. Your recovery phrase is inside.</h2>
+    <p class="lead">The passkey never touches a blockchain. It only locks and unlocks a backup, so the same design works on every network Kestrel supports.</p>
+    <div class="hdiag" role="img" aria-label="Face ID, your passkey, unlocks a locked backup that Kestrel keeps. The backup holds your recovery phrase, which creates the keys for EVM chains and other networks.">
+      <div class="hnode key"><span class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 9.5v1M15 9.5v1M12 9.5V13h-1M9.5 16c1.5 1 3.5 1 5 0"/></svg></span><b>Face ID</b><small>Your passkey, synced with your Apple or Google account</small></div>
+      <div class="harr"><i>→</i>unlocks</div>
+      <div class="hnode"><span class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.3"/></svg></span><b>Locked backup</b><small>Kestrel keeps it. Only your passkey can open it.</small></div>
+      <div class="harr"><i>→</i>holds</div>
+      <div class="hnode"><span class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/></svg></span><b>Recovery phrase</b><small>12 words, created on your phone at sign-up</small></div>
+      <div class="harr"><i>→</i>creates the keys for</div>
+      <div class="hnode"><span class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5S9.7 5.9 12 3.5z"/></svg></span><b>Every network</b><div class="hnets"><span>EVM chains</span><span>Other networks</span></div></div>
+    </div>
+    <ol class="hsteps">
+      <li><span class="wn">1</span><span><b>At sign-up,</b> your phone creates your account’s recovery phrase.</span></li>
+      <li><span class="wn">2</span><span><b>Face ID locks a backup of it.</b> Kestrel keeps the locked copy but can’t open it.</span></li>
+      <li><span class="wn">3</span><span><b>On a new phone,</b> Face ID opens the backup, and everything comes back on every network.</span></li>
+    </ol>
+    <div class="restore" aria-label="Restoring on a new phone"><span class="rl">New phone</span><span class="rs">Log in</span><i>→</i><span class="rs">Face ID</span><i>→</i><span class="rs end">Your investments are back</span></div>
+    <p class="fine">Your passkey syncs through your Apple or Google account. If you might lose that account, add a second recovery method, an iCloud backup or a written recovery phrase, from Find out more on any holding. On Android, the phone’s biometrics (fingerprint, face unlock or screen lock) and Google Password Manager take the place of Face ID and iCloud.</p>
+    <div class="howtour" id="howTour" hidden><span>Recommendation route · 5 of 6</span><button data-tour="5">See the trade-offs →</button><button class="ghost" data-tourx>Leave the route</button></div>
+  </section>
+  <div class="case" id="caseWrap"></div>
+  <p class="foot">Independent onboarding exploration with demo data. Baseline screens recreated from a live investing app as observed on 6 Nov 2026; Kestrel is a presentation alias. New flows, the portfolio holding and system interactions (passkey, Face ID, fingerprint, Google account and Drive prompts, notifications) are illustrative. The recovery phrase is made of demo words, and nothing is uploaded, stored or signed.</p>
+</main>
+<script>
+(() => {
+'use strict';
+/* =====================================================================
+   SHARED ART
+   ===================================================================== */
+const LOGO = '<svg viewBox="0 0 26 26" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M4.5 1.5v23"/><path d="M4.5 15.5 21.5 1.5"/><path d="M10.8 10.3 21.5 24.5h-17"/><path d="M15.2 16.1v8.4"/></svg>';
+const BACK_A = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10H3M9 4 3 10l6 6"/></svg>';
+const BACK_I = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 3.5 6 10l6.5 6.5"/></svg>';
+const FP = (s, c = 'currentColor') => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="${c}" stroke-width="4.4" stroke-linecap="round"><path d="M8.5 41.5c4.5-1.8 6.5-5 6.5-11v-1.5C15 18 22.5 9.5 32.5 9.5c2.3 0 4.4.4 6.3 1.2"/><path d="M45.5 15.3c4.6 3.3 7.5 8.8 7.5 15v3.4c0 4.3 1.9 6.9 5.5 8.3"/><path d="M14.5 54c4.8-2.8 9.5-7.5 9.5-17.5v-6.3c0-5.3 3.6-9.2 8.5-9.2"/><path d="M38.5 22.7c3.1 1.8 4.8 4.7 4.8 8.6v4.2c0 8.6 3.6 14.5 10.2 18"/><path d="M28.6 58c-3.2-3.5-4.3-7.5-4.6-11"/><path d="M32.5 31v8c0 9 2.4 14.5 8.5 19"/></svg>`;
+const FACE = (s, c = 'currentColor') => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V12a6 6 0 0 1 6-6h8M44 6h8a6 6 0 0 1 6 6v8M58 44v8a6 6 0 0 1-6 6h-8M20 58h-8a6 6 0 0 1-6-6v-8"/><path d="M22 24v5M42 24v5M32 24v13h-3.5"/><path d="M23 44c5 4.5 13 4.5 18 0"/></svg>`;
+const CHECK = s => `<svg width="${s}" height="${s}" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17.5l7 7L27 10"/></svg>`;
+const AVATAR = '<svg viewBox="0 0 168 168"><rect width="168" height="168" fill="#EEEEEE"/><path d="M14 150c18-28 42-38 70-38s52 10 70 38v18H14z" fill="#E0E0E0"/><rect x="68" y="92" width="32" height="40" rx="16" fill="#C3C3C3"/><ellipse cx="84" cy="70" rx="34" ry="40" fill="#C3C3C3"/><path d="M50 72c-2-30 14-46 34-46s38 14 34 46c-4-12-14-20-34-20s-30 8-34 20z" fill="#AFAFAF"/><path d="M75 92q9 5 18 0" stroke="#AFAFAF" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
+const I = {
+  cloud: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5h10.5a4 4 0 0 0 .6-8 6 6 0 0 0-11.6-1.4A4.6 4.6 0 0 0 7 18.5z"/></svg>`,
+  pen: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3"/></svg>`,
+  lock: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>`,
+  shield: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>`,
+  phone: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="3" width="11" height="18" rx="2"/><path d="M11 18h2"/></svg>`,
+  key: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="3.5"/><path d="M11.5 12H21M18 12v3M15 12v2"/></svg>`,
+  globe: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>`,
+  alert: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.5 20h19L12 3.5zM12 10v4.5M12 17.2v.3"/></svg>`,
+  eye: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>`,
+  chev: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>`,
+  x: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`,
+  user: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c0-4 3.4-6.8 7.5-6.8s7.5 2.8 7.5 6.8"/></svg>`,
+  plus: s => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`
+};
+const GLOGO = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.8c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C1 16.5 0 20.1 0 24s1 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.8c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>';
+const DRIVE = '<svg width="28" height="28" viewBox="0 0 87 78"><path fill="#0066DA" d="M6.6 66.9l3.9 6.7c.8 1.4 1.9 2.5 3.2 3.3L27.5 53H0c0 1.6.4 3.1 1.2 4.5z"/><path fill="#00AC47" d="M43.7 25L29.9 1.2c-1.3.8-2.4 1.9-3.2 3.3L1.2 48.5C.4 49.9 0 51.4 0 53h27.5z"/><path fill="#EA4335" d="M73.6 76.9c1.3-.8 2.4-1.9 3.2-3.3l1.6-2.8 7.6-13.2c.8-1.4 1.2-2.9 1.2-4.5H59.8l5.9 11.5z"/><path fill="#00832D" d="M43.7 25L57.5 1.2C56.2.4 54.7 0 53.1 0H34.4c-1.6 0-3.1.4-4.4 1.2z"/><path fill="#2684FC" d="M59.8 53H27.5L13.7 76.9c1.3.8 2.8 1.2 4.4 1.2h51.2c1.6 0 3.1-.4 4.4-1.2z"/><path fill="#FFBA00" d="M73.4 26.5L60.6 4.5c-.8-1.4-1.9-2.5-3.2-3.3L43.7 25l16.1 28h27.5c0-1.6-.4-3.1-1.2-4.5z"/></svg>';
+/* production tab bar icons (from the wallet screenshot) */
+const TAB = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 2.2 12.4h4.6V22M12 2.6l9.8 9.8h-4.6V22"/></svg>',
+  bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="2.4" y="7.4" width="19.2" height="14" rx="1.8"/><path d="M8 7.4V4.6a1.2 1.2 0 0 1 1.2-1.2h5.6A1.2 1.2 0 0 1 16 4.6v2.8"/></svg>',
+  wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M7.4 3.2H3.6v17.6h3.8M16.6 3.2h3.8v17.6h-3.8"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/></svg>',
+  bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 17.4V11a6.4 6.4 0 0 1 12.8 0v6.4l1.8 1.8H3.8z"/><path d="M9.6 22h4.8"/></svg>'
+};
+/* token art for the wallet screen */
+const ETH_GLYPH = (fill = '#343434') => `<path d="M12 2.4l-.13.44v12.7l.13.13 5.9-3.48z" fill="${fill}" opacity=".9"/><path d="M12 2.4L6.1 12.2 12 15.67V2.4z" fill="${fill}"/><path d="M12 16.78l-.07.09v4.52l.07.21 5.9-8.3z" fill="${fill}" opacity=".9"/><path d="M12 21.6v-4.82L6.1 13.3z" fill="${fill}"/><path d="M12 15.67l5.9-3.48L12 9.51z" fill="${fill}" opacity=".55"/><path d="M6.1 12.19l5.9 3.48V9.51z" fill="${fill}" opacity=".75"/>`;
+const TK = {
+  eth: `<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="15" fill="#F2F4F7"/><g transform="translate(2.4 2.2) scale(1.05)">${ETH_GLYPH('#2b2b2b')}</g></svg>`,
+  note: '<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="14.6" fill="#fff" stroke="#EFEFEF" stroke-width=".8"/><g transform="translate(8.4 8.6)" fill="none" stroke="#1238FF" stroke-width="2.1" stroke-linecap="square"><path d="M1.6 .4v12.4"/><path d="M1.6 8 11 .4"/><path d="M5 5.2l6 7.6H1.6"/></g></svg>',
+  usdc: '<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="15" fill="#2775CA"/><path d="M11.3 6.3a9.6 9.6 0 0 0 0 17.4M18.7 6.3a9.6 9.6 0 0 1 0 17.4" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/><path d="M17.6 12.3c-.4-1.3-1.5-1.9-2.8-1.9-1.6 0-2.7.9-2.7 2.1 0 2.9 5.8 1.7 5.8 4.7 0 1.3-1.2 2.3-3 2.3-1.5 0-2.7-.7-3.1-2M15 8.8v1.6M15 19.5v1.7" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  bEth: `<svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#fff"/><circle cx="7" cy="7" r="6.2" fill="#F2F4F7"/><g transform="translate(1.6 1.5) scale(.45)">${ETH_GLYPH('#151515')}</g></svg>`,
+  bAvax: '<svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#fff"/><circle cx="7" cy="7" r="6.3" fill="#E84142"/><path d="M7.6 4.1c-.25-.45-.95-.45-1.2 0L3.5 9.3c-.25.45.08 1 .6 1h1.6c.25 0 .48-.13.6-.35l1.2-2.2a.7.7 0 0 0 0-.68zM8.9 7.6c-.25-.44-.9-.44-1.15 0l-1.05 1.8c-.25.45.07 1 .58 1h2.1c.5 0 .83-.55.58-1z" fill="#fff"/></svg>',
+  coins: [
+    '<svg viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="7.5" fill="#9B2FD6"/><path d="M7.5 0A7.5 7.5 0 0 1 7.5 15z" fill="#E5368C" opacity=".75"/><path d="M5 4.2v6.6M7.5 4.2v6.6M10 4.2v6.6" stroke="#fff" stroke-width="1.2"/></svg>',
+    '<svg viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="7.5" fill="#B8121B"/><text x="7.5" y="9.6" text-anchor="middle" font-family="Figtree,sans-serif" font-size="6" font-weight="700" fill="#fff">bT</text></svg>',
+    '<svg viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="7.5" fill="#121212"/><text x="7.6" y="10" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.4" font-weight="800" fill="#C6FF3A">E</text></svg>',
+    '<svg viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="7.5" fill="#E84142"/><path d="M8.1 4.3c-.27-.47-1-.47-1.27 0L3.8 9.8c-.27.47.08 1.05.63 1.05h1.7c.27 0 .5-.14.64-.37l1.26-2.32a.74.74 0 0 0 0-.72zM9.45 8.04c-.27-.46-.95-.46-1.22 0l-1.1 1.9c-.27.47.07 1.05.6 1.05h2.23c.53 0 .87-.58.6-1.05z" fill="#fff"/></svg>',
+    '<svg viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="7.5" fill="#50AF95"/><path d="M4.2 4.6h6.6M7.5 4.6v6.2" stroke="#fff" stroke-width="1.5"/><ellipse cx="7.5" cy="7.3" rx="3.3" ry="1" fill="none" stroke="#fff" stroke-width=".9"/></svg>'
+  ]
+};
+
+/* demo recovery phrase: two words longer than eight letters, which no real recovery-word list contains */
+const PHRASE = ['orbit', 'maple', 'prototype', 'canyon', 'velvet', 'harbor', 'signal', 'lighthouse', 'ember', 'quartz', 'meadow', 'tunnel'];
+const QUIZ = [[2, [9, 2, 5]], [6, [11, 1, 6]], [10, [10, 4, 8]]];
+const DEMO_PW = 'Harbor-lights42';
+
+const PLAT = {
+  ios: { name: 'iOS', dev: 'iPhone', bio: 'Face ID', bioCap: 'Face ID', bioAdj: 'Face ID', bioFail: 'Face ID wasn’t set up', sysNote: '', cloud: 'iCloud', cloudFull: 'iCloud Drive', cloudCo: 'Apple', acct: 'Apple account', pm: 'iCloud Keychain', vault: 'Secure Enclave', clock: '9:41' },
+  android: { name: 'Android', dev: 'phone', bio: 'biometrics', bioCap: 'Biometrics', bioAdj: 'Biometric', bioFail: 'Biometrics weren’t set up', sysNote: ' This demo phone has a fingerprint sensor; other Android phones show face unlock or their screen lock instead.', cloud: 'Google Drive', cloudFull: 'Google Drive', cloudCo: 'Google', acct: 'Google account', pm: 'Google Password Manager', vault: 'Android Keystore', clock: null }
+};
+const fmt = (s, p) => s.replace(/\{(\w+)\}/g, (m, k) => p[k] != null ? p[k] : m);
+
+/* =====================================================================
+   KESTREL PHONE FACTORY. v1's prototype, scoped to one root so an iOS
+   and an Android build can run side by side with independent state.
+   ===================================================================== */
+function phoneMarkup(pl, P) {
+  const p = PLAT[pl], ios = pl === 'ios';
+  const sb = ios
+    ? '<span>9:41</span><span class="cam"></span><span class="sys"><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8" fill="#1a1a1a"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8" fill="#1a1a1a"/><rect x="10" y="3" width="3" height="9" rx=".8" fill="#1a1a1a"/><rect x="15" y="0" width="3" height="12" rx=".8" fill="#1a1a1a"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 00-4.6 0L8 11.2zM3.6 6.4a6.3 6.3 0 018.8 0l1.4-1.5a8.4 8.4 0 00-11.6 0l1.4 1.5zM.6 3.2a10.6 10.6 0 0114.8 0L16 2.5A12.7 12.7 0 000 2.4z" fill="#1a1a1a"/></svg><svg width="27" height="12" viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3" fill="none" stroke="#1a1a1a" opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="1.6" fill="#1a1a1a"/><path d="M25 4v4c.8-.3 1.4-1.1 1.4-2S25.8 4.3 25 4z" fill="#1a1a1a" opacity=".45"/></svg></span>'
+    : '<span data-clock>1:07</span><span class="cam"></span><span class="sys"><svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 10.5 0.6 3.2a10 10 0 0 1 13.8 0z" fill="#1a1a1a"/></svg><svg width="13" height="12" viewBox="0 0 13 12"><path d="M12.5 0.5v11h-11z" fill="#1a1a1a"/></svg><svg width="22" height="11" viewBox="0 0 22 11"><rect x="0.6" y="0.6" width="18.3" height="9.8" rx="2.4" fill="none" stroke="#1a1a1a" stroke-width="1.1" opacity=".5"/><rect x="2" y="2" width="12.6" height="7" rx="1.3" fill="#1a1a1a"/><path d="M20 3.6v3.8c.8-.3 1.3-1 1.3-1.9s-.5-1.6-1.3-1.9z" fill="#1a1a1a" opacity=".5"/></svg></span>';
+  const CK = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 7.4l3.6 3.6L12.6 3.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const rq = (r, t) => `<li data-rule="${r}"><span class="ic">${CK}</span><span class="tx">${t}</span></li>`;
+  const tabbar = cur => '<nav class="tabbar" aria-label="Main">' + [['home', 'Home'], ['bag', 'Portfolio'], ['wallet', 'Wallet'], ['bell', 'Notifications']].map(([k, l]) => `<button data-tab="${k}" aria-label="${l}"${k === cur ? ' aria-current="page"' : ''}>${TAB[k]}</button>`).join('') + '</nav>';
+  const bioIc = ios ? FACE(80) : FP(80);
+  const html = `
+<div class="screen">
+  <div class="statusbar">${sb}</div>
+  <div class="viewport">
+    <section class="scr" data-s="welcome" aria-label="Create new account">
+      <div class="hdr"><span class="logo" data-logo></span></div>
+      <div class="pad">
+        <h1 class="title">Create new account</h1>
+        <button class="btn btn-email" data-go="country"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="3" width="18" height="14" rx="1.6" fill="#4a4a4a"/><path d="M1.6 4.6 10 10l8.4-5.4" fill="none" stroke="#fff" stroke-width="1.6"/></svg>Sign up with email</button>
+        <p class="already">Already have an account?<span class="dot">·</span><button class="link-strong" data-info="login">Log in</button></p>
+      </div>
+      <div class="fill"></div>
+      <div class="pad legal">Browse deals without an account on <u data-info="web">kestrel.app.</u><br>Private investments may result in total loss of principal.<br>Always do your own diligence.<br>By signing up I agree to Kestrel’s<br><span class="link" data-info="terms">Terms of Service</span> and <span class="link" data-info="privacy">Privacy Policy.</span></div>
+    </section>
+    <section class="scr" data-s="country" aria-label="Country of residence">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Create New Account</h1><p class="label">Which country is your primary residence?</p>
+        <button class="select" id="countryBtn" aria-haspopup="listbox"><span class="flag" id="countryFlag"></span><span class="name" id="countryName">United States of America</span><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.5l7 7 7-7" fill="none" stroke="#5a5a5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" data-go="account">Next</button></div>
+    </section>
+    <section class="scr" data-s="account" aria-label="Email and password">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Create new account</h1>
+        <div class="field f-email"><label class="label" for="email">Email</label><div class="uline"><input id="email" type="email" autocomplete="off" spellcheck="false" placeholder="example@gmail.com"></div></div>
+        <div class="field f-pass"><label class="label" for="pass">Password</label><div class="uline"><input id="pass" type="password" autocomplete="new-password" placeholder="••••••••"><button class="showbtn" id="showBtn" type="button">Show</button></div></div>
+        <div class="cf" id="cf" data-state="idle"><button class="cf-box" id="cfBox" aria-label="Verify you are human"></button><span class="cf-spin"><svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" id="cfDots"></svg></span><span class="cf-ok"><svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#1E8E4E"/><path d="M8 14.4l4 4 8-8.4" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cf-text" id="cfText">Verify you are human</span></div>
+        <p class="req-h">Password requirements:</p>
+        <ul class="req" id="req">${rq('len', 'at least 8 characters')}${rq('up', 'at least one uppercase letter')}${rq('low', 'at least one lowercase letter')}${rq('sym', 'at least 1 special symbol !@#$%^&amp;*')}</ul>
+        <p class="already2">Already have an account? •</p>
+        <p class="legal2">By signing up I agree to Kestrel’s<br><span class="link" data-info="terms" style="cursor:pointer">Terms of Service</span> and <span class="link" data-info="privacy" style="cursor:pointer">Privacy Policy.</span></p></div>
+      <div class="footer" style="padding-top:22px"><button class="btn btn-primary" id="accountNext" disabled>Next</button></div>
+    </section>
+    <section class="scr" data-s="code" aria-label="Confirm your account">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title light">Confirm your account</h1><p class="sentto">We sent a code to <span id="sentEmail"></span>.<br>Please enter it below.</p>
+        <div class="field"><label class="label" for="code">Enter security code</label><div class="uline" id="codeLine"><input id="code" inputmode="none" autocomplete="one-time-code" maxlength="6" placeholder="123456"><svg class="codecheck" id="codeCheck" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12.6l6.2 6.2L21.5 5.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div>
+      <div class="footer"><button class="btn btn-primary" id="codeNext" disabled>Continue</button></div>
+      <div class="kb${ios ? ' ios' : ''}" id="kb" aria-hidden="true"></div>
+    </section>
+    <section class="scr" data-s="pin" aria-label="Create your PIN">
+      <div class="hdr"><button class="back" id="pinBack" aria-label="Back" style="display:none"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Create your PIN</h1><p class="sub" id="pinSub">You can use this to log in if there is a<br>problem using other methods.</p></div>
+      <div class="pindots" id="pinDots" aria-live="polite"><i></i><i></i><i></i><i></i></div>
+      <p class="pinerr" id="pinErr"></p>
+      <div class="keypad" id="keypad"></div>
+    </section>
+    <section class="scr" data-s="wallet" aria-label="Protect your investments">
+      <div class="hdr"><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Protect your investments<br>with ${ios ? 'Face ID' : 'biometrics'}</h1><p class="sub">Sign in faster, and receive tokens<br>from eligible investments.</p><button class="btn-quiet hw" data-info="how">How this works</button></div>
+      <div class="fp">${bioIc}</div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="pkGo">Continue with ${ios ? 'Face ID' : 'biometrics'}</button><button class="btn-quiet" id="optGo">Other backup options</button></div>
+    </section>
+    <section class="scr" data-s="cloud" aria-label="Back up to ${p.cloud}">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><div class="ibadge">${ios ? I.cloud(30) : DRIVE}</div><h1 class="title">Back up to ${p.cloud}</h1>
+        <p class="sub" style="margin-top:12px">We’ll lock your recovery phrase with a password you choose and save it to your ${p.cloudFull}.</p>
+        <ul class="facts"><li>${I.lock(20)}<span>Locked on this ${p.dev} with your backup password.</span></li><li>${I.shield(20)}<span>Neither Kestrel nor ${p.cloudCo} can open it.</span></li><li>${I.globe(20)}<span>Restore on a new phone or kestrel.app with your ${p.acct} and this password.</span></li></ul></div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="cloudGo">Continue</button></div>
+    </section>
+    <section class="scr" data-s="cpw" aria-label="Create a backup password">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Create a backup password</h1><p class="sub">You’ll need it to restore your wallet from ${p.cloud}. Kestrel can’t reset it.</p>
+        <div class="field f1"><label class="label" for="cpw1">Backup password</label><div class="uline"><input id="cpw1" type="password" autocomplete="new-password" placeholder="••••••••"><button class="showbtn" id="cpwShow" type="button">Show</button></div></div>
+        <div class="field f2"><label class="label" for="cpw2">Confirm password</label><div class="uline"><input id="cpw2" type="password" autocomplete="new-password" placeholder="••••••••"></div></div>
+        <ul class="req" id="cpwReq">${rq('len', 'at least 8 characters')}${rq('mix', 'upper and lowercase letters')}${rq('num', 'at least one number')}${rq('match', 'both passwords match')}</ul>
+        <button class="ack" id="cpwAck" role="checkbox" aria-checked="false"><span class="bx">${CK}</span><span>I understand Kestrel can’t reset this password for me.</span></button>
+        <button class="demo" id="cpwDemo" type="button">Fill a demo password</button></div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="cpwGo" disabled>Back up</button></div>
+    </section>
+    <section class="scr" data-s="cup" aria-label="Backing up">
+      <div class="hdr"><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title" style="margin-top:20px">Backing up</h1><p class="sub" style="margin-top:12px">Keep Kestrel open for a moment.</p>
+        <ol class="steps" id="cupSteps"><li><i></i>Encrypting your recovery phrase</li><li><i></i>Uploading to ${p.cloudFull}</li><li><i></i>Checking the backup</li></ol></div>
+    </section>
+    <section class="scr" data-s="ph-warn" aria-label="Write down your recovery phrase">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Write down your recovery phrase</h1><p class="sub" style="margin-top:10px">These 12 words can restore your investments. Tick each one to continue.</p>
+        <div class="wacks" id="phAcks">${['If I lose these words and this phone, I may lose access to my investments.', 'Anyone with these words can move my investments.', 'Kestrel will never ask me for them.'].map((t, i) => `<button class="ack" role="checkbox" aria-checked="false" data-ack="${i}"><span class="bx">${CK}</span><span>${t}</span></button>`).join('')}</div></div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="pwGo" disabled>Continue</button></div>
+    </section>
+    <section class="scr" data-s="ph-reveal" aria-label="Your recovery phrase">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Your recovery phrase</h1><p class="sub" style="margin-top:10px">Write these words down in order and keep them somewhere safe and offline.</p>
+        <div class="words hid" id="words"><ol aria-hidden="true">${PHRASE.map((w, i) => `<li><i>${i + 1}</i>${w}</li>`).join('')}</ol><button class="reveal" id="reveal">${I.eye(28)}<b>Tap to reveal</b><small>Make sure no one can see your screen</small></button></div>
+        <p class="note">Demo words. Two aren’t on the real recovery-word list,<br>so this phrase can’t open a real wallet.</p></div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="prGo" disabled>I’ve written it down</button></div>
+    </section>
+    <section class="scr" data-s="ph-check" aria-label="Check your recovery phrase">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Check your phrase</h1><p class="sub" style="margin-top:10px">Choose the right word for each position.</p>
+        <div class="quiz" id="quiz">${QUIZ.map(([q, o]) => `<div class="q" data-q="${q}"><b>Word ${q + 1}</b><div class="qo" role="radiogroup" aria-label="Word ${q + 1}">${o.map(i => `<button role="radio" aria-checked="false" data-pick="${q}:${i}">${PHRASE[i]}</button>`).join('')}</div></div>`).join('')}</div>
+        <p class="qerr" id="qErr" role="alert"></p></div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="pcGo" disabled>Confirm</button></div>
+    </section>
+    <section class="scr" data-s="bio" aria-label="Enable biometrics">
+      <div class="hdr"><span class="logo" data-logo></span></div>
+      <div class="pad"><h1 class="title">Enable biometrics</h1><p class="sub">Set up ${ios ? 'Face ID' : 'biometrics'} to log in even<br>faster next time.</p></div>
+      <div class="fp">${bioIc}</div>
+      <div class="fill"></div>
+      <div class="footer"><button class="btn btn-primary" id="bioGo">Continue</button><button class="btn btn-outline" data-go="photo">Skip</button></div>
+    </section>
+    <section class="scr" data-s="photo" aria-label="Add a photo">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button><span class="logo" data-logo></span></div>
+      <div class="pad"><button class="avatar-lg" id="avatarBtn" aria-label="Choose a photo"><span data-avatar></span></button><input type="file" id="photoIn" accept="image/*" hidden><h1 class="title">Add a photo</h1><p class="sub">This helps startups and other investors<br>know you better.</p></div>
+      <div class="fill"></div>
+      <div class="footer" style="padding-bottom:28px"><button class="btn btn-outline" id="photoNext" data-go="home">I’ll do it later</button></div>
+    </section>
+    <section class="scr" data-s="home" aria-label="Invest">
+      <div class="home-top"><span class="avatar-sm" data-avsm></span><h1>Invest</h1></div>
+      <div class="home-sec"><h2>Live deals</h2><div class="seg" aria-hidden="true"><span><svg width="13" height="13" viewBox="0 0 17 17"><rect x="0" y="0" width="7.4" height="7.4" rx="1.6" fill="#1E1E1E"/><rect x="9.6" y="0" width="7.4" height="7.4" rx="1.6" fill="#1E1E1E"/><rect x="0" y="9.6" width="7.4" height="7.4" rx="1.6" fill="#1E1E1E"/><rect x="9.6" y="9.6" width="7.4" height="7.4" rx="1.6" fill="#1E1E1E"/></svg></span><span><svg width="14" height="12" viewBox="0 0 18 15"><path d="M1 1.5h16M1 7.5h16M1 13.5h16" stroke="#1E1E1E" stroke-width="2.4" stroke-linecap="round"/></svg></span></div></div>
+      <div class="feed" id="feed"></div>
+      ${tabbar('home')}
+    </section>
+    <section class="scr" data-s="pf" aria-label="Portfolio">
+      <div class="home-top"><span class="avatar-sm" data-avsm></span><h1>Portfolio</h1></div>
+      <div class="pf-sum"><small>Invested</small><b>$750</b></div>
+      <h2 class="pf-h">Holdings</h2>
+      <ul class="pf-list">
+        <li><button class="pf-row" data-go="asset"><span class="pf-logo" style="background:#1E3A5F;color:#fff;font:400 15px/1 Georgia,serif">HR</span><span class="pf-tx"><b>Harbor Robotics</b><small>50 tokens</small></span><span class="pf-r"><b>$500</b><span class="chip ok">Delivered</span></span><span class="pf-chev">${I.chev(16)}</span></button></li>
+        <li><div class="pf-row"><span class="pf-logo" style="background:#111;color:#fff;font:400 15px/1 Georgia,serif">SM</span><span class="pf-tx"><b>Saltmarsh Bakehouse</b><small>Reg CF</small></span><span class="pf-r"><b>$250</b><span class="chip neu">Shares</span></span><span class="pf-chev" style="visibility:hidden">${I.chev(16)}</span></div></li>
+      </ul>
+      ${tabbar('bag')}
+    </section>
+    <section class="scr" data-s="asset" aria-label="Harbor Robotics">
+      <div class="hdr"><button class="back" data-back aria-label="Back"></button></div>
+      <div class="as-top"><span class="pf-logo" style="background:#1E3A5F;color:#fff;font:400 15px/1 Georgia,serif">HR</span><h1>Harbor Robotics</h1><p>50 tokens · $500 invested</p><span class="chip ok">${CHECK(13)}Delivered 12 Nov</span></div>
+      <h2 class="as-h">Where it’s held</h2>
+      <ul class="kv"><li><span>Held in</span><b>Your Kestrel account</b></li><li><span>Protected with</span><b id="asProt"></b></li><li><span>Restore on</span><b id="asRest"></b></li></ul>
+      <button class="as-more" id="asMore">Find out more</button>
+    </section>
+    <section class="scr" data-s="wtab" aria-label="Wallet">
+      <div class="home-top"><span class="avatar-sm" data-avsm></span><h1>Wallet</h1></div>
+      <p class="w-empty">You have no assets in your digital wallet</p>
+      <div class="w-div"></div>
+      <h2 class="w-h2">Get started with adding assets</h2>
+      <ul class="w-list">
+        <li class="w-row"><span class="w-ic">${TK.eth}<i class="w-bdg">${TK.bEth}</i></span><span class="w-tx"><b>Ethereum<em> · ETH</em></b><small>Ethereum</small></span><button class="btn w-add" data-info="add">Add</button></li>
+        <li class="w-row"><span class="w-ic">${TK.note}<i class="w-bdg">${TK.bAvax}</i></span><span class="w-tx"><b>Kestrel Note<em> · NOTE</em></b><small>Avalanche</small></span><button class="btn w-add" data-info="add">Add</button></li>
+        <li class="w-row"><span class="w-ic">${TK.usdc}<i class="w-bdg">${TK.bEth}</i></span><span class="w-tx"><b>USD Coin<em> · USDC</em></b><small>Ethereum</small></span><button class="btn w-add" data-info="add">Add</button></li>
+        <li class="w-row w-more" data-info="add" role="button" tabindex="0"><span class="w-plus">${I.plus(15)}</span><span class="w-tx"><b>Add asset</b><small>Choose from 100s of assets &amp; networks</small></span><span class="w-coins">${TK.coins.map(c => '<i>' + c + '</i>').join('')}</span><svg class="w-chev" viewBox="0 0 5 9" fill="none" stroke="#1A1A1A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M.7.7l3.6 3.8L.7 8.3"/></svg></li>
+      </ul>
+      <button class="w-hidden" data-info="hidden">Hidden assets (24)</button>
+      ${tabbar('wallet')}
+    </section>
+  </div>
+  <div class="toast" id="toast" role="alert"><svg class="t-err" width="17" height="17" viewBox="0 0 17 17" aria-hidden="true"><circle cx="8.5" cy="8.5" r="7.4" fill="none" stroke="#E5484D" stroke-width="1.7"/><path d="M6 6l5 5M11 6l-5 5" stroke="#E5484D" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="t-ok" width="17" height="17" viewBox="0 0 17 17" aria-hidden="true"><circle cx="8.5" cy="8.5" r="7.4" fill="none" stroke="#1E8E4E" stroke-width="1.7"/><path d="M5.2 8.7l2.2 2.2 4.4-4.6" stroke="#1E8E4E" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><p id="toastText"></p></div>
+  <div class="nbanner" id="nban" role="status"><span class="nb-ic">${LOGO}</span><span class="nb-tx"><span class="nb-h"><b>Kestrel</b><span>now</span></span><p>Your 50 Harbor Robotics tokens have arrived.</p></span></div>
+  <div class="faceid" id="faceid" aria-hidden="true"><div class="fi-box" id="fiBox"><span class="g" id="fiG">${FACE(64)}</span><span id="fiT">Face ID</span></div></div>
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+  <div class="gesture"><i></i></div>
+</div>`;
+  return html.replace(/\b(id|for)="/g, '$1="' + P);
+}
+
+function Kestrel(host, pl, hooks) {
+  const P = 'k' + pl + '-', p = PLAT[pl], ios = pl === 'ios';
+  host.innerHTML = '<div class="phone ' + pl + '">' + phoneMarkup(pl, P) + '</div>';
+  const root = host.firstElementChild;
+  const $ = s => root.querySelector(s.replace(/#([A-Za-z][\w-]*)/g, '#' + P + '$1'));
+  const $$ = s => Array.from(root.querySelectorAll(s.replace(/#([A-Za-z][\w-]*)/g, '#' + P + '$1')));
+  const scr = id => root.querySelector('[data-s="' + id + '"]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const timers = new Set(); const later = (ms, f) => { const t = setTimeout(() => { timers.delete(t); f(); }, ms); timers.add(t); return t; };
+  const clearTimers = () => { timers.forEach(clearTimeout); timers.clear(); };
+
+  $$('[data-logo]').forEach(e => e.innerHTML = LOGO);
+  $$('.back').forEach(e => e.innerHTML = ios ? BACK_I : BACK_A);
+
+  /* ---------- flags ---------- */
+  const tri = (dir, a, b, c) => dir === 'v' ? `<rect width="10" height="20" fill="${a}"/><rect x="10" width="10" height="20" fill="${b}"/><rect x="20" width="10" height="20" fill="${c}"/>` : `<rect width="30" height="6.67" fill="${a}"/><rect y="6.67" width="30" height="6.67" fill="${b}"/><rect y="13.33" width="30" height="6.67" fill="${c}"/>`;
+  const usFlag = () => { let s = ''; for (let i = 0; i < 13; i++) s += `<rect y="${i * 20 / 13}" width="30" height="${20 / 13 + .02}" fill="${i % 2 ? '#fff' : '#B22234'}"/>`; s += '<rect width="13" height="10.77" fill="#3C3B6E"/>'; for (let r = 0; r < 5; r++) for (let c = 0; c < 6 - (r % 2); c++) s += `<circle cx="${1.2 + c * 2.15 + (r % 2) * 1.07}" cy="${1.2 + r * 2.1}" r=".45" fill="#fff"/>`; return s; };
+  const FLAGS = { US: usFlag(), AT: tri('h', '#ED2939', '#fff', '#ED2939'), BE: tri('v', '#000', '#FAE042', '#ED2939'), FR: tri('v', '#0055A4', '#fff', '#EF4135'), DE: tri('h', '#000', '#DD0000', '#FFCE00'), IN: tri('h', '#FF9933', '#fff', '#138808') + '<circle cx="15" cy="10" r="2.4" fill="none" stroke="#000080" stroke-width=".6"/>', IE: tri('v', '#169B62', '#fff', '#FF883E'), IT: tri('v', '#009246', '#fff', '#CE2B37'), JP: '<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#BC002D"/>', MX: tri('v', '#006847', '#fff', '#CE1126') + '<circle cx="15" cy="10" r="2.2" fill="#8C6A34"/>', NL: tri('h', '#AE1C28', '#fff', '#21468B'), NG: tri('v', '#008751', '#fff', '#008751'), ES: '<rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/>', SE: '<rect width="30" height="20" fill="#006AA7"/><rect x="9" width="3.5" height="20" fill="#FECC00"/><rect y="8.25" width="30" height="3.5" fill="#FECC00"/>', CH: '<rect width="30" height="20" fill="#D52B1E"/><rect x="13.3" y="4.5" width="3.4" height="11" fill="#fff"/><rect x="9.5" y="8.3" width="11" height="3.4" fill="#fff"/>', GB: '<rect width="30" height="20" fill="#012169"/><path d="M0 0l30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0l30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.4"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.4"/>' };
+  const COUNTRIES = [['AT', 'Austria'], ['BE', 'Belgium'], ['FR', 'France'], ['DE', 'Germany'], ['IN', 'India'], ['IE', 'Ireland'], ['IT', 'Italy'], ['JP', 'Japan'], ['MX', 'Mexico'], ['NL', 'Netherlands'], ['NG', 'Nigeria'], ['ES', 'Spain'], ['SE', 'Sweden'], ['CH', 'Switzerland'], ['GB', 'United Kingdom'], ['US', 'United States of America']];
+  const flag = code => `<svg viewBox="0 0 30 20" preserveAspectRatio="xMidYMid slice">${FLAGS[code]}</svg>`;
+
+  /* ---------- state ---------- */
+  const BREACHED = ['password1!', 'password123!', 'p@ssw0rd', 'p@ssw0rd1', 'p@ssword1', 'qwerty123!', 'welcome1!', 'welcome123!', 'admin123!', 'letmein1!', 'iloveyou1!', 'abc123!@#', 'passw0rd!', 'summer2024!', 'winter2024!', 'football1!', 'monkey123!', 'changeme1!', 'password!1', 'qwerty1!'];
+  /* path: 'passkey' | 'cloud' | 'phrase' (how the wallet was secured at sign-up); backed: null | 'cloud' | 'phrase'; origin: where a backup flow started */
+  const fresh = () => ({ country: 'US', email: '', pass: '', verified: false, code: '', pin1: '', pinBuf: '', pinStep: 'create', photo: null, path: null, backed: null, second: null, banner: false, origin: 'signup', acks: [false, false, false], shown: false, quiz: {}, cAck: false });
+  let S = fresh(), current = null, ov = null;
+
+  /* ---------- router ---------- */
+  function backTo() {
+    const d = S.origin === 'detail';
+    return { country: 'welcome', account: 'country', code: 'account', cloud: d ? 'asset' : 'wallet', cpw: 'cloud', 'ph-warn': d ? 'asset' : 'wallet', 'ph-reveal': 'ph-warn', 'ph-check': 'ph-reveal', photo: S.path === 'passkey' ? 'wallet' : 'bio', asset: 'pf' }[current];
+  }
+  function go(id, opts = {}) {
+    const next = scr(id), cur = current && scr(current);
+    if (!next || next === cur) return;
+    hideKb(); closeSheet(true);
+    enter[id] && enter[id]();
+    next.classList.add('active'); next.scrollTop = 0;
+    if (cur && !reduce && !opts.instant) {
+      const back = !!opts.back;
+      next.style.zIndex = back ? 1 : 2; cur.style.zIndex = back ? 2 : 1;
+      const ease = 'cubic-bezier(.2,.75,.25,1)';
+      next.animate([{ transform: back ? 'translateX(-28%)' : 'translateX(100%)' }, { transform: 'none' }], { duration: 300, easing: ease });
+      const a = cur.animate([{ transform: 'none' }, { transform: back ? 'translateX(100%)' : 'translateX(-28%)' }], { duration: 300, easing: ease });
+      a.onfinish = () => { cur.classList.remove('active'); cur.style.zIndex = next.style.zIndex = ''; };
+    } else if (cur) cur.classList.remove('active');
+    current = id; notify();
+  }
+  function goBack() {
+    if (current === 'pin' && S.pinStep === 'repeat') return setPinStep('create');
+    const to = backTo(); if (to) go(to, { back: true });
+  }
+  const notify = () => hooks.onChange && hooks.onChange();
+  root.addEventListener('click', e => {
+    const g = e.target.closest('[data-go]'); if (g && !g.disabled) go(g.dataset.go);
+    if (e.target.closest('[data-back]')) goBack();
+    const i = e.target.closest('[data-info]'); if (i) openInfo(i.dataset.info);
+    const t = e.target.closest('[data-tab]'); if (t) tabPress(t.dataset.tab);
+  });
+
+  const enter = {
+    country() { $('#countryFlag').innerHTML = flag(S.country); $('#countryName').textContent = COUNTRIES.find(c => c[0] === S.country)[1]; },
+    code() { $('#sentEmail').textContent = S.email; updateCode(); },
+    pin() { S.pinStep = 'create'; S.pinBuf = ''; S.pin1 = ''; setPinStep('create'); $('#pinErr').textContent = ''; },
+    cpw() { $('#cpw1').value = ''; $('#cpw2').value = ''; S.cAck = false; $('#cpwAck').setAttribute('aria-checked', 'false'); updateCpw(); },
+    'ph-warn'() { S.acks = [false, false, false]; $$('[data-ack]').forEach(b => b.setAttribute('aria-checked', 'false')); $('#pwGo').disabled = true; },
+    'ph-reveal'() { S.shown = false; $('#words').classList.add('hid'); $('#reveal').style.display = ''; $('#prGo').disabled = true; },
+    'ph-check'() { S.quiz = {}; renderQuiz(); $('#qErr').textContent = ''; },
+    photo() { renderAvatars(); },
+    home() { renderAvatars(); },
+    wtab() { renderAvatars(); },
+    pf() { renderAvatars(); if (!S.banner) { S.banner = true; later(450, () => { nban.classList.add('show'); later(3600, () => nban.classList.remove('show')); }); } },
+    asset() { renderAsset(); }
+  };
+
+  /* ---------- sheets ---------- */
+  const sheet = $('#sheet'), scrim = $('#scrim');
+  let sheetClose = null;
+  function openSheet(html, cls = '', onClose, kind) {
+    sheet.className = 'sheet ' + cls;
+    sheet.style.height = '';
+    sheet.innerHTML = '<div class="grab"></div>' + html.replace(/\b(id|for)="/g, '$1="' + P);
+    requestAnimationFrame(() => { scrim.classList.add('show'); sheet.classList.add('show'); });
+    sheetClose = onClose || null; ov = kind || 'sheet'; notify();
+  }
+  function closeSheet(silent) {
+    if (!sheet.classList.contains('show') && !ov) return;
+    scrim.classList.remove('show'); sheet.classList.remove('show');
+    const f = sheetClose; sheetClose = null; ov = null; f && f();
+    if (!silent) notify();
+  }
+  scrim.addEventListener('click', () => closeSheet());
+
+  const INFO = {
+    login: ['Log in', '<p>Logging in to an existing account isn’t part of this prototype, which covers new-account sign-up from start to finish.</p>', 'Back to sign-up'],
+    web: ['Browse on the web', '<p>On kestrel.app you can look through every live deal, read company pitches and check funding progress without creating an account.</p><p>You’ll need an account to invest or follow deals.</p>', 'Close'],
+    terms: ['Terms of Service', '<p>By creating an account you confirm you are at least 18 and that the information you give us is accurate.</p><p>Investments listed on Kestrel are offered by the companies raising money. Kestrel does not give investment advice, and past results don’t predict future returns.</p><p>You can close your account at any time from Settings.</p>', 'Close'],
+    privacy: ['Privacy Policy', '<p>We use your email to secure your account and send updates about deals you follow.</p><p>Identity details are used only for legally required verification checks and are never sold.</p><p>You can download or delete your data from Settings at any time.</p>', 'Close'],
+    add: ['Add assets', '<p>Adding assets to the wallet isn’t part of this prototype, which shows how the wallet is created during sign-up.</p>', 'Close'],
+    hidden: ['Hidden assets', '<p>Assets you’ve hidden from your wallet appear here. This list isn’t part of the prototype.</p>', 'Close'],
+    tab: ['Not in this prototype', '<p>This tab isn’t part of the prototype. Home, Portfolio and Wallet work.</p>', 'Close'],
+    how: ['How this works', `<p>${ios ? 'Face ID creates' : 'Your phone’s biometrics create'} a passkey for your Kestrel account. It protects your investments and lets you restore them on a new phone or on kestrel.app.</p><p>Prefer something else? You can back up to ${p.cloud} or write down a recovery phrase instead.</p>`, 'Got it']
+  };
+  function openInfo(key) {
+    const [t, body, cta] = INFO[key];
+    openSheet(`<h4>${t}</h4><div class="sheet-body">${body}</div><div class="sheet-actions"><button class="btn btn-primary" id="sheetOk">${cta}</button></div>`);
+    $('#sheetOk').onclick = () => closeSheet();
+  }
+
+  /* ---------- country picker ---------- */
+  $('#countryBtn').addEventListener('click', () => {
+    openSheet(`<h4>Country of residence</h4><label class="search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8a8a8a" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="cSearch" placeholder="Search countries" autocomplete="off"></label><ul class="clist" id="clist" role="listbox"></ul>`);
+    sheet.style.height = '78%';
+    const render = q => { const list = COUNTRIES.filter(c => c[1].toLowerCase().includes(q.toLowerCase()));
+      $('#clist').innerHTML = list.length ? list.map(([c, n]) => `<li class="${c === S.country ? 'on' : ''}" role="option" aria-selected="${c === S.country}"><button data-c="${c}"><span class="flag">${flag(c)}</span>${n}<svg class="sel" width="18" height="18" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>`).join('') : '<li class="empty">No countries match your search.</li>'; };
+    render('');
+    $('#cSearch').addEventListener('input', e => render(e.target.value));
+    $('#clist').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; S.country = b.dataset.c; enter.country(); closeSheet(); });
+  });
+
+  /* ---------- account ---------- */
+  const email = $('#email'), pass = $('#pass'), cf = $('#cf');
+  const RULES = { len: p => p.length >= 8, up: p => /[A-Z]/.test(p), low: p => /[a-z]/.test(p), sym: p => /[!@#$%^&*]/.test(p) };
+  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  function updateAccount() {
+    S.email = email.value.trim(); S.pass = pass.value; let all = true;
+    $$('#req li').forEach(li => { const ok = RULES[li.dataset.rule](S.pass); li.classList.toggle('met', ok); if (!ok) all = false; });
+    $('#accountNext').disabled = !(all && emailOk(S.email) && S.verified);
+  }
+  [email, pass].forEach(inp => { inp.addEventListener('input', updateAccount); inp.addEventListener('focus', () => inp.parentElement.classList.add('focus')); inp.addEventListener('blur', () => inp.parentElement.classList.toggle('focus', inp === email && !!inp.value)); });
+  $('#showBtn').addEventListener('click', () => { const show = pass.type === 'password'; pass.type = show ? 'text' : 'password'; $('#showBtn').textContent = show ? 'Hide' : 'Show'; });
+  (() => { let d = ''; for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; d += `<circle cx="${14 + Math.cos(a) * 11}" cy="${14 + Math.sin(a) * 11}" r="${1.35 + i * .04}" fill="#1E8E4E" opacity="${.45 + i * .07}"/>`; } $('#cfDots').innerHTML = d; })();
+  let cfTimer;
+  function verify() { clearTimeout(cfTimer); S.verified = false; cf.dataset.state = 'verifying'; $('#cfText').textContent = 'Verifying...'; updateAccount(); cfTimer = setTimeout(() => { S.verified = true; cf.dataset.state = 'success'; $('#cfText').textContent = 'Success!'; updateAccount(); }, 1500); }
+  $('#cfBox').addEventListener('click', verify);
+  const toast = $('#toast'), nban = $('#nban'); let toastTimer;
+  nban.addEventListener('click', () => { nban.classList.remove('show'); if (current === 'pf') go('asset'); });
+  function showToast(msg, good) { $('#toastText').textContent = msg; toast.classList.toggle('good', !!good); toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 4200); }
+  toast.addEventListener('click', () => toast.classList.remove('show'));
+  $('#accountNext').addEventListener('click', () => {
+    const btn = $('#accountNext'); btn.classList.add('busy'); btn.disabled = true;
+    later(650, () => { btn.classList.remove('busy'); if (BREACHED.includes(S.pass.toLowerCase())) { showToast('The password has been found in data breaches and must no longer be used.'); verify(); } else { updateAccount(); go('code'); } });
+  });
+
+  /* ---------- confirm code + simulated keyboard ---------- */
+  const code = $('#code'), kb = $('#kb'), sCode = scr('code');
+  if (ios) {
+    const L = { 2: 'ABC', 3: 'DEF', 4: 'GHI', 5: 'JKL', 6: 'MNO', 7: 'PQRS', 8: 'TUV', 9: 'WXYZ' };
+    kb.innerHTML = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'BS'].map(k => k === '' ? '<button class="bare" tabindex="-1" aria-hidden="true"></button>' : k === 'BS' ? '<button class="bare" data-k="BS" aria-label="Delete"><svg width="26" height="20" viewBox="0 0 30 22" fill="none" stroke="#000" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M9 2h17a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9L1.5 11z"/><path d="M13.5 7l8 8M21.5 7l-8 8"/></svg></button>' : `<button data-k="${k}">${k}<small>${L[k] || ''}</small></button>`).join('');
+  } else {
+    const KEYS = ['1', '2', '3', '(', ')', ',', '4', '5', '6', '+', '-', ';', '7', '8', '9', '/', 'N', 'BS', '*', '0', '#', '.', 'SP', 'ENT'];
+    kb.innerHTML = KEYS.map(k => {
+      if (k === 'BS') return '<button class="bare" data-k="BS" aria-label="Delete"><svg width="30" height="22" viewBox="0 0 30 22" fill="none" stroke="#F2F2F2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M9 2h17a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9L1.5 11z"/><path d="M13.5 7l8 8M21.5 7l-8 8"/></svg></button>';
+      if (k === 'ENT') return '<button class="bare enter" data-k="ENT" aria-label="Done"><svg width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="#F2F2F2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 1.5v6.5a3 3 0 0 1-3 3H3"/><path d="M7.5 6.5 2.5 11l5 4.5"/></svg></button>';
+      if (k === 'SP') return '<button data-k=" " aria-label="Space"></button>';
+      return `<button data-k="${k}">${k}</button>`;
+    }).join('');
+  }
+  function updateCode() { code.value = code.value.replace(/\D/g, '').slice(0, 6); S.code = code.value; const ok = S.code.length === 6; $('#codeCheck').classList.toggle('on', ok); $('#codeNext').disabled = !ok; }
+  function showKb() { kb.classList.add('open'); sCode.classList.add('kb-open'); $('#codeLine').classList.add('focus'); }
+  function hideKb() { kb.classList.remove('open'); sCode.classList.remove('kb-open'); $('#codeLine').classList.toggle('focus', !!code.value); if (document.activeElement === code) code.blur(); }
+  code.addEventListener('focus', showKb);
+  code.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== code) hideKb(); }, 0));
+  code.addEventListener('input', updateCode);
+  code.addEventListener('keydown', e => { if (e.key === 'Enter' && !$('#codeNext').disabled) $('#codeNext').click(); });
+  [kb, $('#codeNext')].forEach(el => el.addEventListener('pointerdown', e => e.preventDefault()));
+  kb.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b) return; const k = b.dataset.k;
+    if (k === 'BS') code.value = code.value.slice(0, -1); else if (k === 'ENT') { if (!$('#codeNext').disabled) $('#codeNext').click(); return; } else if (/\d/.test(k)) code.value = (code.value + k).slice(0, 6);
+    updateCode(); });
+  $('#codeNext').addEventListener('click', () => { const btn = $('#codeNext'); btn.classList.add('busy'); btn.disabled = true; later(600, () => { btn.classList.remove('busy'); updateCode(); go('pin'); }); });
+
+  /* ---------- PIN ---------- */
+  const keypad = $('#keypad');
+  keypad.innerHTML = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'BS'].map(k => k === '' ? '<button class="blank" tabindex="-1" aria-hidden="true"></button>' : k === 'BS' ? '<button data-p="BS" aria-label="Delete"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#1a1a1a" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M27 17H7M15 9l-8 8 8 8"/></svg></button>' : `<button data-p="${k}">${k}</button>`).join('');
+  let pinLock = false;
+  function renderPin() { $$('#pinDots i').forEach((d, i) => d.classList.toggle('on', i < S.pinBuf.length)); }
+  function setPinStep(step) {
+    S.pinStep = step; S.pinBuf = ''; if (step === 'create') S.pin1 = '';
+    scr('pin').classList.toggle('repeat', step === 'repeat');
+    $('#pinBack').style.display = step === 'repeat' ? '' : 'none';
+    $('#pinSub').innerHTML = step === 'repeat' ? 'Please repeat your PIN.' : 'You can use this to log in if there is a<br>problem using other methods.';
+    renderPin();
+  }
+  $('#pinBack').addEventListener('click', () => { setPinStep('create'); $('#pinErr').textContent = ''; });
+  function pinPress(k) {
+    if (pinLock || current !== 'pin') return;
+    $('#pinErr').textContent = '';
+    if (k === 'BS') { S.pinBuf = S.pinBuf.slice(0, -1); return renderPin(); }
+    if (S.pinBuf.length >= 4) return;
+    S.pinBuf += k; renderPin();
+    if (S.pinBuf.length < 4) return;
+    pinLock = true;
+    later(220, () => {
+      pinLock = false;
+      if (S.pinStep === 'create') { S.pin1 = S.pinBuf; setPinStep('repeat'); }
+      else if (S.pinBuf === S.pin1) go('wallet');
+      else { const dots = $('#pinDots'); dots.classList.remove('shake'); void dots.offsetWidth; dots.classList.add('shake'); $('#pinErr').textContent = 'PINs don’t match. Create your PIN again.'; later(420, () => setPinStep('create')); }
+    });
+  }
+  keypad.addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) pinPress(b.dataset.p); });
+  document.addEventListener('keydown', e => {
+    if (!hooks.isActive() || current !== 'pin' || sheet.classList.contains('show')) return;
+    if (/^\d$/.test(e.key)) pinPress(e.key); else if (e.key === 'Backspace') pinPress('BS');
+  });
+
+  /* ---------- biometrics: Face ID overlay (iOS) or fingerprint prompt (Android) ---------- */
+  function bioAuth(done, kind) {
+    if (ios) {
+      const f = $('#faceid'), box = $('#fiBox'); box.classList.remove('done'); $('#fiG').innerHTML = FACE(64); $('#fiT').textContent = 'Face ID';
+      f.classList.add('show'); ov = kind || 'bio'; notify();
+      later(1100, () => { box.classList.add('done'); $('#fiG').innerHTML = CHECK(60); later(600, () => { f.classList.remove('show'); ov = null; done(); }); });
+      return;
+    }
+    let fin = false;
+    openSheet(`<h4>Verify it’s you</h4><p class="bio-msg" id="bioMsg">Touch the fingerprint sensor</p><button class="bio-ic pulse" id="bioIc" aria-label="Fingerprint sensor">${FP(40)}</button><button class="cancel" id="bioCancel">Cancel</button>`, 'bio-sheet', null, kind || 'bio');
+    const finish = () => { if (fin) return; fin = true; const ic = $('#bioIc'); ic.classList.remove('pulse'); ic.classList.add('done'); ic.innerHTML = CHECK(34); $('#bioMsg').textContent = 'Fingerprint recognized';
+      later(750, () => { sheetClose = null; closeSheet(true); done(); }); };
+    later(1800, finish); $('#bioIc').onclick = finish; $('#bioCancel').onclick = () => { fin = true; closeSheet(); };
+  }
+  $('#bioGo').addEventListener('click', () => bioAuth(() => go('photo')));
+
+  /* ---------- NEW: create your wallet ---------- */
+  function passkeySheet() {
+    const em = S.email || 'audrey@example.com';
+    /* system sheets carry only OS wording: apps can't add their own text to them */
+    if (ios) {
+      openSheet(`<button class="x" id="pkX" aria-label="Cancel">${I.x(14)}</button><span class="pk">${I.key(30)}</span><h5>Save a passkey for “kestrel.app”?</h5><p>A passkey for “${em}” will be saved in iCloud Keychain and available on all your devices.</p><div class="acct">${I.user(22)}<span><b>${em}</b><small>kestrel.app</small></span></div><button class="go" id="pkOk">Continue</button>`, 'sys-ios', null, 'pk');
+    } else {
+      openSheet(`<div class="gm">${GLOGO}<span>Google Password Manager</span></div><h5>Create passkey for kestrel.app</h5><p>A passkey will be saved to Google Password Manager for this account.</p><div class="acctrow"><span class="av">${em[0].toUpperCase()}</span><span><b>${em}</b><small>kestrel.app</small></span></div><div class="row2"><button class="tb" id="pkX">Cancel</button><button class="fb" id="pkOk">Create</button></div>`, 'sys-and', null, 'pk');
+    }
+    $('#pkX').onclick = cancelled;
+    /* the biometric check is the approval, so it happens inside the same system sheet */
+    $('#pkOk').onclick = () => {
+      const done = () => later(650, () => {
+        sheetClose = null; closeSheet(true);
+        const b = $('#pkGo'); b.classList.add('busy'); b.disabled = true;
+        later(600, () => { b.classList.remove('busy'); b.disabled = false; S.path = 'passkey'; S.backed = 'passkey'; go('photo'); });
+      });
+      if (ios) {
+        const go2 = sheet.querySelector('.go'); sheet.querySelector('.x').style.visibility = 'hidden';
+        go2.outerHTML = `<div class="fi-in"><span class="g">${FACE(46)}</span><small>Face ID</small></div>`;
+        later(1150, () => { const f = sheet.querySelector('.fi-in'); f.classList.add('done'); f.querySelector('.g').innerHTML = CHECK(42); f.querySelector('small').textContent = 'Done'; done(); });
+      } else {
+        sheet.querySelector('h5').textContent = 'Verify it’s you';
+        sheet.querySelector('p').textContent = 'Use your screen lock to create your passkey for kestrel.app.';
+        sheet.querySelector('.acctrow').outerHTML = `<div class="fp-in"><span class="bio-ic pulse">${FP(38)}</span><small>Touch the fingerprint sensor</small></div>`;
+        sheet.querySelector('.row2').innerHTML = '<button class="tb" data-pkx>Cancel</button>';
+        sheet.querySelector('[data-pkx]').onclick = () => { clearTimers(); cancelled(); };
+        const fin = () => { const f = sheet.querySelector('.fp-in'); if (!f || f.classList.contains('done')) return; f.classList.add('done'); f.querySelector('.bio-ic').innerHTML = CHECK(32); f.querySelector('small').textContent = 'Fingerprint recognized'; done(); };
+        sheet.querySelector('.bio-ic').onclick = fin; later(1700, fin);
+      }
+    };
+  }
+  /* cancelling the passkey never skips protection: it offers the other ways instead */
+  function cancelled() { sheetClose = null; closeSheet(true); later(260, fallbackSheet); }
+  const optRows = (only) => [['cloud', I.cloud(20), `Back up to ${p.cloud}`, 'Locked with a password you choose'], ['phrase', I.pen(20), 'Write down recovery phrase', '12 words on paper']]
+    .filter(o => !only || only.includes(o[0])).map(([k, ic, t, d]) => `<button class="opt" data-opt="${k}"><span class="oi">${ic}</span><span><b>${t}</b><small>${d}</small></span>${I.chev(18)}</button>`).join('');
+  function bindOpts(origin) {
+    sheet.querySelectorAll('[data-opt]').forEach(b => b.onclick = () => {
+      const k = b.dataset.opt; sheetClose = null; closeSheet(true); S.origin = origin;
+      if (origin === 'signup') { S.path = k; S.backed = null; }
+      go(k === 'cloud' ? 'cloud' : 'ph-warn');
+    });
+  }
+  function fallbackSheet() {
+    openSheet(`<h4>Choose another way to protect your investments</h4><div class="sheet-body"><p>${p.bioFail}. You can try again, or back up another way.</p></div>
+      <div class="sheet-actions tryfi"><button class="btn btn-primary" id="fbTry">Try ${p.bio} again</button></div>
+      <div class="opts">${optRows()}</div>`, '', null, 'fallback');
+    $('#fbTry').onclick = () => { sheetClose = null; closeSheet(true); later(260, passkeySheet); };
+    bindOpts('signup');
+  }
+  $('#pkGo').addEventListener('click', passkeySheet);
+  function optionsSheet() {
+    openSheet(`<h4>Other backup options</h4><div class="sheet-body"><p>Prefer not to use a passkey? Protect your investments with a backup you control.</p></div>
+      <div class="opts">${optRows()}</div>
+      <div class="sheet-actions"><button class="btn btn-outline" id="optX">Cancel</button></div>`, '', null, 'options');
+    $('#optX').onclick = () => closeSheet();
+    bindOpts('signup');
+  }
+  $('#optGo').addEventListener('click', optionsSheet);
+
+  /* ---------- NEW: holding detail, Find out more and a second recovery method ---------- */
+  const METHOD = { passkey: `${p.bioAdj} passkey`, cloud: `${p.cloud} backup`, phrase: 'Written recovery phrase' };
+  function renderAsset() {
+    const m = S.path || 'passkey';
+    $('#asProt').innerHTML = METHOD[m] + (S.second ? `<small>and ${METHOD[S.second].toLowerCase().replace('icloud', 'iCloud').replace('google', 'Google')}</small>` : '');
+    $('#asRest').innerHTML = m === 'passkey' ? `Any device signed in to your ${p.acct}` : m === 'cloud' ? `Any device, with your ${p.acct} and backup password` : 'Any device, with your 12 words';
+  }
+  function moreSheet() {
+    const m = S.path || 'passkey';
+    const rec = (k, extra) => `<b style="display:block">${METHOD[k]} ✓${extra || ''}</b>`;
+    const others = ['cloud', 'phrase'].filter(k => k !== m);
+    openSheet(`<h4>Account details</h4><div class="sheet-body"><p>For people who want the technical details.</p></div>
+      <ul class="kv"><li><span>Wallet address</span><b>0x7A3f…91C2<button class="copy" id="mCopy">Copy</button></b></li><li><span>Network</span><b>Avalanche</b></li>
+      <li><span>Recovery</span><span style="text-align:right;color:inherit;display:flex;flex-direction:column;gap:6px">${rec(m, m === 'passkey' ? `<small>synced with ${p.pm}</small>` : '')}${S.second ? rec(S.second) : ''}</span></li></ul>
+      ${S.second ? '' : `<button class="addm" id="mAdd"><span class="oi">${I.plus(18)}</span><span><b>Add a second recovery method</b><small>In case you lose access to your ${p.acct}.</small></span>${I.chev(18)}</button>`}
+      <p class="sfine">Kestrel never sees your recovery phrase and can’t reset your recovery methods.</p>
+      <div class="sheet-actions"><button class="btn btn-outline" id="mX">Close</button></div>`, '', null, 'more');
+    $('#mX').onclick = () => closeSheet();
+    $('#mCopy').onclick = () => { $('#mCopy').textContent = 'Copied'; };
+    if (!S.second) $('#mAdd').onclick = () => { sheetClose = null; closeSheet(true); later(260, () => secondSheet(others)); };
+  }
+  function secondSheet(others) {
+    openSheet(`<h4>Add a second recovery method</h4><div class="sheet-body"><p>In case you lose access to your ${p.acct}. Both methods restore the same investments.</p></div>
+      <div class="opts">${optRows(others || ['cloud', 'phrase'])}</div>
+      <div class="sheet-actions"><button class="btn btn-outline" id="sX">Cancel</button></div>`, '', null, 'second');
+    $('#sX').onclick = () => closeSheet();
+    bindOpts('detail');
+  }
+  $('#asMore').addEventListener('click', moreSheet);
+
+  /* ---------- NEW: cloud backup ---------- */
+  function googleAccount() {
+    const em = S.email || 'audrey@example.com';
+    openSheet(`<div class="gm">${GLOGO}<span>Sign in with Google</span></div><h5>Choose an account</h5><p>to continue to Kestrel</p><button class="acctrow" id="gAcc"><span class="av">${em[0].toUpperCase()}</span><span><b>Audrey Lin</b><small>${em}</small></span></button><div class="addacct">${I.user(20)}Add another account</div>`, 'sys-and', null, 'gacct');
+    $('#gAcc').onclick = () => { sheetClose = null; closeSheet(true); googleConsent(); };
+  }
+  function googleConsent() {
+    const em = S.email || 'audrey@example.com';
+    openSheet(`<div class="gm">${GLOGO}<span>${em}</span></div><h5>Kestrel wants access to your Google Account</h5><div class="scope">${DRIVE}<span>See, create and delete its own configuration data in your Google Drive. Kestrel can’t see your other files.</span></div><p>Make sure you trust Kestrel. You can remove this access at any time in your Google Account.</p><div class="row2"><button class="tb" id="gNo">Cancel</button><button class="fb" id="gYes">Allow</button></div>`, 'sys-and', null, 'gconsent');
+    $('#gNo').onclick = () => closeSheet(); $('#gYes').onclick = () => { sheetClose = null; closeSheet(true); go('cpw'); };
+  }
+  $('#cloudGo').addEventListener('click', () => ios ? go('cpw') : googleAccount());
+  const CPWR = { len: v => v.length >= 8, mix: v => /[a-z]/.test(v) && /[A-Z]/.test(v), num: v => /\d/.test(v), match: (v, w) => !!v && v === w };
+  function updateCpw() {
+    const a = $('#cpw1').value, b = $('#cpw2').value; let all = true;
+    $$('#cpwReq li').forEach(li => { const ok = CPWR[li.dataset.rule](a, b); li.classList.toggle('met', ok); if (!ok) all = false; });
+    $('#cpwGo').disabled = !(all && S.cAck);
+  }
+  ['#cpw1', '#cpw2'].forEach(s => { const i = $(s); i.addEventListener('input', updateCpw); i.addEventListener('focus', () => i.parentElement.classList.add('focus')); i.addEventListener('blur', () => i.parentElement.classList.toggle('focus', !!i.value)); });
+  $('#cpwShow').addEventListener('click', () => { const show = $('#cpw1').type === 'password'; ['#cpw1', '#cpw2'].forEach(s => $(s).type = show ? 'text' : 'password'); $('#cpwShow').textContent = show ? 'Hide' : 'Show'; });
+  $('#cpwAck').addEventListener('click', () => { S.cAck = !S.cAck; $('#cpwAck').setAttribute('aria-checked', S.cAck); updateCpw(); });
+  $('#cpwDemo').addEventListener('click', () => { $('#cpw1').value = $('#cpw2').value = DEMO_PW; updateCpw(); });
+  $('#cpwGo').addEventListener('click', () => go('cup'));
+  function runUpload() {
+    const li = $$('#cupSteps li'); li.forEach(l => { l.className = ''; l.querySelector('i').innerHTML = ''; });
+    const step = i => { li.forEach((l, j) => { l.className = j < i ? 'done' : j === i ? 'cur' : ''; l.querySelector('i').innerHTML = j < i ? CHECK(14) : ''; }); };
+    step(0); later(800, () => step(1)); later(1700, () => step(2)); later(2500, () => step(3));
+    later(2900, () => finishBackup('cloud'));
+  }
+  enter.cup = runUpload;
+  function finishBackup(kind) {
+    S.backed = kind;
+    if (S.origin === 'detail') { S.second = kind; S.backed = S.backed || S.path; go('asset', { back: true }); later(350, () => showToast('Second recovery method added', true)); }
+    else { S.backed = kind; go('bio'); later(350, () => showToast(kind === 'cloud' ? `Backed up to ${p.cloud}` : 'Recovery phrase saved', true)); }
+  }
+
+  /* ---------- NEW: recovery phrase ---------- */
+  $$('[data-ack]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.ack; S.acks[i] = !S.acks[i]; b.setAttribute('aria-checked', S.acks[i]); $('#pwGo').disabled = !S.acks.every(Boolean); }));
+  $('#pwGo').addEventListener('click', () => go('ph-reveal'));
+  $('#reveal').addEventListener('click', () => { S.shown = true; $('#words').classList.remove('hid'); $('#reveal').style.display = 'none'; $('#prGo').disabled = false; });
+  $('#prGo').addEventListener('click', () => go('ph-check'));
+  function renderQuiz() {
+    $$('[data-pick]').forEach(b => { const [q, i] = b.dataset.pick.split(':').map(Number); b.setAttribute('aria-checked', S.quiz[q] === i); });
+    $$('.quiz .q').forEach(q => q.classList.remove('bad'));
+    $('#pcGo').disabled = QUIZ.some(([q]) => S.quiz[q] == null);
+  }
+  root.addEventListener('click', e => { const b = e.target.closest('[data-pick]'); if (!b || !root.contains(b)) return; const [q, i] = b.dataset.pick.split(':').map(Number); S.quiz[q] = i; $('#qErr').textContent = ''; renderQuiz(); });
+  $('#pcGo').addEventListener('click', () => {
+    const wrong = QUIZ.find(([q]) => S.quiz[q] !== q);
+    if (wrong) { delete S.quiz[wrong[0]]; renderQuiz(); const el = root.querySelector('.quiz [data-q="' + wrong[0] + '"]'); el.classList.add('bad'); $('#qErr').textContent = 'Word ' + (wrong[0] + 1) + ' doesn’t match. Check your paper copy.'; return; }
+    finishBackup('phrase');
+  });
+
+  /* ---------- tabs ---------- */
+  function tabPress(k) {
+    if (k === 'home') { if (current !== 'home') go('home', { back: true }); return; }
+    if (k === 'wallet') { if (current !== 'wtab') go('wtab'); return; }
+    if (k === 'bag') { if (current !== 'pf') go('pf'); return; }
+    openInfo('tab');
+  }
+
+  /* ---------- photo ---------- */
+  function renderAvatars() {
+    const img = S.photo ? `<img src="${S.photo}" alt="">` : '';
+    $$('[data-avatar]').forEach(e => e.innerHTML = AVATAR + img);
+    $$('[data-avsm]').forEach(e => e.innerHTML = S.photo ? `<img src="${S.photo}" alt="Your photo">` : AVATAR.replace('viewBox="0 0 168 168"', 'viewBox="16 10 136 136"'));
+    $('#photoNext').textContent = S.photo ? 'Continue' : 'I’ll do it later';
+    $('#photoNext').className = S.photo ? 'btn btn-primary' : 'btn btn-outline';
+  }
+  $('#avatarBtn').addEventListener('click', () => $('#photoIn').click());
+  $('#photoIn').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { S.photo = r.result; renderAvatars(); }; r.readAsDataURL(f); });
+
+  /* ---------- home feed (static, from v1) ---------- */
+  function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
+  const STAR = '<svg class="star" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2.8l2.85 5.8 6.4.93-4.63 4.5 1.1 6.37L12 17.4l-5.72 3l1.1-6.37-4.63-4.5 6.4-.93z"/></svg>';
+  const uid = P.replace(/-$/, '');
+  function artBakery() { const r = rng(7); let sugar = ''; for (let i = 0; i < 260; i++) sugar += `<circle cx="${(r() * 322).toFixed(1)}" cy="${(r() * 194).toFixed(1)}" r="${(r() * 1.1 + .3).toFixed(2)}" fill="#FFF6E8" opacity="${(r() * .6 + .3).toFixed(2)}"/>`;
+    const bun = (cx, cy, rr, id) => `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="url(#${uid}${id})"/>` + [0.78, 0.55, 0.32].map(k => `<circle cx="${cx + rr * .05}" cy="${cy + rr * .04}" r="${rr * k}" fill="none" stroke="#7A3E14" stroke-opacity=".35" stroke-width="${rr * .07}"/>`).join('');
+    return `<svg class="bg" viewBox="0 0 322 194" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="${uid}g1" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#F2B66E"/><stop offset=".6" stop-color="#C9742F"/><stop offset="1" stop-color="#7C3A12"/></radialGradient><radialGradient id="${uid}g2" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#E6A55E"/><stop offset="1" stop-color="#6E3210"/></radialGradient><linearGradient id="${uid}gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A1C0B"/><stop offset="1" stop-color="#1E0E05"/></linearGradient></defs><rect width="322" height="194" fill="url(#${uid}gb)"/>${bun(40, 18, 62, 'g2')}${bun(270, 20, 70, 'g2')}${bun(320, 150, 55, 'g2')}${bun(150, 128, 96, 'g1')}${sugar}</svg>`; }
+  function artFilm() { const r = rng(19); let grass = ''; for (let i = 0; i < 120; i++) { const x = r() * 322, y = 160 + r() * 34; grass += `<path d="M${x.toFixed(1)} ${y.toFixed(1)}l${(r() * 2 - 1).toFixed(1)} -${(r() * 7 + 3).toFixed(1)}" stroke="#4A3A28" stroke-width=".8" opacity=".6"/>`; }
+    return `<svg class="bg" viewBox="0 0 322 194" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${uid}sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3E9D8"/><stop offset=".55" stop-color="#E4D3B8"/><stop offset="1" stop-color="#9C8463"/></linearGradient><linearGradient id="${uid}mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#F5EDE0" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="322" height="194" fill="url(#${uid}sky)"/><circle cx="232" cy="92" r="20" fill="#F7D9A8" opacity=".9"/><path d="M0 118 C40 104 80 112 120 104 S200 96 240 108 290 100 322 106 V194 H0z" fill="#8F8371" opacity=".55"/><rect y="96" width="322" height="40" fill="url(#${uid}mist)"/><path d="M0 138 C60 128 110 140 170 132 S270 126 322 136 V194 H0z" fill="#6B5A44"/><path d="M120 194 C140 170 160 150 168 138 L176 138 C186 152 210 172 236 194z" fill="#8C765A" opacity=".6"/>${grass}<text x="161" y="56" text-anchor="middle" font-family="Georgia,serif" font-size="25" letter-spacing="6" fill="#2A2118">LONG ROAD</text><text x="161" y="76" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="12" fill="#3B2F22">a feature film</text></svg>`; }
+  function artEnergy() { let cells = ''; for (let i = 0; i < 6; i++) cells += `<rect x="${34 + i * 44}" y="78" width="36" height="74" rx="4" fill="#E9F1EF" opacity="${.18 + i * .05}"/><rect x="${44 + i * 44}" y="72" width="16" height="6" rx="1.5" fill="#E9F1EF" opacity=".3"/>`;
+    return `<svg class="bg" viewBox="0 0 322 194" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${uid}en" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#18403C"/><stop offset="1" stop-color="#0B2321"/></linearGradient></defs><rect width="322" height="194" fill="url(#${uid}en)"/>${cells}<path d="M0 166h322" stroke="#7FC8B8" stroke-width="1" opacity=".4"/><path d="M168 40l-14 26h12l-8 22 22-30h-12l8-18z" fill="#F5C443"/></svg>`; }
+  const DEALS = [
+    { name: 'Saltmarsh Bakehouse', badge: true, art: artBakery(), tile: '<div style="background:#111;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font:400 18px/1 Georgia,serif;letter-spacing:.5px">SM</div>', desc: 'Lines out the door every weekend. One profitable bakery. Now opening a second.' },
+    { name: 'Long Road Pictures', art: artFilm(), tile: '<div style="background:#F3E9D8;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#2A2118;font:700 20px/1 Georgia,serif">L</div>', desc: 'An independent feature about one soldier’s walk home. Filming is done; raising to finish post-production.' },
+    { name: 'Gridwell Energy', art: artEnergy(), tile: '<div style="background:#0E6B65;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font:800 19px/1 Figtree,sans-serif">G</div>', desc: 'Battery storage for rural power co-ops, with signed contracts from four utilities.' }
+  ];
+  $('#feed').innerHTML = DEALS.map(d => `<article class="card"><div class="art">${d.art}${d.badge ? '<span class="badge">New</span>' : ''}${STAR}<div class="tile">${d.tile}</div></div><div class="body"><h3>${d.name}</h3><p>${d.desc}</p><p class="meta">Kestrel Funding Portal · Reg CF</p></div></article>`).join('');
+
+  /* ---------- clock ---------- */
+  if (!ios) { const tick = () => { const d = new Date(); $$('[data-clock]').forEach(e => e.textContent = d.getHours() % 12 + (d.getHours() % 12 ? 0 : 12) + ':' + String(d.getMinutes()).padStart(2, '0')); }; tick(); setInterval(tick, 15000); }
+
+  /* ---------- reset and jumps (driven by the studio) ---------- */
+  function resetUi() {
+    clearTimers(); sheetClose = null; closeSheet(true); toast.classList.remove('show'); nban.classList.remove('show'); $('#faceid').classList.remove('show'); clearTimeout(cfTimer);
+    email.value = ''; pass.value = ''; pass.type = 'password'; $('#showBtn').textContent = 'Show';
+    cf.dataset.state = 'idle'; $('#cfText').textContent = 'Verify you are human';
+    $$('.uline').forEach(u => u.classList.remove('focus'));
+    code.value = ''; updateAccount(); updateCode(); setPinStep('create'); renderAvatars();
+    $$('.btn.busy').forEach(b => b.classList.remove('busy')); $('#pkGo').disabled = false;
+  }
+  function restart() { resetUi(); S = fresh(); updateAccount(); $$('.scr').forEach(s => s.classList.remove('active')); current = null; go('welcome', { instant: true }); }
+  function prefill(upto) {
+    const order = ['country', 'account', 'code', 'pin', 'after'], n = order.indexOf(upto);
+    if (n >= 2) { S.email = 'audrey@example.com'; email.value = S.email; pass.value = 'Kestrel#2026'; S.verified = true; cf.dataset.state = 'success'; $('#cfText').textContent = 'Success!'; updateAccount(); }
+    if (n >= 3) { code.value = '482915'; updateCode(); }
+  }
+  function show(id) { $$('.scr').forEach(s => s.classList.remove('active')); current = null; go(id, { instant: true }); }
+  function jump(node, lane) {
+    resetUi(); const keepPhoto = S.photo; S = fresh(); S.photo = keepPhoto;
+    if (node === 'welcome') return restart();
+    if (['country', 'account', 'code', 'pin'].includes(node)) { prefill(node); return show(node); }
+    prefill('after');
+    const alt = lane === 'cloud' || lane === 'phrase';
+    if (['wallet', 'pk-sheet', 'options', 'fallback'].includes(node)) { show('wallet'); if (node === 'pk-sheet') passkeySheet(); if (node === 'options') optionsSheet(); if (node === 'fallback') fallbackSheet(); return; }
+    S.path = alt ? lane : 'passkey';
+    S.backed = S.path;
+    if (['cloud', 'gacct', 'gconsent', 'cpw', 'cup', 'ph-warn', 'ph-reveal', 'ph-check'].includes(node)) { S.backed = null; show(node === 'gacct' || node === 'gconsent' ? 'cloud' : node); if (node === 'gacct') googleAccount(); if (node === 'gconsent') googleConsent(); return; }
+    if (node === 'more') { show('asset'); moreSheet(); return; }
+    show(node);
+  }
+  function where() {
+    const c = current;
+    if (['welcome', 'country', 'account', 'code', 'pin'].includes(c)) return { lane: null, node: c };
+    if (c === 'wallet') { if (ov === 'options') return { lane: 'alt', node: 'options' }; if (ov === 'pk' || ov === 'bio') return { lane: 'passkey', node: 'pk-sheet' }; if (ov === 'fallback') return { lane: 'passkey', node: 'fallback' }; return { lane: null, node: 'wallet' }; }
+    if (c === 'cloud' || c === 'cpw' || c === 'cup') return { lane: 'cloud', node: ov === 'gacct' ? 'gacct' : ov === 'gconsent' ? 'gconsent' : c, origin: S.origin };
+    if (c && c.startsWith('ph-')) return { lane: 'phrase', node: c, origin: S.origin };
+    const lane = S.path || 'passkey';
+    if (c === 'asset' && (ov === 'more' || ov === 'second')) return { lane, node: 'more' };
+    return { lane, node: c };
+  }
+  restart();
+  return { restart, jump, where, get state() { return S; }, get screen() { return current; }, get overlay() { return ov; }, root };
+}
+
+/* =====================================================================
+   STUDIO: flow map + narrative
+   ===================================================================== */
+/* kinds: same = observed baseline (recreated from the live app), new = proposed change, sys = simulated system prompt */
+const KIND = { same: 'Observed baseline', new: 'Proposed change', sys: 'Simulated system prompt', later: 'Time jump' };
+const KSHORT = { same: '', new: 'Proposed', sys: 'System', later: 'Later' };
+const COMMON = [['welcome', 'Welcome', 'same'], ['country', 'Country', 'same'], ['account', 'Email & password', 'same'], ['code', 'Email code', 'same'], ['pin', 'PIN', 'same'], ['wallet', 'Protect your investments', 'new']];
+const AFTER = [['photo', 'Photo', 'same'], ['home', 'Home', 'same'], ['pf', 'Later: first tokenized investment', 'later'], ['asset', 'Harbor Robotics', 'new']];
+const LANES = pl => {
+  const p = PLAT[pl];
+  return [
+    { id: 'passkey', label: 'Passkey', sub: 'Default · ' + p.bio, nodes: [['pk-sheet', p.bioAdj + ' prompt', 'sys']].concat(AFTER, [['more', 'Find out more', 'new']]) },
+    { id: 'cloud', label: p.cloud + ' backup', sub: 'Other backup options', nodes: [['options', 'Other options', 'new'], ['cloud', 'Back up to ' + p.cloud, 'new']].concat(pl === 'android' ? [['gacct', 'Google account', 'sys'], ['gconsent', 'Drive access', 'sys']] : [], [['cpw', 'Backup password', 'new'], ['cup', 'Backing up', 'new'], ['bio', 'Enable ' + p.bio, 'same']], AFTER) },
+    { id: 'phrase', label: 'Recovery phrase', sub: 'Other backup options', nodes: [['options', 'Other options', 'new'], ['ph-warn', 'Before the words', 'new'], ['ph-reveal', 'The 12 words', 'new'], ['ph-check', 'Check the words', 'new'], ['bio', 'Enable ' + p.bio, 'same']].concat(AFTER) }
+  ];
+};
+/* narrative: t = headline, s = what the investor sees and why, b = behind the scenes */
+const N = {
+  welcome: { t: 'Sign-up starts as observed today', s: 'Nothing changes before the protect step. These screens recreate the live app’s sign-up as observed.', b: 'No wallet exists yet. It’s created at the protect step, after email confirmation and PIN creation.' },
+  country: { t: 'Country of residence', s: 'Unchanged. Residence decides which deals and disclosures apply.', b: 'Nothing wallet-related happens on this screen.' },
+  account: { t: 'Email and password', s: 'Unchanged. This is the Kestrel account login.', b: 'The account password protects the Kestrel account. It doesn’t unlock or restore the wallet, which has its own recovery phrase.' },
+  code: { t: 'Confirm the email', s: 'Unchanged. The investor confirms their email address.', b: 'Email confirmation isn’t identity verification or a check of investment eligibility. Those happen separately.' },
+  pin: { t: 'Create a PIN', s: 'Unchanged. The PIN is the fallback login for the app.', b: 'The PIN unlocks the Kestrel app on this {dev}. It isn’t part of the wallet backup.' },
+  wallet: { t: 'Protect your investments: the proposed step', s: 'This screen takes the place of today’s “Enable biometrics”. It leads with the benefit, offers one button to continue with {bio}, and keeps the alternatives one quiet tap away.', b: 'The wallet and its recovery phrase are created on the {dev} as this step starts, so every new investor gets a receiving address. The step can’t be skipped: it only decides how that wallet is protected.' },
+  'pk-sheet': { t: 'One familiar prompt', s: 'The standard passkey sheet people know from signing in to websites. It’s approved with {bio} inside the same sheet.{sysNote} Cancel it to see the fallback.', b: 'The passkey locks a backup of the recovery phrase (using the WebAuthn PRF extension). Kestrel stores the locked copy but can’t open it. The passkey syncs through {pm}, which is what makes the wallet restorable.' },
+  fallback: { t: 'If the passkey isn’t set up', s: 'Try again, or choose {cloud} or paper. There’s no skip, so nobody leaves sign-up without a way back in.', b: 'This also covers devices and browsers that can’t create this kind of passkey.' },
+  options: { t: 'Other backup options', s: 'For investors who would rather not use a passkey: a locked backup to {cloud}, or writing down the 12 words.', b: 'All three options protect the same wallet. They only differ in how the investor gets it back.' },
+  cloud: { t: 'Back up to {cloud}', s: 'Three plain lines explain what happens: the recovery phrase is locked on the phone with a password they choose, then saved to {cloudFull}.', b: 'Nothing has left the {dev} yet. Only the locked file is uploaded.' },
+  gacct: { t: 'Choose a Google account', s: 'Android only: the standard Google account picker chooses which Drive holds the backup.', b: 'On iOS this step isn’t needed: iCloud Drive uses the Apple account the {dev} is already signed in to.' },
+  gconsent: { t: 'Allow Drive access', s: 'Android only: Google’s consent screen for an app-specific Drive folder.', b: 'The permission covers only data Kestrel creates. Kestrel wouldn’t see the investor’s other files.' },
+  cpw: { t: 'Create a backup password', s: 'Kestrel’s own fields and live rules. The investor accepts that Kestrel can’t reset this password.', b: 'The password locks the recovery phrase on the {dev}, so neither Kestrel nor {cloudCo} sees the password or the phrase.' },
+  cup: { t: 'Backing up', s: 'A short progress list: lock, upload, then check the backup.', b: 'Reading the backup back before moving on catches a broken upload now, not on the day it’s needed.' },
+  'ph-warn': { t: 'Before the words appear', s: 'Three short statements to tick. They set the stakes in plain language, including that Kestrel will never ask for the phrase.', b: '“May lose access” rather than “can’t be recovered”: tokenized securities often have an off-chain ownership record, so losing the wallet isn’t always the end of the story.' },
+  'ph-reveal': { t: 'The 12 words', s: 'The words stay blurred until tapped, so nobody nearby sees them by accident.', b: 'Demo words only. In a real app, screenshots of this screen would be blocked or warned against.' },
+  'ph-check': { t: 'Check the paper copy', s: 'Three quick questions: pick the right word for a position. Enough to catch a missing or swapped word.', b: 'The answers are checked on the {dev}. The phrase isn’t sent anywhere.' },
+  bio: { t: '“Enable biometrics” stays', s: 'Without a passkey, today’s observed biometrics step still appears, so everyday unlock stays fast.', b: 'Here, {bio} login only unlocks the app. The {cloud} backup or the paper is what restores the wallet.' },
+  'photo:passkey': { t: 'Sign-up continues: +0 screens', s: 'Straight on to “Add a photo”. No confirmation screen and no separate biometrics step.', b: 'Login with {bio} comes from the same passkey approval, so today’s “Enable biometrics” screen isn’t needed on this path.' },
+  photo: { t: 'Add a photo', s: 'Unchanged. Sign-up carries on as observed today.', b: 'The wallet already exists and is protected, before any investment.' },
+  home: { t: 'Home', s: 'The observed home screen. Nothing about the wallet asks for attention.', b: 'No reminders: the wallet is already protected.' },
+  pf: { t: 'Weeks later: tokens arrive', s: 'After the first tokenized investment, the holding lands in Portfolio next to traditional ones. A notification says the tokens have arrived. No separate setup step.', b: 'Delivery goes to the address created at sign-up. This is the moment the original problem used to break.' },
+  asset: { t: 'Held in your account', s: 'Plain answers: where it’s held, how it’s protected and where it can be restored. The wallet stays in the background.', b: 'The holding is described by what the investor owns, not by the wallet that holds it.' },
+  more: { t: 'Find out more, for people who want details', s: 'Wallet address, network and recovery methods, plus an optional second method in case the investor loses their {acct}.', b: 'This is the “find out more” layer for advanced users. A second method runs the same {cloud} or paper flow and returns here.' },
+  wtab: { t: 'The Wallet tab, unchanged', s: 'Today’s Wallet tab as observed in the live app. In this design, holdings appear in Portfolio, and wallet details live behind Find out more.', b: 'The tab could fade later, once holdings live in Portfolio.' }
+};
+
+/* ---------- the case ---------- */
+const CASE = {
+  start: 'Starting point: give every investor a wallet address at sign-up, so tokens from an eligible investment always have somewhere to go, without a separate setup step later.',
+  reco: 'Make wallet protection part of the existing Face ID step. Face ID creates a passkey that locks a backup of the wallet, so it can be restored on any device and every network. Cloud backup and a written recovery phrase stay available as alternatives.',
+  tradeoff: 'A fully invisible wallet would skip even the Face ID prompt. But protection then has to happen later, and later has only two outcomes: tokens land in a wallet with no backup, or delivery waits for the investor to come back after paying, which is the follow-up step that’s easy to miss. Sign-up is the one moment every investor passes through before any money moves, so this design asks once, there, in a step that already exists, and every wallet is recoverable from day one.',
+  why: [
+    ['Every investor has an address before they invest', 'Tokens can be delivered without asking anyone to set up a wallet later.'],
+    ['No extra screens', 'The step replaces today’s “Enable biometrics”, and the same approval can turn on Face ID login.'],
+    ['Restorable with Face ID', 'The passkey is the backup, so there’s nothing to write down. It works on every network, because it protects the recovery phrase rather than signing for one chain.']
+  ],
+  audit: [
+    ['App screens', 'Enable biometrics', 'Protect your investments', '+0'],
+    ['System prompts', 'Biometric enrolment prompt', 'Passkey prompt, with Face ID or Android biometrics inside it', 'No change']
+  ],
+  cols: [['passkey', 'Passkey', 'Default'], ['cloud', 'iCloud or Google Drive backup', 'Alternative'], ['phrase', 'Recovery phrase', 'Alternative']],
+  rows: [
+    ['App screens added at sign-up', '+0 (replaces “Enable biometrics”)', 'Explainer, password, backup progress (plus Google’s account and Drive prompts on Android); the biometrics step stays', 'Warnings, the 12 words, a check; the biometrics step stays'],
+    ['Time to complete', 'About 5 seconds', 'About a minute', '3 to 5 minutes'],
+    ['Restore on a new phone or kestrel.app', 'Face ID or Android biometrics, on any device signed in to your Apple or Google account', 'Cloud account and backup password', 'Enter the 12 words'],
+    ['Main risk', 'Losing access to the Apple or Google account', 'Forgetting the backup password', 'The paper is lost, photographed or phished'],
+    ['Best for', 'Most investors', 'People who’d rather not use a passkey', 'People who want an offline backup']
+  ],
+  measures: [
+    ['Primary outcome', [['Usable receiving address at distribution', 'Share of eligible investors with a usable address when distribution is authorized.'], ['Separate wallet setup', 'Share of distributions that still need the investor to set up a wallet.']]],
+    ['Guardrail', [['Sign-up completion', 'Compared with the observed baseline.'], ['Face ID prompt success', 'Share of investors who complete the passkey prompt first time.']]],
+    ['Supporting', [['Fallback rate', 'How often the prompt is cancelled or unsupported, and which backup people choose instead.'], ['Restore success', 'Share of restores on a new device that succeed.'], ['Second recovery method', 'Share of holders who add one.'], ['Access support contacts', 'Support contacts about wallet access and recovery.']]]
+  ],
+  risks: [
+    ['Losing access to the Apple or Google account', 'An optional second recovery method behind Find out more. Test whether a one-time prompt after the first delivery is worth it.'],
+    ['A device or browser can’t create this kind of passkey', 'The fallback at sign-up offers an iCloud or Google Drive backup, or a recovery phrase.'],
+    ['A forgotten cloud backup password', 'An explicit “Kestrel can’t reset this” acknowledgement, and a suggestion to also write down the phrase.'],
+    ['Phishing for the recovery phrase', 'Plain warnings before the words appear, and a clear “Kestrel will never ask for them”.']
+  ],
+  validate: [
+    ['One recovery phrase covers every network', 'A single recovery phrase can create the keys for each network the wallet supports.', 'Engineering'],
+    ['Device support', 'The passkey feature that locks the backup (WebAuthn PRF) works on iOS 18+, on Android with Google Password Manager, and in the browsers kestrel.app supports. Everyone else uses the fallback.', 'Engineering'],
+    ['Still self-custody', 'Kestrel storing a locked backup it can’t open keeps the wallet self-custody.', 'Compliance'],
+    ['The Option A trade-off', 'A passkey smart wallet (Coinbase’s model) is the closest match to an invisible wallet, but it’s EVM-only. Revisit it for a standalone wallet app, or if token deliveries become EVM-only.', 'Product', true]
+  ]
+};
+/* the guided route: problem, protect step, prompt, portfolio, how it works, trade-offs */
+const TOUR = [
+  { l: 'The problem', go: k => k.jump('pin'), t: 'The problem: tokens with nowhere to land', s: 'Across tokenized investing, an investor can often complete sign-up, and even invest in a tokenized product, before they have a receiving address. Delivery then depends on setting up a wallet later, a step that is easy to put off or miss.' },
+  { l: 'Protect step', go: k => k.jump('wallet', null) },
+  { l: 'Face ID prompt', go: k => k.jump('pk-sheet') },
+  { l: 'Portfolio', go: k => k.jump('pf', 'passkey') },
+  { l: 'How it works', scroll: 'how' },
+  { l: 'Trade-offs', go: null }
+];
+
+const store = (() => { try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); return localStorage; } catch (e) { return null; } })();
+const $ = s => document.querySelector(s);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const state = { plat: 'ios', lane: { ios: 'passkey', android: 'passkey' }, openCommon: { ios: false, android: false }, behind: false, tour: null };
+const K = {};
+const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
+const LEGEND = '<p class="legend"><span><i class="lg-s"></i>Observed</span><span><i class="lg-n"></i>Proposed</span><span><i class="lg-y"></i>System prompt</span><span><i class="lg-l"></i>Time jump</span></p>';
+
+/* which path the stepper shows: follows the phone when the phone is on a path, otherwise keeps the reviewer's choice */
+function laneId(pl) { const w = K[pl].where(); if (['passkey', 'cloud', 'phrase'].includes(w.lane)) state.lane[pl] = w.lane; return state.lane[pl]; }
+const laneObj = pl => LANES(pl).find(l => l.id === laneId(pl));
+const seqOf = pl => { const L = laneObj(pl); return COMMON.map(c => ({ id: c[0], lane: null, label: c[1], kind: c[2] })).concat(L.nodes.map(c => ({ id: c[0], lane: L.id, label: c[1], kind: c[2] }))); };
+function idxOf(pl) { const w = K[pl].where(); return seqOf(pl).findIndex(s => s.id === w.node && (s.lane === null ? !w.lane : true)); }
+function goStep(pl, s) { K[pl].jump(s.id, s.lane || laneId(pl)); }
+
+function renderPaths() {
+  const pl = state.plat, cur = laneId(pl);
+  $('#paths').innerHTML = LANES(pl).map(L => '<button data-path="' + L.id + '" aria-pressed="' + (L.id === cur) + '">' + L.label + (L.id === 'passkey' ? ' <span class="def">Default</span>' : '') + '</button>').join('');
+  document.querySelectorAll('[data-plat]').forEach(b => b.setAttribute('aria-selected', b.dataset.plat === pl));
+}
+function renderTour() {
+  const el = $('#tourbar'), i = state.tour, ht = $('#howTour');
+  if (ht) ht.hidden = i !== 4;
+  if (i == null) { el.hidden = true; el.innerHTML = ''; return; }
+  el.hidden = false;
+  el.innerHTML = '<span class="tl">Recommendation route</span><ol>' + TOUR.map((s, j) => '<li><button data-tour="' + j + '"' + (j === i ? ' aria-current="step"' : '') + '><span>' + (j + 1) + '</span>' + s.l + '</button></li>').join('') + '</ol>' +
+    '<button class="tnext" data-tour="' + (i + 1) + '">' + (i === TOUR.length - 2 ? 'See the trade-offs →' : 'Next →') + '</button><button class="tx" data-tourx aria-label="Leave the route">×</button>';
+}
+function renderStepper() {
+  const pl = state.plat, L = laneObj(pl), seq = seqOf(pl), i = idxOf(pl), inCommon = i >= 0 && i < COMMON.length - 1, open = state.openCommon[pl] || inCommon;
+  const row = (s, n) => '<li><button class="srow ' + s.kind + '" data-node="' + s.id + '" data-lane="' + (s.lane || '') + '"' + (n === i ? ' aria-current="step"' : '') + '><span class="n">' + (n + 1) + '</span><span class="t">' + s.label + '</span>' + (KSHORT[s.kind] ? '<span class="nw">' + KSHORT[s.kind] + '</span>' : '') + '</button></li>';
+  const common = seq.slice(0, COMMON.length - 1), rest = seq.slice(COMMON.length - 1);
+  $('#stepper').innerHTML = '<h3>This path</h3><p class="lane">' + L.label + (L.id === 'passkey' ? ', the default' : '') + '</p><ol>' +
+    '<li><button class="grp" data-grp aria-expanded="' + open + '"><span class="n">' + CHEV + '</span><span class="t">Observed sign-up<small>' + common.length + ' screens, unchanged</small></span></button>' + (open ? '<ol>' + common.map((s, n) => row(s, n)).join('') + '</ol>' : '') + '</li>' +
+    rest.map((s, n) => row(s, n + common.length)).join('') + '</ol>' + LEGEND;
+  /* on phones the steps are a horizontal chip row: keep the current one in view */
+  const cur = $('#stepper [aria-current="step"]'), list = $('#stepper > ol');
+  if (cur && innerWidth < 760) list.scrollLeft = cur.closest('li').offsetLeft - 16;
+}
+function narrative(pl, w) {
+  const lane = w.lane, st = K[pl].state;
+  let key = w.node;
+  if (w.node === 'photo' && (lane === 'passkey' || st.path === 'passkey')) key = 'photo:passkey';
+  const kind = w.node === 'fallback' ? 'new' : (COMMON.find(c => c[0] === w.node) || LANES(pl).flatMap(l => l.nodes).find(c => c[0] === w.node) || [0, 0, 'same'])[2];
+  return { n: N[key] || N[w.node], kind, p: PLAT[pl] };
+}
+function renderStory() {
+  const pl = state.plat, w = K[pl].where(), seq = seqOf(pl), i = idxOf(pl);
+  let { n, kind, p } = narrative(pl, w);
+  const problem = state.tour === 0 && w.node === 'pin';
+  if (problem) n = { t: TOUR[0].t, s: TOUR[0].s, b: N.pin.b };
+  $('#story').innerHTML = '<p class="kick"><span class="tag ' + kind + '">' + KIND[kind] + '</span>' + (i >= 0 ? 'Step ' + (i + 1) + ' of ' + seq.length : '') + '</p>' +
+    '<h2>' + fmt(n.t, p) + '</h2><p class="st">' + fmt(n.s, p) + '</p>' +
+    (problem ? '<p class="st st2">' + CASE.start + '</p>' : '') +
+    (w.origin === 'detail' ? '<span class="from">Started from Find out more on the Harbor Robotics holding</span>' : '') +
+    '<details id="behind"' + (state.behind ? ' open' : '') + '><summary>' + CHEV + 'Behind the scenes</summary><p>' + fmt(n.b, p) + '</p></details>';
+  $('#behind').addEventListener('toggle', e => { state.behind = e.target.open; });
+  document.querySelectorAll('[data-step="-1"]').forEach(b => b.disabled = i <= 0);
+  document.querySelectorAll('[data-step="1"]').forEach(b => b.disabled = i >= seq.length - 1);
+}
+function renderMap() {
+  const pl = state.plat, w = K[pl].where(), lanes = LANES(pl);
+  const btn = (id, label, kind, laneId, cur) => '<button class="node ' + kind + '" data-node="' + id + '" data-lane="' + (laneId || '') + '" data-from="map" title="' + KIND[kind] + '"' + (cur ? ' aria-current="step"' : '') + '>' + label + '</button>';
+  const isCur = (id, laneId) => w.node === id && (laneId === null ? !w.lane : (w.lane === laneId || (w.lane === 'alt' && id === 'options' && laneId === state.lane[pl])));
+  $('#map').innerHTML = LEGEND + '<div class="mrow' + (!w.lane ? ' on' : '') + '"><span class="mlab"><b>Observed sign-up</b><small>Unchanged until the PIN</small></span>' + COMMON.map(([id, l, k], i) => (i ? '<span class="arr">→</span>' : '') + btn(id, l, k, null, isCur(id, null))).join('') + '</div>' +
+    '<p class="fork">Then one of three ways to protect the wallet</p><div class="mlanes">' +
+    lanes.map(L => '<div class="mrow' + (laneId(pl) === L.id && w.lane ? ' on' : '') + '"><span class="mlab"><b>' + L.label + '</b><small>' + L.sub + '</small></span>' + L.nodes.map(([id, l, k], i) => (i ? '<span class="arr">→</span>' : '') + btn(id, l, k, L.id, isCur(id, L.id))).join('') + '</div>').join('') + '</div>';
+}
+function renderCase() {
+  const p = PLAT[state.plat], c = CASE;
+  $('#caseWrap').innerHTML =
+    '<section id="case"><p class="eyebrow">The case</p><p class="startpt">' + c.start + '</p><div class="reco"><div><h2>Recommendation</h2><p class="lead">' + c.reco + '</p></div>' +
+      '<ol class="why">' + c.why.map((w, i) => '<li><span class="wn">' + (i + 1) + '</span><span><b>' + w[0] + '</b>' + w[1] + '</span></li>').join('') + '</ol></div>' +
+      '<aside class="callout" id="tradeoff"><b>Design trade-off</b><p>' + c.tradeoff + '</p></aside>' +
+      '<div class="audit"><h3>Screen count, observed baseline vs passkey path</h3><table><thead><tr><th scope="col"></th><th scope="col">Observed baseline</th><th scope="col">Proposed passkey path</th><th scope="col">Change</th></tr></thead><tbody>' +
+      c.audit.map(r => '<tr><th scope="row">' + r[0] + '</th><td>' + r[1] + '</td><td>' + r[2] + '</td><td><b>' + r[3] + '</b></td></tr>').join('') + '</tbody></table><p class="fine">App screens and system prompts are counted separately. There is no separate confirmation screen, so the passkey path adds no app screens.</p></div></section>' +
+    '<section id="options"><p class="eyebrow">Access and recovery options</p><h2>Three ways to protect the same wallet.</h2><p class="lead">All three protect the same wallet. They differ in how you get it back.</p>' +
+      '<div class="cmp"><table><thead><tr><th scope="col"></th>' + c.cols.map(([id, l, t]) => '<th scope="col"' + (id === 'passkey' ? ' class="def"' : '') + '><small>' + t + '</small>' + l + '<br><button class="try" data-try="' + id + '">Try it in the demo →</button></th>').join('') + '</tr></thead><tbody>' +
+      c.rows.map(r => '<tr><th scope="row">' + r[0] + '</th>' + r.slice(1).map((v, i) => '<td' + (i === 0 ? ' class="def"' : '') + '>' + v + '</td>').join('') + '</tr>').join('') + '</tbody></table></div><p class="fine">Times are illustrative, from the prototype.</p></section>' +
+    '<section id="measure"><p class="eyebrow">What we’d measure</p><h2>How we’ll know it’s working.</h2><p class="lead">Ordered around the problem: receiving readiness first. Baselines and targets stay unclaimed until measured.</p><div class="mgroups">' +
+      c.measures.map(([g, items], gi) => '<div class="mgroup' + (gi === 0 ? ' pri' : '') + '"><h3>' + g + '</h3><ul>' + items.map(([t, s]) => '<li><b>' + t + '</b><span>' + s + '</span></li>').join('') + '</ul></div>').join('') + '</div></section>' +
+    '<section id="risks"><p class="eyebrow">Risks</p><h2>What could go wrong, and what we’d do about it.</h2><div class="risks">' +
+      c.risks.map(([r, m]) => '<div><b>' + r + '</b><p>' + m + '</p></div>').join('') + '</div></section>' +
+    '<section id="validate"><p class="eyebrow">What we’d validate</p><h2>What has to be true.</h2><p class="lead">Questions for engineering and compliance before this goes further.</p><ol class="validate">' +
+      c.validate.map(([t, d, who, alt], i) => '<li' + (alt ? ' class="alt"' : '') + '><span class="wn">' + (i + 1) + '</span><span><b>' + t + '.</b> ' + d + '<span class="who">' + who + '</span></span></li>').join('') + '</ol></section>' +
+    '<section id="flow"><p class="eyebrow">The whole flow</p><h2>Every screen, across all three paths.</h2><details class="flow"><summary>See every screen on ' + p.name + CHEV + '</summary><div class="map" id="map"></div></details></section>';
+}
+let raf = 0;
+function refresh() { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { renderTour(); renderPaths(); renderStepper(); renderStory(); if ($('#map')) renderMap(); }); }
+function tourGo(i) {
+  if (TOUR[i] && TOUR[i].scroll) { state.tour = i; refresh(); const h = $('#' + TOUR[i].scroll); h.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); return; }
+  if (i >= TOUR.length - 1) { state.tour = null; refresh(); const t = $('#tradeoff'); t.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' }); t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash'); return; }
+  state.tour = Math.max(0, i); state.lane[state.plat] = 'passkey'; TOUR[state.tour].go(K[state.plat]); toDemo(); refresh();
+}
+function fit() {
+  const narrow = innerWidth < 760;
+  const s = narrow ? Math.min(1, (innerWidth - 32) / 384) : Math.max(.55, Math.min(1, (innerHeight - 52 - 96) / 804));
+  document.querySelectorAll('.pwrap').forEach(e => e.style.setProperty('--s', s.toFixed(3)));
+}
+function setPlat(pl, push) {
+  state.plat = pl;
+  $('#stage').setAttribute('aria-labelledby', 'tab-' + pl);
+  $('#pw-ios').hidden = pl !== 'ios'; $('#pw-android').hidden = pl !== 'android';
+  try { history[push ? 'pushState' : 'replaceState'](null, '', '#' + pl); } catch (e) { }
+  renderCase(); refresh();
+}
+function step(d) { const pl = state.plat, seq = seqOf(pl), i = idxOf(pl), nx = seq[i < 0 ? COMMON.length - 1 : i + d]; if (nx) goStep(pl, nx); }
+function toDemo() { $('#demo').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }
+
+['ios', 'android'].forEach(pl => { K[pl] = Kestrel($('#pw-' + pl), pl, { onChange: () => { if (state.plat === pl) refresh(); }, isActive: () => state.plat === pl }); });
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-plat],[data-path],[data-node],[data-step],[data-c],[data-grp],[data-try],[data-tour],[data-tourx],[data-explore]'); if (!t || t.closest('.phone')) return;
+  const d = t.dataset, pl = state.plat, k = K[pl];
+  if (d.explore != null && t.matches('[data-explore]')) { tourGo(0); return; }
+  if (d.tour != null && t.matches('[data-tour]')) { tourGo(+d.tour); return; }
+  if (t.matches('[data-tourx]')) { state.tour = null; refresh(); return; }
+  if (d.plat) { if (d.plat !== pl) setPlat(d.plat, true); return; }
+  if (d.path || d.try) { const id = d.path || d.try; state.lane[pl] = id; k.jump(id === 'passkey' ? 'wallet' : 'options', id); if (d.try) toDemo(); refresh(); return; }
+  if (d.grp != null && t.matches('[data-grp]')) { state.openCommon[pl] = t.getAttribute('aria-expanded') !== 'true'; renderStepper(); return; }
+  if (d.node) { if (d.lane) state.lane[pl] = d.lane; k.jump(d.node, d.lane || null); if (d.from === 'map') toDemo(); return; }
+  if (d.step) { step(+d.step); return; }
+  if (d.c === 'restart') { state.openCommon[pl] = false; k.restart(); }
+  if (d.c === 'wallet') k.jump('wallet', null);
+});
+document.addEventListener('keydown', e => {
+  const tab = e.target.closest && e.target.closest('[role="tab"][data-plat]');
+  if (tab && ['ArrowLeft', 'ArrowRight'].includes(e.key)) { const n = tab.dataset.plat === 'ios' ? 'android' : 'ios'; setPlat(n, true); document.querySelector('[data-plat="' + n + '"]').focus(); e.preventDefault(); return; }
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || e.altKey || e.metaKey || e.ctrlKey) return;
+  const r = $('#demo').getBoundingClientRect(); if (r.bottom < 100 || r.top > innerHeight - 100) return;
+  if (e.key === 'ArrowRight') { step(1); e.preventDefault(); } else if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
+});
+window.addEventListener('popstate', () => setPlat(location.hash === '#android' ? 'android' : 'ios'));
+window.addEventListener('resize', fit);
+$('#topLogo').innerHTML = LOGO.replace('width="26" height="26"', 'width="22" height="22"');
+let theme = 'auto'; try { theme = (store && store.getItem('kestrel-v2-theme')) || 'auto'; } catch (e) { }
+const applyTheme = () => { if (theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', theme); const b = $('#thm'); b.textContent = theme === 'auto' ? 'Auto' : theme === 'dark' ? 'Dark' : 'Light'; b.setAttribute('aria-label', 'Page theme: ' + b.textContent + '. Change theme'); };
+$('#thm').addEventListener('click', () => { theme = theme === 'auto' ? 'dark' : theme === 'dark' ? 'light' : 'auto'; try { store && store.setItem('kestrel-v2-theme', theme); } catch (e) { } applyTheme(); });
+applyTheme(); fit(); setPlat(location.hash === '#android' ? 'android' : 'ios', false);
+window.__kv2 = { K, state, setPlat };
+})();
+</script>
+</body>
+</html>
