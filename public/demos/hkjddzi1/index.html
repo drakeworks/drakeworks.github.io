@@ -12,7 +12,7 @@
 <!--QAFONTS-->
 <style>
 /* ======================================================================
-   STUDIO PAGE: a short claim, the demo as the centrepiece, then the case
+   STUDIO PAGE: a short claim, the demo as the centerpiece, then the case
    ====================================================================== */
 :root{
   --s-bg:#F7F5F0;--s-panel:#FFFFFF;--s-ink:#1D1B18;--s-ink2:#57524A;--s-ink3:#8A8378;--s-line:#E3DED4;--s-line2:#EDE9E1;
@@ -704,6 +704,8 @@ input:focus-visible{outline:none}
 .kv li span{color:#777;flex:none}
 .kv li b{font-weight:600;color:var(--ink);text-align:right}
 .kv li b small{display:block;font-weight:500;color:#777;font-size:13px}
+.as-doc{font:inherit;font-weight:600;color:var(--accent)}
+.as-wallet{margin:24px 19px 0;font-size:14px;line-height:20px;color:#777;flex:none}
 .as-more{display:block;margin:16px 19px 0;height:37px;font-size:15.5px;font-weight:700;color:var(--accent);text-align:left;flex:none}
 /* sheet: account details */
 .sheet .kv{margin:8px 19px 0}
@@ -994,16 +996,17 @@ function phoneMarkup(pl, P) {
       <div class="pf-sum"><small>Invested</small><b>$750</b></div>
       <h2 class="pf-h">Holdings</h2>
       <ul class="pf-list">
-        <li><button class="pf-row" data-go="asset"><span class="pf-logo" style="background:#1E3A5F;color:#fff;font:400 15px/1 Georgia,serif">HR</span><span class="pf-tx"><b>Harbor Robotics</b><small>50 tokens</small></span><span class="pf-r"><b>$500</b><span class="chip ok">Delivered</span></span><span class="pf-chev">${I.chev(16)}</span></button></li>
+        <li><button class="pf-row" data-go="asset"><span class="pf-logo" style="background:#1E3A5F;color:#fff;font:400 15px/1 Georgia,serif">HR</span><span class="pf-tx"><b>Harbor Robotics</b><small>50 tokens</small></span><span class="pf-r"><b>$500</b><span class="chip ok">Received</span></span><span class="pf-chev">${I.chev(16)}</span></button></li>
         <li><div class="pf-row"><span class="pf-logo" style="background:#111;color:#fff;font:400 15px/1 Georgia,serif">SM</span><span class="pf-tx"><b>Saltmarsh Bakehouse</b><small>Reg CF</small></span><span class="pf-r"><b>$250</b><span class="chip neu">Shares</span></span><span class="pf-chev" style="visibility:hidden">${I.chev(16)}</span></div></li>
       </ul>
       ${tabbar('bag')}
     </section>
     <section class="scr" data-s="asset" aria-label="Harbor Robotics">
       <div class="hdr"><button class="back" data-back aria-label="Back"></button></div>
-      <div class="as-top"><span class="pf-logo" style="background:#1E3A5F;color:#fff;font:400 15px/1 Georgia,serif">HR</span><h1>Harbor Robotics</h1><p>50 tokens · $500 invested</p><span class="chip ok">${CHECK(13)}Delivered 12 Nov</span></div>
-      <h2 class="as-h">Where it’s held</h2>
-      <ul class="kv"><li><span>Held in</span><b>Your Kestrel account</b></li><li><span>Protected with</span><b id="asProt"></b></li><li><span>Restore on</span><b id="asRest"></b></li></ul>
+      <div class="as-top"><span class="pf-logo" style="background:#1E3A5F;color:#fff;font:400 15px/1 Georgia,serif">HR</span><h1>Harbor Robotics</h1><p>$500 invested</p><span class="chip ok">${CHECK(13)}Received 12 Nov</span></div>
+      <h2 class="as-h">About this investment</h2>
+      <ul class="kv"><li><span>Represents</span><b>Tokenized equity</b></li><li><span>Tokens</span><b>50 (at $10 each)</b></li><li><span>Invested</span><b>3 Nov</b></li><li><span>Documents</span><b><button class="as-doc" data-info="docs">Offering documents ›</button></b></li></ul>
+      <p class="as-wallet" id="asWallet"></p>
       <button class="as-more" id="asMore">Find out more</button>
     </section>
     <section class="scr" data-s="wtab" aria-label="Wallet">
@@ -1132,6 +1135,7 @@ function Kestrel(host, pl, hooks) {
     add: ['Add assets', '<p>Adding assets to the wallet isn’t part of this prototype, which shows how the wallet is created during sign-up.</p>', 'Close'],
     hidden: ['Hidden assets', '<p>Assets you’ve hidden from your wallet appear here. This list isn’t part of the prototype.</p>', 'Close'],
     tab: ['Not in this prototype', '<p>This tab isn’t part of the prototype. Home, Portfolio and Wallet work.</p>', 'Close'],
+    docs: ['Not in this prototype', '<p>Offering documents aren’t part of this prototype.</p>', 'Close'],
     how: ['How this works', `<p>${ios ? 'Face ID creates' : 'Your phone’s biometrics create'} a passkey for your Kestrel account. It protects your investments and lets you restore them on a new phone or on kestrel.app.</p><p>Prefer something else? You can back up to ${p.cloud} or write down a recovery phrase instead.</p>`, 'Got it']
   };
   function openInfo(key) {
@@ -1284,7 +1288,7 @@ function Kestrel(host, pl, hooks) {
       }
     };
   }
-  /* cancelling the passkey never skips protection: it offers the other ways instead */
+  /* canceling the passkey never skips protection: it offers the other ways instead */
   function cancelled() { sheetClose = null; closeSheet(true); later(260, fallbackSheet); }
   const optRows = (only) => [['cloud', I.cloud(20), `Back up to ${p.cloud}`, 'Locked with a password you choose'], ['phrase', I.pen(20), 'Write down recovery phrase', '12 words on paper']]
     .filter(o => !only || only.includes(o[0])).map(([k, ic, t, d]) => `<button class="opt" data-opt="${k}"><span class="oi">${ic}</span><span><b>${t}</b><small>${d}</small></span>${I.chev(18)}</button>`).join('');
@@ -1316,8 +1320,7 @@ function Kestrel(host, pl, hooks) {
   const METHOD = { passkey: `${p.bioAdj} passkey`, cloud: `${p.cloud} backup`, phrase: 'Written recovery phrase' };
   function renderAsset() {
     const m = S.path || 'passkey';
-    $('#asProt').innerHTML = METHOD[m] + (S.second ? `<small>and ${METHOD[S.second].toLowerCase().replace('icloud', 'iCloud').replace('google', 'Google')}</small>` : '');
-    $('#asRest').innerHTML = m === 'passkey' ? `Any device signed in to your ${p.acct}` : m === 'cloud' ? `Any device, with your ${p.acct} and backup password` : 'Any device, with your 12 words';
+    $('#asWallet').textContent = 'In your wallet · ' + (m === 'passkey' ? `protected with ${ios ? 'Face ID' : 'biometrics'}` : m === 'cloud' ? `backed up to ${p.cloud}` : 'backed up with your recovery phrase');
   }
   function moreSheet() {
     const m = S.path || 'passkey';
@@ -1325,7 +1328,8 @@ function Kestrel(host, pl, hooks) {
     const others = ['cloud', 'phrase'].filter(k => k !== m);
     openSheet(`<h4>Account details</h4><div class="sheet-body"><p>For people who want the technical details.</p></div>
       <ul class="kv"><li><span>Wallet address</span><b>0x7A3f…91C2<button class="copy" id="mCopy">Copy</button></b></li><li><span>Network</span><b>Avalanche</b></li>
-      <li><span>Recovery</span><span style="text-align:right;color:inherit;display:flex;flex-direction:column;gap:6px">${rec(m, m === 'passkey' ? `<small>synced with ${p.pm}</small>` : '')}${S.second ? rec(S.second) : ''}</span></li></ul>
+      <li><span>Recovery</span><span style="text-align:right;color:inherit;display:flex;flex-direction:column;gap:6px">${rec(m, m === 'passkey' ? `<small>synced with ${p.pm}</small>` : '')}${S.second ? rec(S.second) : ''}</span></li>
+      <li><span>Restore on</span><b>${m === 'passkey' ? `Any device signed in to your ${p.acct}` : m === 'cloud' ? `Any device, with your ${p.acct} and backup password` : 'Any device, with your 12 words'}</b></li></ul>
       ${S.second ? '' : `<button class="addm" id="mAdd"><span class="oi">${I.plus(18)}</span><span><b>Add a second recovery method</b><small>In case you lose access to your ${p.acct}.</small></span>${I.chev(18)}</button>`}
       <p class="sfine">Kestrel never sees your recovery phrase and can’t reset your recovery methods.</p>
       <div class="sheet-actions"><button class="btn btn-outline" id="mX">Close</button></div>`, '', null, 'more');
@@ -1518,7 +1522,7 @@ const N = {
   photo: { t: 'Add a photo', s: 'Unchanged. Sign-up carries on as observed today.', b: 'The wallet already exists and is protected, before any investment.' },
   home: { t: 'Home', s: 'The observed home screen. Nothing about the wallet asks for attention.', b: 'No reminders: the wallet is already protected.' },
   pf: { t: 'Weeks later: tokens arrive', s: 'After the first tokenized investment, the holding lands in Portfolio next to traditional ones. A notification says the tokens have arrived. No separate setup step.', b: 'Delivery goes to the address created at sign-up. This is the moment the original problem used to break.' },
-  asset: { t: 'Held in your account', s: 'Plain answers: where it’s held, how it’s protected and where it can be restored. The wallet stays in the background.', b: 'The holding is described by what the investor owns, not by the wallet that holds it.' },
+  asset: { t: 'Investment first, wallet second', s: 'The holding leads with what the investor owns: what the token represents, when they invested, and the documents. The wallet is one line at the bottom, with the details behind Find out more.', b: 'The wallet line reflects how this investor protected it: passkey, cloud backup or recovery phrase. It says “in your wallet”, never “held by Kestrel”, because the wallet is self-custody.' },
   more: { t: 'Find out more, for people who want details', s: 'Wallet address, network and recovery methods, plus an optional second method in case the investor loses their {acct}.', b: 'This is the “find out more” layer for advanced users. A second method runs the same {cloud} or paper flow and returns here.' },
   wtab: { t: 'The Wallet tab, unchanged', s: 'Today’s Wallet tab as observed in the live app. In this design, holdings appear in Portfolio, and wallet details live behind Find out more.', b: 'The tab could fade later, once holdings live in Portfolio.' }
 };
@@ -1535,7 +1539,7 @@ const CASE = {
   ],
   audit: [
     ['App screens', 'Enable biometrics', 'Protect your investments', '+0'],
-    ['System prompts', 'Biometric enrolment prompt', 'Passkey prompt, with Face ID or Android biometrics inside it', 'No change']
+    ['System prompts', 'Biometric enrollment prompt', 'Passkey prompt, with Face ID or Android biometrics inside it', 'No change']
   ],
   cols: [['passkey', 'Passkey', 'Default'], ['cloud', 'iCloud or Google Drive backup', 'Alternative'], ['phrase', 'Recovery phrase', 'Alternative']],
   rows: [
@@ -1548,12 +1552,12 @@ const CASE = {
   measures: [
     ['Primary outcome', [['Usable receiving address at distribution', 'Share of eligible investors with a usable address when distribution is authorized.'], ['Separate wallet setup', 'Share of distributions that still need the investor to set up a wallet.']]],
     ['Guardrail', [['Sign-up completion', 'Compared with the observed baseline.'], ['Face ID prompt success', 'Share of investors who complete the passkey prompt first time.']]],
-    ['Supporting', [['Fallback rate', 'How often the prompt is cancelled or unsupported, and which backup people choose instead.'], ['Restore success', 'Share of restores on a new device that succeed.'], ['Second recovery method', 'Share of holders who add one.'], ['Access support contacts', 'Support contacts about wallet access and recovery.']]]
+    ['Supporting', [['Fallback rate', 'How often the prompt is canceled or unsupported, and which backup people choose instead.'], ['Restore success', 'Share of restores on a new device that succeed.'], ['Second recovery method', 'Share of holders who add one.'], ['Access support contacts', 'Support contacts about wallet access and recovery.']]]
   ],
   risks: [
     ['Losing access to the Apple or Google account', 'An optional second recovery method behind Find out more. Test whether a one-time prompt after the first delivery is worth it.'],
     ['A device or browser can’t create this kind of passkey', 'The fallback at sign-up offers an iCloud or Google Drive backup, or a recovery phrase.'],
-    ['A forgotten cloud backup password', 'An explicit “Kestrel can’t reset this” acknowledgement, and a suggestion to also write down the phrase.'],
+    ['A forgotten cloud backup password', 'An explicit “Kestrel can’t reset this” acknowledgment, and a suggestion to also write down the phrase.'],
     ['Phishing for the recovery phrase', 'Plain warnings before the words appear, and a clear “Kestrel will never ask for them”.']
   ],
   validate: [
